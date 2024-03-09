@@ -1,0 +1,49 @@
+/* products.php */
+.thead_dark{
+    background-color: black;
+    color: white;
+}
+
+.container_products .products{
+    border: 1px solid  #333;
+    border-radius: 5px;
+}
+.container_products .products .products_header{
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    /* margin-bottom: 15px; */
+    text-align: center;
+    font-size: 22px;
+}
+.container_products .products .products_body{
+    background-color: white;
+    margin-top: 20px;
+}
+.container_products .products_body .table{
+    width: 100%;
+}
+.products_body tr{
+    text-align: center;
+    border: 1px solid #333;
+    display: table-row;
+    width: 100%;
+}
+.products_body tr .seperate {
+    border-bottom: 0.5px solid #ccc; /* Viền đen 1 pixel dưới mỗi ô */
+    padding: 10px; /* Thêm padding cho đẹp */
+}
+
+.products_body .image_product{
+    width: 10%;
+}
+.image_product img{
+    height: 75px;
+}
+
+.products_body .Update:hover,.products_body .Delete:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: purple;
+}
+
+
