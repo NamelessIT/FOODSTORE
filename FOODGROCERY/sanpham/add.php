@@ -82,6 +82,7 @@
                 </div>
                 
                 <button name="sbm" type="submit" class="btn btn_add">Thêm</button>
+                <a  class="btn btn_back" href="index.php?page_layout=danhsach'">Quay về</a>
             </form>
                 <script>
                     var list_masp = <?php echo json_encode($list_masp); ?>;
@@ -95,7 +96,7 @@
                         
                         if (list_masp && checkMaspExistence(list_masp, enteredMasp)) {
                             event.preventDefault();
-                            console.log('Mã sản phẩm đã tồn tại');
+                            alert('Mã sản phẩm đã tồn tại');
                             // Don't submit the form if the MASP already exists
                         } else {
                             // Submit the form if the MASP is valid

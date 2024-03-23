@@ -29,6 +29,12 @@
             case 'back':
                 require_once 'sanpham/back.php';
                 break;
+            case 'deleted':
+                require_once 'sanpham/deleteproducted.php';
+                break;
+            case 'thongke':
+                require_once 'hoadon,nhap,xuat/thongke.php';
+                break;    
             default:
                 require_once 'sanpham/products.php';
         }

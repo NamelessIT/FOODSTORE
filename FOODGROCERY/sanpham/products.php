@@ -123,4 +123,5 @@
 </div>
 <div style="margin: 25px ;"></div>
 <!-- nếu không phải là user thì cho phép xem -->
+<a class="btn add_product" href="index.php?page_layout=thongke" >Giao diện hóa đơn</a>
 <?php require_once 'sanpham/productshidden.php';?>

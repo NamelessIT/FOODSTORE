@@ -84,6 +84,8 @@
                 </div>
                 
                 <button name="sbm" type="submit" class="btn btn_add">SỬA</button>
+                <a  class="btn btn_back" href="index.php?page_layout=danhsach'">Quay về</a>
+
             </form>
                 <script>
                     var list_masp = <?php echo json_encode($list_masp); ?>;
@@ -106,7 +108,7 @@
                     });
 
                     function checkMaspExistence(list_masp, enteredMasp,masp) {
-                        if(masp!=enteredMasp){
+                        if(masp!==enteredMasp){
                             return list_masp.includes(enteredMasp);
                         }
                     }
