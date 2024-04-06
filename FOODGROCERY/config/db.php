@@ -6,7 +6,7 @@
     //throw $th;
     // echo "ket noi database that bai";
 // }
-    if($connect){
-        echo 'kết nối thành công';
-    }
+    // if($connect){
+    //     echo 'kết nối thành công';
+    // }
 ?>

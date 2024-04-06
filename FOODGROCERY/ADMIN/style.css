@@ -1,0 +1,472 @@
+.invisible{
+  display: none;
+}
+
+/* products.php */
+.thead_dark{
+    background-color: black;
+    color: white;
+}
+
+.container_products .products{
+    border: 1px solid  #333;
+    border-radius: 5px;
+}
+.container_products .products .products_header{
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    /* margin-bottom: 15px; */
+    text-align: center;
+    font-size: 22px;
+}
+.container_products .products .products_body{
+    background-color: white;
+    margin-top: 20px;
+}
+.container_products .products_body .table{
+    width: 100%;
+}
+.products_body tr{
+    text-align: center;
+    border: 1px solid #333;
+    display: table-row;
+    width: 100%;
+}
+.products_body tr .seperate {
+    border-bottom: 0.5px solid #ccc; /* Viền đen 1 pixel dưới mỗi ô */
+    padding: 10px; /* Thêm padding cho đẹp */
+}
+
+.products_body .image_product{
+    width: 10%;
+}
+.image_product img{
+    height: 75px;
+}
+
+.products_body .Update:hover,.products_body .Delete:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: purple;
+}
+
+
+/* thongke.css */
+input[readonly] {
+    cursor: pointer;
+    background-color: white;
+  }
+  
+  .invisible{
+      display: none !important;
+  }
+  .container {
+      display: flex;
+      height: 96vh;
+  }
+  
+  .sidebar {
+      width: 22%;
+      background: linear-gradient(to bottom right, #FFA500, #FF4500);
+  }
+  
+  .sidebar ul {
+      list-style: none;
+      padding: 0px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+      height: 100%;
+  }
+  
+  .sidebar li {
+      color: white;
+      padding: 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+      min-width: 165px;
+      border-radius: 5px;
+  }
+  
+  .sidebar li.active {
+      background: black;
+  }
+  
+  .content {
+      flex-grow: 1;
+      background: lightgray;
+      overflow: hidden;
+  }
+  
+  .sliding-effect {
+      animation: slide 0.3s;
+  }
+  
+  @keyframes slide {
+      0% {
+          transform: translateY(-100%);
+      }
+      100% {
+          transform: translateY(0);
+      }
+  }
+  .sliding-effect.slide-up {
+      animation: slide-up 0.3s;
+  }
+  
+  @keyframes slide-up {
+      0% {
+          transform: translateY(100%);
+      }
+      100% {
+          transform: translateY(0);
+      }
+  }
+  /* Logo */
+  .LOGO{
+      width: 20%;
+      position: absolute;
+  }
+  .LOGO img{
+      position: absolute;
+      width: 65%;
+      left: 28px;
+      top: 10px;
+  }
+  .content{
+    width: 77%;
+    --color-bg-gradient: rgba(11, 196, 226, 0.2);
+    background-color: rgba(255, 244, 244, 0.5);
+    height: 96%;
+    position: absolute;
+    top: 8px;
+    right: 0px;
+  }
+  
+  #QUANLYDONHANG #Find,#QUANLYDONHANG h5,#QUANLYDONHANG #FindOLD{
+      margin: 5px;
+      display: inline;
+      width: 15%;
+      border-radius: 5px;
+      padding: 3px;
+      text-transform: uppercase;
+  }
+  #CHART_SHOW .chart,#CHART_SHOWOLD .chart{
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      margin: 5px 5px;
+  }
+  #CHART_SHOW .chart:hover,#CHART_SHOWOLD .chart:hover{
+      opacity: 0.6;
+      background-color: #ccc;
+  }
+  #CHART_SHOW .chart img,#CHART_SHOWOLD .chart img,#DETAIL img{
+      width: 8%;
+      display: inline;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-left: 3px;
+      max-height: 50px;
+      max-width: 30px;
+  }
+  #CHART_SHOW .chart .ChartTsp,#CHART_SHOW .chart .ChartSL
+  ,.chart .ChartDuong,.chart .ChartDa,.chart .ChartSize,.chart .ChartTopping,
+  #CHART_SHOW .chart .ChartTien,#CHART_SHOW .chart .HUY,#CHART_SHOW .chart .HoanThanh,#CHART_SHOW .chart .ChartDIACHI{
+      text-align: center;
+      width: 11%;
+      display: inline;
+      margin: 0 2px;
+      font-size: 11px;
+  }
+  #CHART_SHOWOLD .chart .ChartTsp,#CHART_SHOWOLD .chart .ChartSL
+  ,.chart .ChartDuong,.chart .ChartDa,.chart .ChartSize,.chart .ChartTopping,
+  #CHART_SHOWOLD .chart .ChartTien,#CHART_SHOWOLD .chart .HUY,#CHART_SHOWOLD .chart .HoanThanh,#CHART_SHOWOLD .chart .ChartDIACHI{
+      text-align: center;
+      width: 20%;
+      display: inline;
+      margin: 0 2px;
+      font-size: 11px;
+  
+  }
+  #CHART_SHOW .chart .HUY,.chart .HoanThanh,#CHART_SHOWOLD .chart .HUY,.chart .HoanThanh{
+      cursor: pointer;
+      padding: 2px;
+    }
+  #CHART_SHOW .chart .HUY{
+    background-color: rgb(223, 104, 104);
+  }
+  .chart .HoanThanh{
+    background-color: rgb(84, 84, 190);
+  }
+  
+  
+  /* THỐNG KÊ ĐÔN HÀNG */
+  .THONGKEDONHANG {
+      display: flex;
+    }
+    
+    .THONGKEDONHANG .SOLUONGMUA,
+    .THONGKEDONHANG .DOANHTHU,
+    .THONGKEDONHANG .SANPHAMBANCHAY {
+      flex: 1;
+      background: var(--color-bg-gradient);
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .THONGKEDONHANG .SOLUONGMUA p,
+    .THONGKEDONHANG .DOANHTHU p,
+    .THONGKEDONHANG .SANPHAMBANCHAY p {
+      margin: 0;
+    }
+    #QUANLYDONHANG h4,
+    #QUANLYNGUOIDUNG h4,
+    #THONGKEDONHANG h4{
+      margin: 10px;
+    }
+    
+    .THONGKEDONHANG .underline {
+      width: 50%;
+      height: 2px;
+      background-color: black;
+      margin: 10px auto;
+    }
+    
+    /* Hiệu ứng chạy số */
+    @keyframes count-up {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    .THONGKEDONHANG .SOLUONGMUA #SoLuongMua,
+    .THONGKEDONHANG .DOANHTHU #SoDoanhThu {
+      font-size: 24px;
+      font-weight: bold;
+      animation: count-up 1s ease-in-out;
+    }
+    
+    /* Hiệu ứng hiển thị từng chữ cái */
+    @keyframes show-letter {
+      0% {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .THONGKEDONHANG .SANPHAMBANCHAY #TenSanPhamBanChay {
+      font-size: 24px;
+      font-weight: bold;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    
+    .THONGKEDONHANG .SANPHAMBANCHAY #TenSanPhamBanChay span {
+      animation: show-letter 0.1s linear forwards;
+      opacity: 0;
+      display: inline-block;
+    }
+    
+    .THONGKEDONHANG .SANPHAMBANCHAY #TenSanPhamBanChay span:nth-child(1) {
+      animation-delay: 0s;
+    }
+    
+    .THONGKEDONHANG .SANPHAMBANCHAY #TenSanPhamBanChay span:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+    #QUANLYNGUOIDUNG .delete-button{
+      cursor: pointer;
+      padding: 6px;
+      background-color: black;
+      color: white;
+    }
+    #QUANLYNGUOIDUNG .title_count,#QUANLYNGUOIDUNG .user_count{
+      display: inline-block;
+      margin: 2px 5px;
+    }
+    #QUANLYNGUOIDUNG .title_count{
+      margin-left: 10px;
+    }
+    #THONGKEDONHANG .Filter{
+      margin: 5px;
+      height: 37rem;
+      overflow: scroll;
+    } 
+    #start-day,#end-day{
+      border-radius: 8px;
+      margin: 2px 8px;
+    }
+    .dropdown{
+      position: relative;
+      display: inline;
+      width: 10%;
+    }
+    #TYPE{
+    }
+    .dropdown-content{
+      position: absolute;
+      top: 120%;
+      left: 2px;
+      text-align: center;
+      display: none;
+      border: 1px solid #ccc;
+      min-width: 140px;
+      box-shadow: 0 0 1px #ccc;
+    }
+    .dropdown-content li{
+      list-style-type: none;
+      margin: 5px;
+    }
+    .dropdown-content li:hover{
+      opacity: 0.5;
+      background-color: #ccc;
+      padding: 0 2px;
+    }
+    #SHOWOUT{
+      margin: 5px;
+    }
+    #SHOWOUT div:hover{
+      cursor: pointer;
+      background-color: #ccc;
+    }
+    #DETAIL{
+      min-height: 200px;
+      /* position: fixed; */
+      width: 100%;
+      border-radius: 50px;
+      z-index: 3;
+      /* overflow: scroll; */
+    }
+    #DETAIL .chart{
+      margin: 5px;
+      border-bottom: 1px solid #333;
+  
+    }
+    #DETAIL .chart img{
+      display: none;
+    }
+    #DETAIL .chart .ChartTsp,#DETAIL .chart .ChartSL
+  ,.chart .ChartDuong,.chart .ChartDa,.chart .ChartSize,.chart .ChartTopping,
+  #DETAIL .chart .ChartTien{
+    line-height: 2px;
+  }
+
+
+  /* MODAL ADD SẢN PHẨM */
+  .modal,
+.modal-admin,
+.modal-ADJUST {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.modal .modal-container,
+.modal-admin .modal-container,
+.modal-ADJUST .modal-container_ADJUST {
+  background-color: #fff;
+  width: 75%;
+  min-height: 250px;
+  border-radius: 50px;
+  position: relative;
+  border: 3px solid orange;
+  border-radius: 15px;
+}
+
+.modal .modal-container .icon,
+.modal-admin .modal-container .icon,
+.modal-ADJUST .modal-container_ADJUST .icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px;
+  font-size: 20px;
+  background-color: red;
+  border-radius: 8px;
+  color: #ccc;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.modal .modal-container .icon:hover,
+.modal-admin .modal-container .icon:hover,
+.modal-ADJUST .modal-container_ADJUST .icon:hover {
+  transform: rotate(-360deg);
+  padding: 5px;
+}
+
+.modal .modal-container .modal-body,
+.modal-admin .modal-container .modal-body,
+.modal-ADJUST .modal-container_ADJUST .modal-body_ADJUST {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.modal .modal-body .img,
+.modal-admin .modal-body .img,
+.modal-ADJUST .modal-body_ADJUST .img {
+  width: 40%;
+}
+
+.modal .modal-body .img img,
+.modal-admin .modal-body .img img,
+.modal-ADJUST .modal-body_ADJUST .img img {
+  width: 90%;
+  margin-left: 20px;
+  padding: 20% 0;
+  border-radius: 30%;
+  max-height: 460px;
+  max-width: 280px;
+}
+
+.modal-admin .modal-body .img img,
+.modal-ADJUST .modal-body_ADJUST .img img {
+  cursor: pointer;
+  border: 1px solid;
+  max-height: 460px;
+  margin: 20px 0;
+  border-radius: 20%;
+}
+
+.modal .modal-body .properties,
+.modal-admin .modal-body .properties,
+.modal-ADJUST .modal-body_ADJUST .properties {
+  width: 58%;
+}
+
+.modal-admin .properties .flex-box,
+.modal-ADJUST .properties .flex-box {
+  display: flex;
+  align-items: baseline;
+}
+
+.modal-admin .flex-box .Title,
+.modal-ADJUST .flex-box .Title {
+  min-width: 65px;
+}
+
+.modal-admin .flex-box .SoLuong,
+.modal-ADJUST .flex-box .SoLuong {
+  flex: 1;
+  text-transform: uppercase;
+}
