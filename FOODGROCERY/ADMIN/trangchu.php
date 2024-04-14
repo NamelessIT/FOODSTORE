@@ -38,7 +38,7 @@ mysqli_close($connect);
         <div class="sidebar">
             <ul>
                 <li class="QUANLYSANPHAM active">QUẢN LÝ SẢN PHẨM</li>
-                <li class="QUANLYDONHANG ">QUẢN LÝ ĐƠN HÀNG</li>
+                <li class="QUANLYDONHANG ">QUẢN LÝ HÓA ĐƠN</li>
                 <li class="QUANLYNGUOIDUNG">QUẢN LÝ NGƯỜI DÙNG</li>
                 <li class="THONGKEDONHANG">THỐNG KÊ ĐƠN HÀNG</li>
                 <li class="TROVE">TRỞ VỀ</li>
@@ -54,7 +54,9 @@ mysqli_close($connect);
         <br></br>
         <button class="Modal_Add" style="width:15%">Thêm sản phẩm</button>
         <br></br>
-        <button class="edit" style="width:15%">Sửa sản phẩm</button>
+        <button id="SHOW_DM">xem danh mục</button>
+        <br></br>
+        <button class="edit" style="width:15%" >Sửa sản phẩm</button>
         <input type="file" id="Edit_Anh" class="invisible" >
         <div id="SANPHAM" >
         </div>
@@ -64,6 +66,17 @@ mysqli_close($connect);
         <div id="SANPHAM_XOA" >
                             
         </div>
+    </div>
+
+    <!-- MODAL  DANH MỤC SẢN PHẨM -->
+    <div class="modal_dm invisible">
+        <div class="modal-container container_dm animationTransmision">
+            <button   button class="Modal_Add_dm" id="add_dm" style="width:15%; display:inline">Thêm danh mục</button>
+            <input type="text" id="add_danh_muc">
+            <div id="NOIDUNG_DANHMUC">
+            </div>
+        </div>
+
     </div>
 
 
@@ -117,6 +130,10 @@ mysqli_close($connect);
     </form>
 
     <!-- END -->
+                       
+
+
+    <!-- END -->
 
     <!-- ADJUST -->
 
@@ -166,13 +183,13 @@ mysqli_close($connect);
 
                 <!-- MODAL QUANLYDONHANG -->
     <div id="QUANLYDONHANG" class="invisible">
-        <h4>Quản lý đơn hàng</h4>
-        <h5>TÌM KIẾM ĐƠN HÀNG</h5>
+        <h4>Quản lý hóa đơn</h4>
+        <h5>TÌM KIẾM HÓA ĐƠN</h5>
         <input id="Find" type="text">
         <div id="CHART_SHOW" >
         </div>
         <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>                   
-        <h5>TÌM KIẾM ĐƠN HÀNG ĐÃ THANH TOÁN</h5>
+        <h5>TÌM KIẾM HÓA ĐƠN ĐÃ HOÀN THÀNH</h5>
         <input id="FindOLD" type="text">
         <div id="CHART_SHOWOLD" >
                             
@@ -233,6 +250,8 @@ mysqli_close($connect);
                                 }
                             </script>
         <button class="FilterAccept">LỌC</button>
+        <h5>tổng,trung bình,đếm,min,max số lượng hóa đơn trong thời gian đó</h5>
+
         <div id="SHOWOUT"></div>
         <div id="DETAIL"></div>
     </div>

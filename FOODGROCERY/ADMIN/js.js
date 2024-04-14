@@ -281,6 +281,43 @@ function update_list_masp_cthd(callback) {
         }
     });
 }
+// check mã danh mục đã tồn tại trong sản phẩm hay chưa
+let list_madm_sp=[];
+let len_madm_sp=0;
+function update_list_madm_sp(callback) {
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            list_madm_sp = responseData.list_madm_sp;
+            len_madm_sp = list_madm_sp.length;
+            callback(); // Gọi hàm callback sau khi AJAX hoàn thành
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", error);
+            // Xử lý lỗi ở đây nếu cần
+        }
+    });
+}
+let list_madm_all=[];
+let len_madm_all=0;
+function update_list_madm_all(callback) {
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            list_madm_all = responseData.list_madm_all;
+            len_madm_all = list_madm_all.length;
+            callback(); // Gọi hàm callback sau khi AJAX hoàn thành
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", error);
+            // Xử lý lỗi ở đây nếu cần
+        }
+    });
+}
 
 function check_already_masp_cthd(masp, text, column_name) {
     update_list_masp_cthd(function() {
@@ -407,7 +444,6 @@ $(document).on('click', '.Image', function() {
     var input=document.getElementById('Edit_Anh');
     input.addEventListener('change', function() {
         var imageData = document.getElementById('Edit_Anh').files[0];
-        console.log(imageData);
 
             edit_data_image(id_image, imageData, "image");
     });
@@ -419,7 +455,7 @@ function edit_data_image(id_image, imageData, column_name) {
     formData.append('id_image', id_image);
     formData.append('imageData', imageData);
     formData.append('column_name', column_name);
-
+    console.log(imageData);
     $.ajax({
         url: "quanlysp/action_sp.php",
         method: "POST",
@@ -427,7 +463,6 @@ function edit_data_image(id_image, imageData, column_name) {
         contentType: false,
         processData: false,
         success: function(data) {
-            alert('Sửa dữ liệu thành công');
             fetch_data_edit();
         }
     });
@@ -457,16 +492,25 @@ $(document).on('click','.Del_data',function(){
 
 $(document).on('click','.Del_data_hidden',function(){
     var id_xoa_hidden =$(this).data('xoa');
-    $.ajax({
-        url: "quanlysp/action_sp.php",
-        method: "POST",
-        data: { id_xoa_hidden: id_xoa_hidden},
-        success: function(response) {
-            alert('XOá dữ liệu thành công');
-            // Assuming fetch_data() is defined elsewhere
-            fetch_data();
-            fetch_data_hidden();
+    update_list_masp_cthd(function() {
+        for (let i = 0; i < len_cthd; i++) {      
+            if (list_sp_cthd[i].trim() === id_xoa_hidden.toString().trim()) {
+                alert("Mã sản phẩm đã tồn tại trong hóa đơn, không thể sửa");
+                fetch_data_edit();
+                return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
+            }
         }
+        $.ajax({
+            url: "quanlysp/action_sp.php",
+            method: "POST",
+            data: { id_xoa_hidden: id_xoa_hidden},
+            success: function(response) {
+                alert('XOá dữ liệu thành công');
+                // Assuming fetch_data() is defined elsewhere
+                fetch_data();
+                fetch_data_hidden();
+            }
+        });
     });
 })
 
@@ -491,6 +535,7 @@ $(document).on('click','.Back_hidden',function(){
         }
     });
 })
+
 
 //LOAD SẢN PHẨM
 //lấy dữ liệu từ database
@@ -527,13 +572,129 @@ function fetch_data_edit(){
         }
     });
 }
+//load danh mục
+var NOIDUNG_DANHMUC=document.getElementById('NOIDUNG_DANHMUC');
+function fetch_data_dm(){
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var output_dm = responseData.output_dm;
+            NOIDUNG_DANHMUC.innerHTML = output_dm; 
+        }
+    });
+}
+var btn_show_dm=document.getElementById('SHOW_DM');
+var modal_dm=document.querySelector('.modal_dm');
+var container_dm=document.querySelector('.container_dm');
+btn_show_dm.addEventListener('click',function(){
+    modal_dm.classList.remove('invisible');
+    fetch_data_dm();   
+})
+    // Sử dụng sự kiện mousedown thay vì click
+    document.addEventListener('mousedown', function(event){
+        // Nếu người dùng click bên ngoài container_dm và không phải là modal_dm
+        if(!container_dm.contains(event.target)) {
+            // Ẩn modal_dm
+            modal_dm.classList.add('invisible');
+        }
+    });
+// modal_dm.addEventListener('click',function(){
+//     modal_dm.classList.add('invisible');
+// })
 
-// LOAD SẢN PHẨM ĐÃ XÓA
+//thêm danh mục
+var btn_dm=document.getElementById('add_dm');
+var value_dm=document.getElementById('add_danh_muc');
+btn_dm.addEventListener('click',function(){
+    let check=0;
+    alert("có bấm");
+    var new_dm=value_dm.value.trim();
+    update_list_madm_all(function() {
+        for (let i = 0; i < len_madm_all; i++) {      
+            console.log(list_madm_all[i].tendm+" "+new_dm+" "+check);
+            if (list_madm_all[i].tendm.trim() === new_dm.trim()) {
+                $.ajax({
+                    url: "quanlysp/action_sp.php",
+                    method: "POST",
+                    data: { edit_dm: new_dm},
+                    success: function(response) {
+                        console.log("thành công");
+                        fetch_data_dm();
+                        check=-1;
+                        return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
+                    }
+                });
 
+            }
+            else if(check===len_madm_all-1){
+                $.ajax({
+                    url: "quanlysp/action_sp.php",
+                    method: "POST",
+                    data: { tendm: new_dm},
+                    success: function(response) {
+                        console.log('THÊM dữ liệu thành công');
+                        // Assuming fetch_data() is defined elsewhere
+                        fetch_data_dm();
+                        return;
+                    }
+                });
+    
+            }
+            check+=1;
+        }
+
+
+    });
+});
+
+
+
+    // xóa danh mục
+    $(document).on('click','.Del_dm',function(){
+        alert("có bấm");
+        var id_xoa_hidden =$(this).data('dm');
+        update_list_madm_sp(function() {
+            for (let i = 0; i < len_madm_sp; i++) {      
+                console.log(list_madm_sp[i].madm+" "+id_xoa_hidden);
+                if (list_madm_sp[i].madm.toString().trim() === id_xoa_hidden.toString().trim()) {
+                    $.ajax({
+                        url: "quanlysp/action_sp.php",
+                        method: "POST",
+                        data: { id_xoa_dm: id_xoa_hidden},
+                        success: function(response) {
+                            alert("thành công");
+                            fetch_data_dm();
+                            return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
+                        }
+                    });
+
+                }
+                else{
+                        $.ajax({
+                            url: "quanlysp/action_sp.php",
+                            method: "POST",
+                            data: { id_xoa_dm_notin_sp: id_xoa_hidden},
+                            success: function(response) {
+                                alert('XOá dữ liệu thành công');
+                                // Assuming fetch_data() is defined elsewhere
+                                fetch_data_dm();
+                                return;
+                            }
+                        });
+
+                }
+            }
+
+
+        });
+    })
 
 window.addEventListener('load', function() {
     fetch_data(); // Gọi hàm để tải sản phẩm khi trang được load
     fetch_data_hidden();
+    fetch_data_dm();
 });
 
 

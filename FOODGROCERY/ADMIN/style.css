@@ -367,7 +367,7 @@ input[readonly] {
   /* MODAL ADD SẢN PHẨM */
   .modal,
 .modal-admin,
-.modal-ADJUST {
+.modal-ADJUST,.modal_dm {
   position: fixed;
   bottom: 0;
   right: 0;
@@ -382,7 +382,7 @@ input[readonly] {
 
 .modal .modal-container,
 .modal-admin .modal-container,
-.modal-ADJUST .modal-container_ADJUST {
+.modal-ADJUST .modal-container_ADJUST,.modal_dm .modal-container {
   background-color: #fff;
   width: 75%;
   min-height: 250px;
@@ -390,6 +390,14 @@ input[readonly] {
   position: relative;
   border: 3px solid orange;
   border-radius: 15px;
+}
+.modal_dm .modal-container{
+  height: 200px;
+
+}
+.modal_dm .modal-container tbody{
+  overflow: hidden;
+  scroll-behavior: auto;
 }
 
 .modal .modal-container .icon,
