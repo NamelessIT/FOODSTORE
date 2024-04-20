@@ -441,17 +441,240 @@ $output_dm .='
     </table>
 ';
 
+//output thống kê 
+//tuần
+$output_thongke_tuan_SUM='';
+if(isset($_POST['option'])){
+    $option = $_POST['option'];
+    $response = array();
+    $max_value = 1;
+    for ($week = 1; $week <= 4; $week++) {
+        $sql = "SELECT SUM(tongtien) AS total FROM hoadon WHERE ROUND(WEEK(ngay, 3)/4-1,0) = $week AND MONTH(ngay) = $option";
+        $result = mysqli_query($connect, $sql);
+        $row = mysqli_fetch_array($result);
+        $response["week_$week"] = $row['total'] ?? 0;
+        $max_value = max($max_value, $response["week_$week"]);
+    }
+    $output_thongke_tuan_SUM .= '<div class="chart-layout">';
+    foreach ($response as $key => $value) {
+        $output_thongke_tuan_SUM .= '
+            <div class="chart_layout_item" style="--percent:' . ($value / $max_value * 100) . '%;align-self:flex-end;width:60px;color:#333;text-align:center;height:var(--percent);background-color:#EF5122">' . $value . '</div>
+        ';
+    }
+
+    $output_thongke_tuan_SUM .= '</div>'; // Đóng thẻ div.chart-layout
+}
+
+$output_thongke_tuan_AVERAGE='';
+if(isset($_POST['option'])){
+    $option = $_POST['option'];
+    $response = array();
+    $max_value = 1;
+    for ($week = 1; $week <= 4; $week++) {
+        $sql = "SELECT ROUND(AVG(tongtien),2) AS total FROM hoadon WHERE ROUND(WEEK(ngay, 3)/4-1,0) = $week AND MONTH(ngay) = $option";
+        $result = mysqli_query($connect, $sql);
+        $row = mysqli_fetch_array($result);
+        $response["week_$week"] = $row['total'] ?? 0;
+        $max_value = max($max_value, $response["week_$week"]);
+    }
+    $output_thongke_tuan_AVERAGE .= '<div class="chart-layout">';
+    foreach ($response as $key => $value) {
+        $output_thongke_tuan_AVERAGE .= '
+            <div class="chart_layout_item" style="--percent:' . ($value / $max_value * 100) . '%;align-self:flex-end;width:60px;color:#333;text-align:center;height:var(--percent);background-color:#EF5122">' . $value . '</div>
+        ';
+    }
+
+    $output_thongke_tuan_AVERAGE .= '</div>'; // Đóng thẻ div.chart-layout
+}
+
+$output_thongke_tuan_COUNT='';
+if(isset($_POST['option'])){
+    $option = $_POST['option'];
+    $response = array();
+    $max_value = 1;
+    for ($week = 1; $week <= 4; $week++) {
+        $sql = "SELECT COUNT(*) AS total FROM hoadon WHERE ROUND(WEEK(ngay, 3)/4-1,0) = $week AND MONTH(ngay) = $option";
+        $result = mysqli_query($connect, $sql);
+        $row = mysqli_fetch_array($result);
+        $response["week_$week"] = $row['total'] ?? 0;
+        $max_value = max($max_value, $response["week_$week"]);
+    }
+    $output_thongke_tuan_COUNT .= '<div class="chart-layout">';
+    foreach ($response as $key => $value) {
+        $output_thongke_tuan_COUNT .= '
+            <div class="chart_layout_item" style="--percent:' . ($value / $max_value * 100) . '%;align-self:flex-end;width:60px;color:#333;text-align:center;height:var(--percent);background-color:#EF5122">' . $value . '</div>
+        ';
+    }
+
+    $output_thongke_tuan_COUNT .= '</div>'; // Đóng thẻ div.chart-layout
+}
+
+$output_thongke_tuan_MAX='';
+if(isset($_POST['option'])){
+    $option = $_POST['option'];
+    $response = array();
+    $max_value = 1;
+    for ($week = 1; $week <= 4; $week++) {
+        $sql = "SELECT MAX(tongtien) AS total FROM hoadon WHERE ROUND(WEEK(ngay, 3)/4-1,0) = $week AND MONTH(ngay) = $option";
+        $result = mysqli_query($connect, $sql);
+        $row = mysqli_fetch_array($result);
+        $response["week_$week"] = $row['total'] ?? 0;
+        $max_value = max($max_value, $response["week_$week"]);
+    }
+    $output_thongke_tuan_MAX .= '<div class="chart-layout">';
+    foreach ($response as $key => $value) {
+        $output_thongke_tuan_MAX .= '
+            <div class="chart_layout_item" style="--percent:' . ($value / $max_value * 100) . '%;align-self:flex-end;width:60px;color:#333;text-align:center;height:var(--percent);background-color:#EF5122">' . $value . '</div>
+        ';
+    }
+
+    $output_thongke_tuan_MAX .= '</div>'; // Đóng thẻ div.chart-layout
+}
+
+$output_thongke_tuan_MIN='';
+if(isset($_POST['option'])){
+    $option = $_POST['option'];
+    $response = array();
+    $max_value = 1;
+    for ($week = 1; $week <= 4; $week++) {
+        $sql = "SELECT MIN(tongtien) AS total FROM hoadon WHERE ROUND(WEEK(ngay, 3)/4-1,0) = $week AND MONTH(ngay) = $option";
+        $result = mysqli_query($connect, $sql);
+        $row = mysqli_fetch_array($result);
+        $response["week_$week"] = $row['total'] ?? 0;
+        $max_value = max($max_value, $response["week_$week"]);
+    }
+    $output_thongke_tuan_MIN .= '<div class="chart-layout">';
+    foreach ($response as $key => $value) {
+        $output_thongke_tuan_MIN .= '
+            <div class="chart_layout_item" style="--percent:' . ($value / $max_value * 100) . '%;align-self:flex-end;width:60px;color:#333;text-align:center;height:var(--percent);background-color:#EF5122">' . $value . '</div>
+        ';
+    }
+
+    $output_thongke_tuan_MIN .= '</div>'; // Đóng thẻ div.chart-layout
+}
+//NĂM
+$output_thongke_year_SUM='';
+    $response = array();
+    $max_value = 1;
+    for ($month = 1; $month <= 12; $month++) {
+        $sql = "SELECT SUM(tongtien) AS total FROM hoadon WHERE  MONTH(ngay) = $month";
+        $result = mysqli_query($connect, $sql);
+        $row = mysqli_fetch_array($result);
+        $response["month_$month"] = $row['total'] ?? 0;
+        $max_value = max($max_value, $response["month_$month"]);
+    }
+    $output_thongke_year_SUM .= '<div class="chart-layout">';
+    foreach ($response as $key => $value) {
+        $output_thongke_year_SUM .= '
+            <div class="chart_layout_item" style="--percent:' . ($value / $max_value * 100) . '%;align-self:flex-end;width:60px;color:#333;text-align:center;height:var(--percent);background-color:#EF5122">' . $value . '</div>
+        ';
+    }
+
+    $output_thongke_year_SUM .= '</div>'; // Đóng thẻ div.chart-layout
 
 
-// echo $output1;
-echo json_encode(array("output" => $output, 
-                "output1" => $output1,
-                "list_masp" => $list_masp,
-                "list_madm"=>$list_madm,
-                "list_madm_all"=>$list_madm_all,
-                "list_madm_sp"=>$list_madm_sp,
-                "list_masp_hoadon"=>$list_masp_hoadon,
-                "output_hidden" => $output_hidden,
-                "output_dm" => $output_dm
-            ));
+
+    $output_thongke_year_AVG='';
+    $response = array();
+    $max_value = 1;
+    for ($month = 1; $month <= 12; $month++) {
+        $sql = "SELECT ROUND(AVG(tongtien),2) AS total FROM hoadon WHERE  MONTH(ngay) = $month";
+        $result = mysqli_query($connect, $sql);
+        $row = mysqli_fetch_array($result);
+        $response["month_$month"] = $row['total'] ?? 0;
+        $max_value = max($max_value, $response["month_$month"]);
+    }
+    $output_thongke_year_AVG .= '<div class="chart-layout">';
+    foreach ($response as $key => $value) {
+        $output_thongke_year_AVG .= '
+            <div class="chart_layout_item" style="--percent:' . ($value / $max_value * 100) . '%;align-self:flex-end;width:60px;color:#333;text-align:center;height:var(--percent);background-color:#EF5122">' . $value . '</div>
+        ';
+    }
+
+    $output_thongke_year_AVG .= '</div>'; // Đóng thẻ div.chart-layout
+
+    $output_thongke_year_COUNT='';
+    $response = array();
+    $max_value = 1;
+    for ($month = 1; $month <= 12; $month++) {
+        $sql = "SELECT COUNT(*) AS total FROM hoadon WHERE  MONTH(ngay) = $month";
+        $result = mysqli_query($connect, $sql);
+        $row = mysqli_fetch_array($result);
+        $response["month_$month"] = $row['total'] ?? 0;
+        $max_value = max($max_value, $response["month_$month"]);
+    }
+    $output_thongke_year_COUNT .= '<div class="chart-layout">';
+    foreach ($response as $key => $value) {
+        $output_thongke_year_COUNT .= '
+            <div class="chart_layout_item" style="--percent:' . ($value / $max_value * 100) . '%;align-self:flex-end;width:60px;color:#333;text-align:center;height:var(--percent);background-color:#EF5122">' . $value . '</div>
+        ';
+    }
+
+    $output_thongke_year_COUNT .= '</div>'; // Đóng thẻ div.chart-layout
+
+
+    $output_thongke_year_MAX='';
+    $response = array();
+    $max_value = 1;
+    for ($month = 1; $month <= 12; $month++) {
+        $sql = "SELECT MAX(tongtien) AS total FROM hoadon WHERE  MONTH(ngay) = $month";
+        $result = mysqli_query($connect, $sql);
+        $row = mysqli_fetch_array($result);
+        $response["month_$month"] = $row['total'] ?? 0;
+        $max_value = max($max_value, $response["month_$month"]);
+    }
+    $output_thongke_year_MAX .= '<div class="chart-layout">';
+    foreach ($response as $key => $value) {
+        $output_thongke_year_MAX .= '
+            <div class="chart_layout_item" style="--percent:' . ($value / $max_value * 100) . '%;align-self:flex-end;width:60px;color:#333;text-align:center;height:var(--percent);background-color:#EF5122">' . $value . '</div>
+        ';
+    }
+
+    $output_thongke_year_MAX .= '</div>'; // Đóng thẻ div.chart-layout
+
+
+    $output_thongke_year_MIN='';
+    $response = array();
+    $max_value = 1;
+    for ($month = 1; $month <= 12; $month++) {
+        $sql = "SELECT MIN(tongtien) AS total FROM hoadon WHERE  MONTH(ngay) = $month";
+        $result = mysqli_query($connect, $sql);
+        $row = mysqli_fetch_array($result);
+        $response["month_$month"] = $row['total'] ?? 0;
+        $max_value = max($max_value, $response["month_$month"]);
+    }
+    $output_thongke_year_MIN .= '<div class="chart-layout">';
+    foreach ($response as $key => $value) {
+        $output_thongke_year_MIN .= '
+            <div class="chart_layout_item" style="--percent:' . ($value / $max_value * 100) . '%;align-self:flex-end;width:60px;color:#333;text-align:center;height:var(--percent);background-color:#EF5122">' . $value . '</div>
+        ';
+    }
+
+    $output_thongke_year_MIN .= '</div>'; // Đóng thẻ div.chart-layout
+
+// echo $output;
+
+$response_array = array(
+    "output" => $output,
+    "output1" => $output1,
+    "list_masp" => $list_masp,
+    "list_madm" => $list_madm,
+    "list_madm_all" => $list_madm_all,
+    "list_madm_sp" => $list_madm_sp,
+    "list_masp_hoadon" => $list_masp_hoadon,
+    "output_hidden" => $output_hidden,
+    "output_dm" => $output_dm,
+    "output_thongke_tuan_SUM"=>$output_thongke_tuan_SUM,
+    "output_thongke_tuan_AVERAGE"=>$output_thongke_tuan_AVERAGE,
+    "output_thongke_tuan_COUNT"=>$output_thongke_tuan_COUNT,
+    "output_thongke_tuan_MAX"=>$output_thongke_tuan_MAX,
+    "output_thongke_tuan_MIN"=>$output_thongke_tuan_MIN,
+    "output_thongke_year_SUM"=>$output_thongke_year_SUM,
+    "output_thongke_year_AVG"=>$output_thongke_year_AVG,
+    "output_thongke_year_COUNT"=>$output_thongke_year_COUNT,
+    "output_thongke_year_MAX"=>$output_thongke_year_MAX,
+    "output_thongke_year_MIN"=>$output_thongke_year_MIN
+);
+// Trả về dữ liệu dưới dạng JSON
+echo json_encode($response_array);
 ?>

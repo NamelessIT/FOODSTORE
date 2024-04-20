@@ -220,39 +220,60 @@ mysqli_close($connect);
               </div>
         </div>
     <div class="Filter">
-        <input id="start-day" type="date">
-        <input id="end-day" type="date">
-        <div class="dropdown">
-            <input id="TYPE" class="SoLuong" type="text" readonly  required>
-                            <div class="dropdown-content">
+        <!-- <input id="start-day" type="date">
+        <input id="end-day" type="date"> -->
+        <div class="dropdown THONGKE">
+            <input id="TYPE_THONGKE" class="SoLuong" type="text"  readonly  required>
+                            <div class="dropdown-content-THONGKE invisible" >
                                 <li onclick="selectOption('TẤT CẢ')">TẤT CẢ</li>
-                                <li onclick="selectOption('BÁNH')">BÁNH</li>
-                                <li onclick="selectOption('TRÀ')">TRÀ</li>
-                                <li onclick="selectOption('TRÀ SỮA')">TRÀ SỮA</li>
-                                <li onclick="selectOption('NƯỚC ÉP')">NƯỚC ÉP</li>
-                                <li onclick="selectOption('TOPPING')">TOPPING</li>
+                                <li onclick="selectOption('TỔNG')">TỔNG</li>
+                                <li onclick="selectOption('TRUNG BÌNH')">TRUNG BÌNH</li>
+                                <li onclick="selectOption('SỐ LƯỢNG')">SỐ LƯỢNG</li>
+                                <li onclick="selectOption('MIN')">MIN</li>
+                                <li onclick="selectOption('MAX')">MAX</li>
                             </div>
         </div>
-                            <script>
-                                const LOC=document.getElementById('TYPE');
-                                const menu=document.querySelector('.dropdown-content');
-                                const outside=document.querySelector('.dropdown');
-                                LOC.addEventListener('click',function(event){
-                                    menu.style.display='block';
-                                    event.stopPropagation();
-                                })
-                                outside.addEventListener('click',function(){
-                                    menu.style.display='none';
-                                })
-
-                                function selectOption(option) {
-                                    document.getElementById("TYPE").value = option;
-                                }
-                            </script>
         <button class="FilterAccept">LỌC</button>
         <h5>tổng,trung bình,đếm,min,max số lượng hóa đơn trong thời gian đó</h5>
+        <input type="checkbox" id="week" >
+        <h5 style="display:inline;">tuần</h5>
+        <input type="checkbox" id="month">
+        <h5 style="display:inline;">tháng</h5>
+        <div class="dropdown MONTH">
+        <h5 class="text_month invisible">Chọn tháng</h5>
+        <input type="text" id="month_for_week" class="invisible" style="display: block;text-align:center;" readonly  required >
+        <div class="dropdown-content-MONTH invisible" >
+                                <li onclick="selectOption_MONTH('1')">1</li>
+                                <li onclick="selectOption_MONTH('2')">2</li>
+                                <li onclick="selectOption_MONTH('3')">3</li>
+                                <li onclick="selectOption_MONTH('4')">4</li>
+                                <li onclick="selectOption_MONTH('5')">5</li>
+                                <li onclick="selectOption_MONTH('6')">6</li>
+                                <li onclick="selectOption_MONTH('7')">7</li>
+                                <li onclick="selectOption_MONTH('8')">8</li>
+                                <li onclick="selectOption_MONTH('9')">9</li>
+                                <li onclick="selectOption_MONTH('10')">10</li>
+                                <li onclick="selectOption_MONTH('11')">11</li>
+                                <li onclick="selectOption_MONTH('12')">12</li>
+                            </div>
+        </div>
+        <div id="SHOWOUT">
+            <div id="SUM">
 
-        <div id="SHOWOUT"></div>
+            </div>
+            <div id="AVG">
+
+            </div>
+            <div id="COUNT">
+
+            </div>
+            <div id="MAX">
+
+            </div>
+            <div id="MIN">
+
+            </div>
+        </div>
         <div id="DETAIL"></div>
     </div>
     </div>

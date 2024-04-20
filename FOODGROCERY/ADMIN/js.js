@@ -691,7 +691,323 @@ btn_dm.addEventListener('click',function(){
         });
     })
 
+
+// THỐNG KÊ
+const LOC_THONGKE=document.getElementById('TYPE_THONGKE');
+const menu_THONGKE=document.querySelector('.dropdown-content-THONGKE');
+const outside_THONGKE=document.querySelector('.THONGKE');
+
+const weekCheckbox = document.getElementById('week');
+const monthCheckbox = document.getElementById('month');
+const textcheckbox=document.querySelector('.text_month');
+const month_for_week=document.getElementById('month_for_week');
+const bieudo_tuan_sum=document.getElementById('SUM');
+const bieudo_tuan_avg=document.getElementById('AVG');
+const bieudo_tuan_count=document.getElementById('COUNT');
+const bieudo_tuan_max=document.getElementById('MAX');
+const bieudo_tuan_min=document.getElementById('MIN');
+
+const LOC_MONTH=document.getElementById('month_for_week');
+const monthDropdown = document.querySelector('.MONTH');
+const menu_MONTH=document.querySelector('.dropdown-content-MONTH');
+
+
+LOC_THONGKE.addEventListener('click',function(event){
+    menu_THONGKE.classList.remove('invisible');
+    event.stopPropagation();
+})
+outside_THONGKE.addEventListener('click',function(){
+    menu_THONGKE.classList.add('invisible');
+})
+
+function selectOption(option) {
+    document.getElementById("TYPE_THONGKE").value = option;
+    console.log(option);
+    clearElement();
+    var option2=document.getElementById("month_for_week").value;
+    if(option2){
+        if(option==="TẤT CẢ"){
+            fetch_data_month_SUM(option2);
+            fetch_data_month_AVERAGE(option2);
+            fetch_data_month_COUNT(option2);
+            fetch_data_month_MAX(option2);
+            fetch_data_month_MIN(option2);
+        }
+        else if(option==="TỔNG"){
+            fetch_data_month_SUM(option2);
+        }
+        else if(option==="TRUNG BÌNH"){
+            fetch_data_month_AVERAGE(option2);
+        }
+        else if(option==="SỐ LƯỢNG"){
+            fetch_data_month_COUNT(option2);
+        }
+        else if(option==="MIN"){
+            fetch_data_month_MIN(option2);   
+        }
+        else if(option==="MAX"){
+            fetch_data_month_MAX(option2);   
+        }
+    }
+    else if(monthCheckbox.checked===true){
+        if(option==="TẤT CẢ"){
+            fetch_data_year_SUM();
+            fetch_data_year_AVG();
+            fetch_data_year_COUNT();
+            fetch_data_year_MAX();
+            fetch_data_year_MIN();
+        }
+        else if(option==="TỔNG"){
+            fetch_data_year_SUM();
+
+        }
+        else if(option==="TRUNG BÌNH"){
+            fetch_data_year_AVG();
+        }
+        else if(option==="SỐ LƯỢNG"){
+            fetch_data_year_COUNT();
+        }
+        else if(option==="MIN"){
+            fetch_data_year_MIN();
+        }
+        else if(option==="MAX"){
+            fetch_data_year_MAX();
+        }
+    }
+}
+
+
+//checkbox
+
+weekCheckbox.addEventListener('click', function() {
+    if (weekCheckbox.checked) {
+        clearElement();
+        monthCheckbox.checked = false;
+        month_for_week.classList.remove('invisible');
+        textcheckbox.classList.remove('invisible');
+    }
+    else{
+        weekCheckbox.checked=true;
+    }
+});
+monthCheckbox.addEventListener('click', function() {
+    if (monthCheckbox.checked) {
+        clearElement();
+        weekCheckbox.checked = false;
+        month_for_week.classList.add('invisible');
+        month_for_week.value='';
+        textcheckbox.classList.add('invisible');
+    }
+    else{
+        monthCheckbox.checked=true;
+    }
+    if(LOC_THONGKE.value==="TẤT CẢ"){
+        fetch_data_year_SUM();
+        fetch_data_year_AVG();
+        fetch_data_year_COUNT();
+        fetch_data_year_MAX();
+        fetch_data_year_MIN();
+    }
+    else if(LOC_THONGKE.value==="TỔNG"){
+        fetch_data_year_SUM();
+    }
+    else if(LOC_THONGKE.value==="TRUNG BÌNH"){
+        fetch_data_year_AVG();
+    }
+    else if(LOC_THONGKE.value==="SỐ LƯỢNG"){
+        fetch_data_year_COUNT();
+    }
+    else if(LOC_THONGKE.value==="MAX"){
+        fetch_data_year_MAX();
+    }
+    else if(LOC_THONGKE.value==="MIN"){
+        fetch_data_year_MIN();
+    }
+});
+
+
+
+LOC_MONTH.addEventListener('click',function(event){
+    menu_MONTH.classList.remove('invisible');
+    event.stopPropagation();
+})
+document.addEventListener('click',function(event){
+    if (!monthDropdown.contains(event.target)) {
+        // Thêm lớp invisible vào dropdown-content-MONTH
+        menu_MONTH.classList.add('invisible');
+    }
+})
+
+function selectOption_MONTH(option) {
+    document.getElementById("month_for_week").value = option;
+    console.log(option);
+    clearElement();
+    if(document.getElementById("TYPE_THONGKE").value=="TẤT CẢ"){
+            fetch_data_month_SUM(option);
+            fetch_data_month_AVERAGE(option);
+            fetch_data_month_COUNT(option);
+            fetch_data_month_MAX(option);
+            fetch_data_month_MIN(option);
+    }
+    else if(document.getElementById("TYPE_THONGKE").value==="TỔNG"){
+        fetch_data_month_SUM(option);
+    }
+    else if(document.getElementById("TYPE_THONGKE").value==="TRUNG BÌNH"){
+        fetch_data_month_AVERAGE(option);
+    }
+    else if(document.getElementById("TYPE_THONGKE").value==="SỐ LƯỢNG"){
+        fetch_data_month_COUNT(option);
+    }
+    else if(document.getElementById("TYPE_THONGKE").value==="MAX"){
+        fetch_data_month_MAX(option);
+    }
+    else if(document.getElementById("TYPE_THONGKE").value==="MIN"){
+        fetch_data_month_MIN(option);
+    }
+    // thêm if vào
+}
+function clearElement() {
+    bieudo_tuan_sum.innerHTML='';
+    bieudo_tuan_avg.innerHTML='';
+    bieudo_tuan_count.innerHTML='';
+    bieudo_tuan_max.innerHTML='';
+    bieudo_tuan_min.innerHTML='';
+}
+
+function fetch_data_month_SUM(option){
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        data: { option: option},
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var output_thongke_tuan_SUM = responseData.output_thongke_tuan_SUM;
+            bieudo_tuan_sum.innerHTML = output_thongke_tuan_SUM; 
+            alert('đã tạo output thống kế tuần SUM thành công');
+        }
+    });
+}
+function fetch_data_month_AVERAGE(option){
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        data: { option: option},
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var output_thongke_tuan_AVERAGE = responseData.output_thongke_tuan_AVERAGE;
+            bieudo_tuan_avg.innerHTML = output_thongke_tuan_AVERAGE; 
+            alert('đã tạo output thống kế tuần AVG thành công');
+        }
+    });
+}
+function fetch_data_month_COUNT(option){
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        data: { option: option},
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var output_thongke_tuan_COUNT = responseData.output_thongke_tuan_COUNT;
+            bieudo_tuan_count.innerHTML = output_thongke_tuan_COUNT; 
+            alert('đã tạo output thống kế tuần COUNT thành công');
+        }
+    });
+}
+function fetch_data_month_MAX(option){
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        data: { option: option},
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var output_thongke_tuan_MAX = responseData.output_thongke_tuan_MAX;
+            bieudo_tuan_max.innerHTML = output_thongke_tuan_MAX; 
+            alert('đã tạo output thống kế tuần MAX thành công');
+        }
+    });
+}
+function fetch_data_month_MIN(option){
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        data: { option: option},
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var output_thongke_tuan_MIN = responseData.output_thongke_tuan_MIN;
+            bieudo_tuan_min.innerHTML = output_thongke_tuan_MIN; 
+            alert('đã tạo output thống kế tuần MIN thành công');
+        }
+    });
+}
+function fetch_data_year_SUM(){
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var output_thongke_year_SUM = responseData.output_thongke_year_SUM;
+            bieudo_tuan_sum.innerHTML = output_thongke_year_SUM; 
+            alert('đã tạo output thống kế YEAR SUM thành công');
+        }
+    });
+}
+
+function fetch_data_year_AVG(){
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var output_thongke_year_SUM = responseData.output_thongke_year_AVG;
+            bieudo_tuan_avg.innerHTML = output_thongke_year_SUM; 
+            alert('đã tạo output thống kế YEAR AVG thành công');
+        }
+    });
+}
+
+function fetch_data_year_COUNT(){
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var output_thongke_year_SUM = responseData.output_thongke_year_COUNT;
+            bieudo_tuan_count.innerHTML = output_thongke_year_SUM; 
+            alert('đã tạo output thống kế YEAR COUNT thành công');
+        }
+    });
+}
+
+function fetch_data_year_MAX(){
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var output_thongke_year_SUM = responseData.output_thongke_year_MAX;
+            bieudo_tuan_max.innerHTML = output_thongke_year_SUM; 
+            alert('đã tạo output thống kế YEAR MAX thành công');
+        }
+    });
+}
+
+function fetch_data_year_MIN(){
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var output_thongke_year_SUM = responseData.output_thongke_year_MIN;
+            bieudo_tuan_min.innerHTML = output_thongke_year_SUM; 
+            alert('đã tạo output thống kế YEAR MIN thành công');
+        }
+    });
+}
+
+
 window.addEventListener('load', function() {
+    selectOption('TẤT CẢ');
+    weekCheckbox.click();
     fetch_data(); // Gọi hàm để tải sản phẩm khi trang được load
     fetch_data_hidden();
     fetch_data_dm();
