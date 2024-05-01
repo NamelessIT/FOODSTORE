@@ -66,7 +66,7 @@ input[readonly] {
   }
   
   .sidebar {
-      width: 22%;
+      width: 19%;
       background: linear-gradient(to bottom right, #FFA500, #FF4500);
   }
   
@@ -135,13 +135,13 @@ input[readonly] {
       top: 10px;
   }
   .content{
-    width: 77%;
+    width: 79%;
     --color-bg-gradient: rgba(11, 196, 226, 0.2);
     background-color: rgba(255, 244, 244, 0.5);
     height: 96%;
     position: absolute;
     top: 8px;
-    right: 0px;
+    right: 1%;
   }
   
   #QUANLYDONHANG #Find,#QUANLYDONHANG h5,#QUANLYDONHANG #FindOLD{
@@ -313,8 +313,11 @@ input[readonly] {
       display: inline;
       width: 10%;
     }
-    #TYPE{
-    }
+
+    /* #TYPE{
+
+    } */
+
     .dropdown-content,.dropdown-content-THONGKE,.dropdown-content-THONGKE-danhmuc{
       position: absolute;
       top: 120%;
@@ -488,6 +491,18 @@ input[readonly] {
   text-transform: uppercase;
 }
 
+.modal_dm .Modal_Add_dm {
+  overflow: hidden;
+  margin-left: 1px;
+  margin-top: 1px;
+  height: 20px;
+  border-radius: 13px 0 0 0;
+}
+
+.modal_dm .add_danh_muc {
+  height: 15px;
+}
+
 /* thống kê */
 .chart-layout{
   margin: 36px auto 0 auto;
@@ -510,4 +525,39 @@ input[readonly] {
     height: calc(var(--percent));
   }
   
+}
+
+/* css của các trang chức năng quản lý */
+.search_cover {
+  display: flex;
+}
+
+.input_seacrh {
+  margin-left: 10px;
+}
+
+.Title_ChucNang {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1%;
+}
+
+
+.Title_ChucNang label {
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.Cover_sepherate_line .sepherate_line {
+  position: relative;
+  height: 5px;
+  width: 40vw;
+  background-color: #333;
+  border-radius: 30px;
+}
+
+.Cover_sepherate_line {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2vh;
 }
