@@ -36,7 +36,7 @@ mysqli_close($connect);
 
     <div class="container">
         <div class="sidebar">
-            <ul style="padding-left: 2vw;">
+            <ul>
                 <li class="QUANLYSANPHAM active">QUẢN LÝ SẢN PHẨM</li>
                 <li class="QUANLYDONHANG ">QUẢN LÝ HÓA ĐƠN</li>
                 <li class="QUANLYNGUOIDUNG">QUẢN LÝ NGƯỜI DÙNG</li>
@@ -47,18 +47,11 @@ mysqli_close($connect);
         </div>
         <div class="content">
             <!-- Nội dung của trang -->
-    <!--MODAL QUẢN LÝ SẢN PHẨM  -->
+                <!--MODAL QUẢN LÝ SẢN PHẨM  -->
     <div id="QUANLYSANPHAM" class="invisible">
-        <div class="Title_ChucNang">
-            <label>Quản Lý Sản Phẩm</label>
-        </div>
-        <div class="Cover_sepherate_line">
-            <div class="sepherate_line"></div>
-        </div>
-        <div class="search_cover">
-            <label>Tìm Kiếm</label>
-            <input id="Find_SANPHAM" type="text" class="input_seacrh">
-        </div>
+        <h4>Quản lý sản phẩm</h4>
+        <h5>TÌM KIẾM</h5>
+        <input id="Find_SANPHAM" type="text">
         <br></br>
         <button class="Modal_Add" style="width:15%">Thêm sản phẩm</button>
         <br></br>
@@ -88,7 +81,7 @@ mysqli_close($connect);
     </div>
 
 
-    <!-- MODAL FOR ADD SẢN PHẨM -->
+        <!-- MODAL FOR ADD SẢN PHẨM -->
     <form method="POST" id="THEM_SAN_PHAM">
         <div class="modal-admin invisible">
             <div class="modal-container animationTransmision">
@@ -101,11 +94,6 @@ mysqli_close($connect);
                     <img id="preview" src="" title="Nhấn để thêm ảnh">
                 </div>
                     <div class="properties">
-                        <div class="flex-box">
-                            <h4 class="Title Masp" style="margin: 8px 5px;">Mã Sản Phẩm </h4>
-                            <input id="MaSanPham" class="SoLuong" type="text" required
-                                placeholder="#0000">
-                        </div>
                         <div class="flex-box">
                             <h4 class="Title Tensp" style="margin: 8px 5px;">Tên Sản Phẩm </h4>
                             <input id="TenSanPham" class="SoLuong" type="text" required
@@ -144,6 +132,7 @@ mysqli_close($connect);
     <!-- END -->
 
     <!-- ADJUST -->
+
     <div class="modal-ADJUST invisible">
         <div class="modal-container_ADJUST animationTransmision">
             <div class="fa fa-times icon close">
@@ -188,14 +177,9 @@ mysqli_close($connect);
 
     <!-- KẾT THÚC -->
 
-    <!-- MODAL QUANLYDONHANG -->
+                <!-- MODAL QUANLYDONHANG -->
     <div id="QUANLYDONHANG" class="invisible">
-        <div class="Title_ChucNang">
-            <label>Quản Lý Hóa Đơn</label>
-        </div>
-        <div class="Cover_sepherate_line">
-            <div class="sepherate_line"></div>
-        </div>
+        <h4>Quản lý hóa đơn</h4>
         <h5>TÌM KIẾM HÓA ĐƠN</h5>
         <input id="Find" type="text">
         <div id="CHART_SHOW" >
@@ -209,96 +193,29 @@ mysqli_close($connect);
     </div>
     <!-- MODAL QUANLYNGUOIDUNG -->
     <div id="QUANLYNGUOIDUNG" class="invisible">
-        <div class="Title_ChucNang">
-            <label>Quản Lý Người Dùng</label>
-        </div>
-        <div class="Cover_sepherate_line">
-            <div class="sepherate_line"></div>
-        </div>
-        <div class="search_cover">
-            <label>Tìm Kiếm</label>
-            <input id="Find_NGUOIDUNG" type="text" class="input_seacrh">
-        </div>
+        <h4>Quản lý người dùng</h4>
         <h5 class="title_count">SỐ LƯỢNG NGƯỜI DÙNG:</h5>
         <h5 class="user_count"></h5>
         <div id="USER_SHOW"></div>
     </div>
 
-        <!-- Modal phiếu nhâp -->
+        <!-- model phiếu nhâp -->
         <div id="QUANLYPHIEUNHAP" class="invisible">
-        <div class="Title_ChucNang">
-            <label>Quản Lý Phiếu Nhập</label>
-        </div>
-        <div class="Cover_sepherate_line">
-            <div class="sepherate_line"></div>
-        </div>
-        <div class="search_cover">
-            <label>Tìm Kiếm</label>
-            <input id="Find_PN" type="text" class="input_seacrh">
-        </div>
+        <h4>Quản lý phiếu nhập</h4>
+        <h5>TÌM KIẾM</h5>
+        <input id="Find_PN" type="text">
         <br></br>
-        <button class="Modal_Add ADD-PN" style="width:15%; margin-bottom:1vh">Thêm phiếu nhập</button>
+        <button class="Modal_Add ADD-PN" style="width:15%">Thêm phiếu nhập</button>
         <!-- <br></br>
         <button id="SHOW_DM">xem danh mục</button>
         <br></br> -->
         <div id="PHIEUNHAP" >
-
-        <!-- Bảng cho phiếu nhập -->
-        <table style="width: 100%;border-collapse: collapse;">
-        <thead>
-            <tr>
-                <th style=" border: 1px solid black;padding: 8px;background-color: #f2f2f2;">Mã phiếu nhập</th>
-                <th style=" border: 1px solid black;padding: 8px;background-color: #f2f2f2;">Tổng tiền</th>
-                <th style=" border: 1px solid black;padding: 8px;background-color: #f2f2f2;">Ngày nhập</th>
-                <th style=" border: 1px solid black;padding: 8px;background-color: #f2f2f2;">Chi tiết</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style=" text-align: center;border: 1px solid black;padding: 8px;">P001</td>
-                <td style=" text-align: center;border: 1px solid black;padding: 8px;">1000000</td>
-                <td style=" text-align: center;border: 1px solid black;padding: 8px;">2024-04-01</td>
-                <td style=" text-align: center;border: 1px solid black;padding: 8px;"><button>Xem</button></td>
-            </tr>
-        </tbody>
-        </table>
-
-        <br></br>
-        <!-- Bảng cho sản phẩm -->
-        <table style="width: 100%;border-collapse: collapse">
-        <thead>
-            <tr>
-                <th style="background-color: #f2f2f2; border: 1px solid black; padding: 8px;">Mã sản phẩm</th>
-                <th style="background-color: #f2f2f2; border: 1px solid black; padding: 8px;">Tên sản phẩm</th>
-                <th style="background-color: #f2f2f2; border: 1px solid black; padding: 8px;">Ảnh</th>
-                <th style="background-color: #f2f2f2; border: 1px solid black; padding: 8px;">Đơn giá</th>
-                <th style="background-color: #f2f2f2; border: 1px solid black; padding: 8px;">Mã danh mục</th>
-                <th style="background-color: #f2f2f2; border: 1px solid black; padding: 8px;">Mô tả</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style=" text-align: center;border: 1px solid black;padding: 8px;">SP001</td>
-                <td style=" text-align: center;border: 1px solid black;padding: 8px;">Sản phẩm 1</td>
-                <td style=" text-align: center;border: 1px solid black;padding: 8px;"><img src="#" alt="Ảnh sản phẩm 1"></td>
-                <td style=" text-align: center;border: 1px solid black;padding: 8px;">1000000</td>
-                <td style=" text-align: center;border: 1px solid black;padding: 8px;">DM001</td>
-                <td style=" text-align: center;border: 1px solid black;padding: 8px;">Mô tả sản phẩm 1</td>
-            </tr>
-        </tbody>
-    </table>
-
         </div>
     </div>     
 
     <!-- MODAL THONGKEDONHANG -->
     <div id="THONGKEDONHANG" class="invisible">
-        <div class="Title_ChucNang">
-            <label>Thống Kê Đơn Hàng</label>
-        </div>
-        <div class="Cover_sepherate_line">
-            <div class="sepherate_line"></div>
-        </div>
+        <h4>Thống kê đơn hàng</h4>
         <div class="THONGKEDONHANG">
             <div class="SOLUONGMUA">
                 <div id="SoLuongMua"></div>
@@ -320,12 +237,12 @@ mysqli_close($connect);
         <div class="dropdown THONGKE">
             <input id="TYPE_THONGKE" class="SoLuong" type="text"  readonly  required>
                             <div class="dropdown-content-THONGKE invisible" >
-                                <li onclick="selectOption('TẤT CẢ')">TẤT CẢ</li>
-                                <li onclick="selectOption('TỔNG')">TỔNG</li>
-                                <li onclick="selectOption('TRUNG BÌNH')">TRUNG BÌNH</li>
-                                <li onclick="selectOption('SỐ LƯỢNG')">SỐ LƯỢNG</li>
-                                <li onclick="selectOption('MIN')">MIN</li>
-                                <li onclick="selectOption('MAX')">MAX</li>
+                                <li onclick="selectOptionType('TẤT CẢ')">TẤT CẢ</li>
+                                <li onclick="selectOptionType('TỔNG')">TỔNG</li>
+                                <li onclick="selectOptionType('TRUNG BÌNH')">TRUNG BÌNH</li>
+                                <li onclick="selectOptionType('SỐ LƯỢNG')">SỐ LƯỢNG</li>
+                                <li onclick="selectOptionType('MIN')">MIN</li>
+                                <li onclick="selectOptionType('MAX')">MAX</li>
                             </div>
         </div>
         <div class="dropdown THONGKE">

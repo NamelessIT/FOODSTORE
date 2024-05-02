@@ -132,41 +132,17 @@ function previewImage(event) {
 
 
 //NÚT BẤM INSERT
-var masp=document.getElementById('MaSanPham');
 var tensp=document.getElementById('TenSanPham');
 var AnhSanPham=document.getElementById('AnhSanPham');
 var madm=document.getElementById('TIEUDE');
 var dongia=document.getElementById('GiaBan');
 var motasp=document.getElementById('motasp');
-let list_sp=[];
-let len=0;
 
-//check masp đã tồn tại hay chưa
-function update_list_masp(callback) {
-    $.ajax({
-        url: "quanlysp/action_sp.php",
-        method: "POST",
-        success: function(response) {
-            var responseData = JSON.parse(response);
-            list_sp = responseData.list_masp;
-            len = list_sp.length;
-            callback(); // Gọi hàm callback sau khi AJAX hoàn thành
-        }
-    });
-}
+
+
 
 //kiểm tra id có trong phiếu nhập chưa, nếu rồi thì không cho sửa trùng
-function check_already_masp_and_add(masp) {
-    update_list_masp(function() {
-        for (let i = 0; i < len; i++) {
-            if (list_sp[i] === masp) {
-                console.log("Mã sản phẩm đã tồn tại.");
-                alert("Mã sản phẩm đã tồn tại");
-                document.getElementById('MaSanPham').value='';
-                return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
-            }
-        }
-        console.log("Mã sản phẩm chưa tồn tại.");
+function check_already_masp_and_add() {
         // Nếu không tìm thấy mã sản phẩm, tiếp tục xử lý
         var tensp = document.getElementById('TenSanPham').value;
         var AnhSanPham = document.getElementById('AnhSanPham').files[0];
@@ -176,7 +152,6 @@ function check_already_masp_and_add(masp) {
         var motasp = document.getElementById('motasp').value;
 
         var formData = new FormData();
-        formData.append('masp', masp);
         formData.append('tensp', tensp);
         formData.append('AnhSanPham', AnhSanPham);
         formData.append('madm', madm);
@@ -201,7 +176,6 @@ function check_already_masp_and_add(masp) {
                 console.error(xhr.responseText);
             }
         });
-    });
 }
 
 
@@ -210,12 +184,10 @@ function check_already_masp_and_add(masp) {
 var add_products_btn = document.getElementById('Add_sp_btn');
 add_products_btn.addEventListener('click', function(event){
     event.preventDefault(); // Prevent default form submission behavior
-    var masp = document.getElementById('MaSanPham').value;
-    check_already_masp_and_add(masp);
+    check_already_masp_and_add();
 });
 
 function clear_input(){
-    masp.value='';
     tensp.value='';
     AnhSanPham.value='';
     document.getElementById('preview').src='';
@@ -332,29 +304,36 @@ function update_list_madm_all(callback) {
 }
 
 function check_already_masp_cthd(masp, text, column_name) {
-    update_list_masp_cthd(function() {
-        for (let i = 0; i < len_cthd; i++) {      
-            if (list_sp_cthd[i].trim() === masp.toString().trim()) {
-                alert("Mã sản phẩm đã tồn tại trong hóa đơn, không thể sửa");
-                fetch_data_edit();
-                return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
+
+        update_list_masp_cthd(function() {
+            for (let i = 0; i < len_cthd; i++) {      
+                if (list_sp_cthd[i].trim() === masp.toString().trim()) {
+                    alert("Mã sản phẩm đã tồn tại trong hóa đơn, không thể sửa");
+                    fetch_data_edit();
+                    return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
+                }
             }
-        }
-        $.ajax({
-            url: "quanlysp/action_sp.php",
-            method: "POST",
-            data: { id: masp, text: text, column_name: column_name },
-            success: function(data) {
-                alert('Sửa dữ liệu thành công');
-                // Assuming fetch_data() is defined elsewhere
+            console.log(Number.isInteger(parseInt(text)));
+            if(Number.isInteger(parseInt(text))){
+            $.ajax({
+                url: "quanlysp/action_sp.php",
+                method: "POST",
+                data: { id: masp, text: text, column_name: column_name },
+                success: function(data) {
+                    alert('Sửa dữ liệu thành công');
+                    // Assuming fetch_data() is defined elsewhere
+                    fetch_data_edit();
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                    // Xử lý lỗi ở đây nếu cần
+                }
+            });
+            }
+            else{
                 fetch_data_edit();
-            },
-            error: function(xhr, status, error) {
-                console.error("Error:", error);
-                // Xử lý lỗi ở đây nếu cần
             }
         });
-    });
 }
 
 // Sửa tên
@@ -621,7 +600,6 @@ var btn_dm=document.getElementById('add_dm');
 var value_dm=document.getElementById('add_danh_muc');
 btn_dm.addEventListener('click',function(){
     let check=0;
-    alert("có bấm");
     var new_dm=value_dm.value.trim();
     update_list_madm_all(function() {
         for (let i = 0; i < len_madm_all; i++) {      
@@ -634,13 +612,13 @@ btn_dm.addEventListener('click',function(){
                     success: function(response) {
                         console.log("thành công");
                         fetch_data_dm();
-                        check=-1;
+                        check=0;
                         return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
                     }
                 });
 
             }
-            else if(check===len_madm_all-1){
+            else if(check===len_madm_all-1 && new_dm!=''){
                 $.ajax({
                     url: "quanlysp/action_sp.php",
                     method: "POST",
@@ -656,6 +634,19 @@ btn_dm.addEventListener('click',function(){
             }
             check+=1;
         }
+        if(len_madm_all===0){
+            $.ajax({
+                url: "quanlysp/action_sp.php",
+                method: "POST",
+                data: { tendm: new_dm},
+                success: function(response) {
+                    console.log('THÊM dữ liệu thành công');
+                    // Assuming fetch_data() is defined elsewhere
+                    fetch_data_dm();
+                    return;
+                }
+            });
+        }
 
 
     });
@@ -665,6 +656,7 @@ btn_dm.addEventListener('click',function(){
 
     // xóa danh mục
     $(document).on('click','.Del_dm',function(){
+        let check=0;
         alert("có bấm");
         var id_xoa_hidden =$(this).data('dm');
         update_list_madm_sp(function() {
@@ -678,28 +670,41 @@ btn_dm.addEventListener('click',function(){
                         success: function(response) {
                             alert("thành công");
                             fetch_data_dm();
+                            check-=1;
                             return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
                         }
                     });
 
                 }
-                else{
-                        $.ajax({
-                            url: "quanlysp/action_sp.php",
-                            method: "POST",
-                            data: { id_xoa_dm_notin_sp: id_xoa_hidden},
-                            success: function(response) {
-                                alert('XOá dữ liệu thành công');
-                                // Assuming fetch_data() is defined elsewhere
-                                fetch_data_dm();
-                                return;
-                            }
-                        });
+                else if(check===len_madm_sp-1){
+                    $.ajax({
+                        url: "quanlysp/action_sp.php",
+                        method: "POST",
+                        data: { id_xoa_dm_notin_sp: id_xoa_hidden},
+                        success: function(response) {
+                            alert('XOá dữ liệu thành công');
+                            // Assuming fetch_data() is defined elsewhere
+                            fetch_data_dm();
+                            return;
+                        }
+                    });
 
-                }
             }
-
-
+                check+=1;
+            }
+            if(len_madm_sp===0){
+                $.ajax({
+                    url: "quanlysp/action_sp.php",
+                    method: "POST",
+                    data: { id_xoa_dm_notin_sp: id_xoa_hidden},
+                    success: function(response) {
+                        alert('XOá dữ liệu thành công');
+                        // Assuming fetch_data() is defined elsewhere
+                        fetch_data_dm();
+                        return;
+                    }
+                });
+            }
         });
     })
 
@@ -742,7 +747,7 @@ outside_THONGKE.addEventListener('click',function(){
     menu_THONGKE.classList.add('invisible');
 })
 
-function selectOption(option) {
+function selectOptionType(option) {
     document.getElementById("TYPE_THONGKE").value = option;
     console.log(option);
     clearElement();
@@ -804,18 +809,36 @@ function selectOption(option) {
 weekCheckbox.addEventListener('click', function() {
     if (weekCheckbox.checked) {
         clearElement();
+        menu_THONGKE.classList.add('invisible');
+        menu_THONGKE_DM.classList.add('invisible');
+        start_time.classList.add('invisible');
+        end_time.classList.add('invisible');
+        LOC_DM.classList.add('invisible');
+        LOC_THONGKE.classList.remove('invisible');
         timeCheckbox.checked=false;
         monthCheckbox.checked = false;
         month_for_week.classList.remove('invisible');
         textcheckbox.classList.remove('invisible');
     }
     else{
+        menu_THONGKE.classList.add('invisible');
+        menu_THONGKE_DM.classList.add('invisible');
+        start_time.classList.add('invisible');
+        end_time.classList.add('invisible');
+        LOC_DM.classList.add('invisible');
+        LOC_THONGKE.classList.remove('invisible');
         weekCheckbox.checked=true;
     }
 });
 monthCheckbox.addEventListener('click', function() {
     if (monthCheckbox.checked) {
         clearElement();
+        menu_THONGKE.classList.add('invisible');
+        menu_THONGKE_DM.classList.add('invisible');
+        start_time.classList.add('invisible');
+        end_time.classList.add('invisible');
+        LOC_DM.classList.add('invisible');
+        LOC_THONGKE.classList.remove('invisible');
         weekCheckbox.checked = false;
         timeCheckbox.checked=false;
         month_for_week.classList.add('invisible');
@@ -823,6 +846,12 @@ monthCheckbox.addEventListener('click', function() {
         textcheckbox.classList.add('invisible');
     }
     else{
+        menu_THONGKE.classList.add('invisible');
+        menu_THONGKE_DM.classList.add('invisible');
+        start_time.classList.add('invisible');
+        end_time.classList.add('invisible');
+        LOC_THONGKE.classList.remove('invisible');
+        LOC_DM.classList.add('invisible');
         monthCheckbox.checked=true;
     }
     if(LOC_THONGKE.value==="TẤT CẢ"){
@@ -851,6 +880,12 @@ monthCheckbox.addEventListener('click', function() {
 
 timeCheckbox.addEventListener('click', function() {
     if (timeCheckbox.checked) {
+        menu_THONGKE.classList.add('invisible');
+        menu_THONGKE_DM.classList.add('invisible');
+        start_time.classList.remove('invisible');
+        end_time.classList.remove('invisible');
+        LOC_THONGKE.classList.add('invisible');
+        LOC_DM.classList.remove('invisible');
         clearElement();
         weekCheckbox.checked = false;
         monthCheckbox.checked=false;
@@ -860,6 +895,12 @@ timeCheckbox.addEventListener('click', function() {
         end_time.classList.remove('invisible');
     }
     else{
+        menu_THONGKE.classList.add('invisible');
+        menu_THONGKE_DM.classList.add('invisible');
+        start_time.classList.remove('invisible');
+        end_time.classList.remove('invisible');
+        LOC_DM.classList.remove('invisible');
+        LOC_THONGKE.classList.add('invisible');
         timeCheckbox.checked=true;
     }
 
@@ -876,16 +917,8 @@ document.addEventListener('click',function(event){
         menu_MONTH.classList.add('invisible');
     }
 })
-start_time.addEventListener('change',function(){
-    if(end_time.value!='' && start_time.value < end_time.value){
-        console.log("thỏa điều kiện");
-    }
-})
-end_time.addEventListener('change',function(){
-    if(start_time.value!='' && start_time.value < end_time.value){
-        console.log("thỏa điều kiện");
-    }
-})
+
+
 
 function fetch_data_dm_THONGKE(){
     $.ajax({
@@ -1055,6 +1088,38 @@ function fetch_data_year_MIN(){
         }
     });
 }
+$(document).on('click', '.Tendm_thongke', function() {
+    var tendm=$(this).data('tk');
+    document.getElementById('TYPE_THONGKE_LOAI').value=tendm;
+    menu_THONGKE_DM.classList.add('invisible');
+    fetch_data_top_products();
+
+});
+start_time.addEventListener('change',function(){
+    fetch_data_top_products();
+})
+end_time.addEventListener('change',function(){
+    fetch_data_top_products();
+})
+var DETAIL=document.getElementById('DETAIL');
+
+function fetch_data_top_products(){
+    if(LOC_DM.value!='' && end_time.value!='' && start_time.value!='' && start_time.value < end_time.value){
+        var DANHMUC=LOC_DM.value;
+        var start=start_time.value;
+        var end=end_time.value;
+        $.ajax({
+            url: "quanlysp/action_sp.php",
+            method: "POST",
+            data: { DANHMUC: DANHMUC,START:start,END:end},
+            success: function(response) {
+                var responseData = JSON.parse(response);
+                var output_top = responseData.output_top;
+                DETAIL.innerHTML = output_top; 
+            }
+        });
+    }
+}
 
 //phiếu nhập
 var btn_add_pn=document.querySelector('.ADD-PN');
@@ -1064,7 +1129,7 @@ btn_add_pn.addEventListener('click',function(){
 
 
 window.addEventListener('load', function() {
-    selectOption('TẤT CẢ');
+    selectOptionType('TẤT CẢ');
     weekCheckbox.click();
     fetch_data(); // Gọi hàm để tải sản phẩm khi trang được load
     fetch_data_hidden();
