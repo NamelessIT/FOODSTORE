@@ -1034,8 +1034,6 @@ function selectOption_MONTH(option) {
     // thêm if vào
 }
 function clearElement() {
-    start_time.value='';
-    end_time.value='';
     DETAIL.innerHTML='';
     bieudo_tuan_sum.innerHTML='';
     bieudo_tuan_avg.innerHTML='';
@@ -1187,7 +1185,7 @@ end_time.addEventListener('change',function(){
     }
 })
 var DETAIL=document.getElementById('DETAIL');
-
+var SHOWOUT=document.getElementById('SHOWOUT');
 function fetch_data_top_products(){
     if(end_time.value!='' && start_time.value!='' && start_time.value < end_time.value &&filter_product.checked==true){
         var start=start_time.value;
@@ -1199,24 +1197,46 @@ function fetch_data_top_products(){
             success: function(response) {
                 var responseData = JSON.parse(response);
                 var output_top = responseData.output_top;
-                DETAIL.innerHTML = output_top; 
+                var output_top_loinhuan=responseData.output_top_loinhuan;
+                var combinedHTML = `
+                <div>
+                    ${output_top}
+                </div>
+                <div>
+                    ${output_top_loinhuan}
+                </div>
+                `;
+
+                // Gán chuỗi HTML đã tạo vào phần tử có id là DETAIL
+                DETAIL.innerHTML = combinedHTML;
             }
         });
     }
 }
 function fetch_data_top_products_dm(){
-    if(LOC_DM.value!='' && end_time.value!='' && start_time.value!='' && start_time.value < end_time.value){
-        var DANHMUC=LOC_DM.value;
+    if(end_time.value!='' && start_time.value!='' && start_time.value < end_time.value){
         var start=start_time.value;
         var end=end_time.value;
         $.ajax({
             url: "quanlysp/action_sp.php",
             method: "POST",
-            data: { DANHMUC: DANHMUC,START:start,END:end},
+            data: {START:start,END:end},
             success: function(response) {
                 var responseData = JSON.parse(response);
                 var output_top_dm = responseData.output_top_dm;
-                DETAIL.innerHTML = output_top_dm; 
+                var output_top_dm_loinhuan=responseData.output_top_dm_loinhuan;
+                // Tạo một chuỗi HTML kết hợp cả hai giá trị
+                var combinedHTML = `
+                <div>
+                    ${output_top_dm}
+                </div>
+                <div>
+                    ${output_top_dm_loinhuan}
+                </div>
+                `;
+
+                // Gán chuỗi HTML đã tạo vào phần tử có id là DETAIL
+                DETAIL.innerHTML = combinedHTML;
             }
         });
     }

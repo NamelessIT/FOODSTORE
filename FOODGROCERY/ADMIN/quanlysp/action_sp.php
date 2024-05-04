@@ -16,6 +16,10 @@ if(isset($_POST['tensp'])){
 
     mysqli_query($connect,"INSERT INTO sanpham (tensp,image,dongia,madm,motasp,ishidden) 
     VALUES ('$tensp','$image','$dongia','$madm','$motasp',0)");
+    $masp = mysqli_insert_id($connect);
+    // Thêm thông tin sản phẩm vào bảng kho
+    mysqli_query($connect,"INSERT INTO kho (masp, soluong) VALUES ('$masp', 0)");
+
 }
 if(isset($_POST['tendm'])){
     $tendm=$_POST['tendm'];
@@ -61,6 +65,7 @@ if(isset($_POST['id_xoa'])){
 
 
     mysqli_query($connect,"UPDATE  sanpham SET ishidden=1 WHERE masp='$masp_del'");
+    mysqli_query($connect,"UPDATE  kho SET soluong=0 WHERE masp='$masp_del'");
 }
 
 if(isset($_POST['id_xoa_hidden'])){
@@ -68,6 +73,8 @@ if(isset($_POST['id_xoa_hidden'])){
 
 
     mysqli_query($connect,"DELETE FROM sanpham WHERE masp='$masp_del'");
+    mysqli_query($connect,"DELETE FROM kho WHERE masp='$masp_del'");
+
 }
 //xóa danh mục
 if(isset($_POST['id_xoa_dm'])){
@@ -699,7 +706,7 @@ $sql_query=mysqli_query($connect,"SELECT sanpham.masp,danhmuc.tendm, sanpham.ten
                                     AND hoadon.trangthai = 1 
                                     AND sanpham.masp = chitiethoadon.masp
                                     AND sanpham.madm=danhmuc.madm
-                                GROUP BY sanpham.masp, sanpham.tensp
+                                GROUP BY sanpham.masp
                                 ORDER BY tong_soluong DESC;");
 // .= NỐI CHUỖI
 $output_top .= '
@@ -761,18 +768,86 @@ $output_top .='
     </table>
 ';    
 
-$output_top_dm='';
-if(isset($_POST['DANHMUC'])){
-    $DANHMUC=$_POST['DANHMUC'];
-    $sql_query=mysqli_query($connect,"SELECT sanpham.masp,danhmuc.tendm, sanpham.tensp, SUM(chitiethoadon.soluong) AS tong_soluong
+
+//thống kê top sản phẩm lợi nhuận cao nhât
+$output_top_loinhuan='';
+$sql_query=mysqli_query($connect,"SELECT sanpham.masp,danhmuc.tendm, sanpham.tensp, SUM(chitiethoadon.soluong*chitiethoadon.dongia) AS tong_soluong
                                 FROM hoadon, chitiethoadon, sanpham ,danhmuc
                                 WHERE hoadon.mahd = chitiethoadon.mahd 
                                     AND hoadon.trangthai = 1 
                                     AND sanpham.masp = chitiethoadon.masp
                                     AND sanpham.madm=danhmuc.madm
-                                    AND danhmuc.tendm='".$DANHMUC."'
-                                GROUP BY sanpham.masp, sanpham.tensp
+                                GROUP BY sanpham.masp
                                 ORDER BY tong_soluong DESC;");
+// .= NỐI CHUỖI
+$output_top_loinhuan .= '
+    <table class="table" style="width: 100%">
+        <thead class="thead_dark">
+        <tr>
+            <th>
+                TOP
+            </th>
+            <th>
+                Mã sản phẩm
+            </th>
+            <th>
+                Tên sản phẩm
+            </th>
+            <th>
+                Loại
+            </th>
+            <th>
+                Tiền kiếm được
+            </th>
+        </tr>
+        </thead>
+';
+
+if(mysqli_num_rows($sql_query)>0){
+    $i=1;
+    while($row=mysqli_fetch_array($sql_query)){
+        $output_top_loinhuan .='
+        <tr style="margin:5px 0;">
+            <td class="seperate STT">
+                '.$i++.'
+            </td>
+            <td class="seperate Masp">
+                '.$row['masp'].'
+            </td>
+            <td class="seperate Tensp">
+                '.$row['tensp'].'
+            </td>
+            <td class="seperate Madm">
+                '.$row['tendm'].'
+            </td>            
+            <td class="seperate SoLuong">
+                '.$row['tong_soluong'].'
+            </td>
+        </tr>
+        ';
+    }
+}
+else{
+    $output_top_loinhuan .='
+        <tr>
+            <td colspan="5">Dữ liệu chưa có</td> 
+        </tr>
+    ';
+}
+
+$output_top_loinhuan .='
+    </table>
+';    
+//top danh mục bán chạy nhất
+$output_top_dm='';
+    $sql_query=mysqli_query($connect,"SELECT danhmuc.madm,danhmuc.tendm, SUM(chitiethoadon.soluong) AS tong_soluong
+                                        FROM hoadon, chitiethoadon, sanpham ,danhmuc
+                                        WHERE hoadon.mahd = chitiethoadon.mahd 
+                                            AND hoadon.trangthai = 1 
+                                            AND sanpham.masp = chitiethoadon.masp
+                                            AND sanpham.madm=danhmuc.madm
+                                        GROUP BY danhmuc.madm
+                                        ORDER BY tong_soluong DESC;");
     // .= NỐI CHUỖI
     $output_top_dm .= '
         <table class="table" style="width: 100%">
@@ -782,13 +857,10 @@ if(isset($_POST['DANHMUC'])){
                     TOP
                 </th>
                 <th>
-                    Mã sản phẩm
+                    Mã danh mục
                 </th>
                 <th>
-                    Tên sản phẩm
-                </th>
-                <th>
-                    Loại
+                    Tên danh mục
                 </th>
                 <th>
                     Số lượng đã bán
@@ -806,14 +878,11 @@ if(isset($_POST['DANHMUC'])){
                     '.$i++.'
                 </td>
                 <td class="seperate Masp">
-                    '.$row['masp'].'
+                    '.$row['madm'].'
                 </td>
                 <td class="seperate Tensp">
-                    '.$row['tensp'].'
-                </td>
-                <td class="seperate Madm">
                     '.$row['tendm'].'
-                </td>            
+                </td>         
                 <td class="seperate SoLuong">
                     '.$row['tong_soluong'].'
                 </td>
@@ -824,11 +893,69 @@ if(isset($_POST['DANHMUC'])){
     else{
         $output_top_dm .='
             <tr>
-                <td colspan="5">Dữ liệu chưa có</td> 
+                <td colspan="4">Dữ liệu chưa có</td> 
             </tr>
         ';
     }
-}
+//top danh mục có lợi nhuận nhất
+    $output_top_dm_loinhuan='';
+    $sql_query=mysqli_query($connect,"SELECT danhmuc.madm,danhmuc.tendm, SUM(chitiethoadon.soluong*chitiethoadon.dongia) AS tong_soluong
+                                        FROM hoadon, chitiethoadon, sanpham ,danhmuc
+                                        WHERE hoadon.mahd = chitiethoadon.mahd 
+                                            AND hoadon.trangthai = 1 
+                                            AND sanpham.masp = chitiethoadon.masp
+                                            AND sanpham.madm=danhmuc.madm
+                                        GROUP BY danhmuc.madm
+                                        ORDER BY tong_soluong DESC;");
+    // .= NỐI CHUỖI
+    $output_top_dm_loinhuan .= '
+        <table class="table" style="width: 100%">
+            <thead class="thead_dark">
+            <tr>
+                <th>
+                    TOP
+                </th>
+                <th>
+                    Mã danh mục
+                </th>
+                <th>
+                    Tên danh mục
+                </th>
+                <th>
+                    Tiền kiếm được
+                </th>
+            </tr>
+            </thead>
+    ';
+
+    if(mysqli_num_rows($sql_query)>0){
+        $i=1;
+        while($row=mysqli_fetch_array($sql_query)){
+            $output_top_dm_loinhuan .='
+            <tr style="margin:5px 0;">
+                <td class="seperate STT">
+                    '.$i++.'
+                </td>
+                <td class="seperate Masp">
+                    '.$row['madm'].'
+                </td>
+                <td class="seperate Tensp">
+                    '.$row['tendm'].'
+                </td>         
+                <td class="seperate SoLuong">
+                    '.$row['tong_soluong'].'
+                </td>
+            </tr>
+            ';
+        }
+    }
+    else{
+        $output_top_dm_loinhuan .='
+            <tr>
+                <td colspan="4">Dữ liệu chưa có</td> 
+            </tr>
+        ';
+    }
 
 // echo $output;
 
@@ -854,7 +981,9 @@ $response_array = array(
     "output_thongke_year_MAX"=>$output_thongke_year_MAX,
     "output_thongke_year_MIN"=>$output_thongke_year_MIN,
     "output_top"=>$output_top,
-    "output_top_dm"=>$output_top_dm
+    "output_top_dm"=>$output_top_dm,
+    "output_top_loinhuan"=>$output_top_loinhuan,
+    "output_top_dm_loinhuan"=>$output_top_dm_loinhuan
 );
 // Trả về dữ liệu dưới dạng JSON
 echo json_encode($response_array);

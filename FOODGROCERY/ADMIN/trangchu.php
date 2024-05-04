@@ -217,13 +217,11 @@ mysqli_close($connect);
         <div class="THONGKEDONHANG">
             <div class="SOLUONGMUA">
                 <div id="SoLuongMua"></div>
-                <p>Số lượng mua</p>
                 <div class="underline"></div>
                 <div class="SoLuongMuaNumber"></div>
               </div>
               <div class="DOANHTHU">
                 <div id="SoDoanhThu"></div>
-                <p>Doanh thu</p>
                 <div class="underline"></div>
                 <div class="DoanhThuNumber"></div>
               </div>
@@ -257,7 +255,7 @@ mysqli_close($connect);
             <input type="checkbox" id="filter_product_dm">
             <h5 style="display:inline;">Loại sản phẩm</h5>
         </div>
-        <div class="dropdown THONGKE" >
+        <div class="dropdown THONGKE invisible" >
         <input id="TYPE_THONGKE_LOAI" class="SoLuong" type="text" style="margin: 10px 0 0 0;"  readonly  required>
             <div class="dropdown-content-THONGKE-danhmuc invisible" >
 
