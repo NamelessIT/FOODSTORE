@@ -965,14 +965,14 @@ filter_product.addEventListener('click', function() {
 })
 filter_product_dm.addEventListener('click',function(){
     if (filter_product_dm.checked) {
-        fetch_data_top_products_dm();
+        fetch_data_top_products_cungloai_dm();
         clearElement()
         filter_product.checked=false;
         LOC_DM.classList.remove('invisible');
         // Filter_thongke_dm.classList.remove('invisible');
     }
     else{
-        fetch_data_top_products_dm();
+        fetch_data_top_products_cungloai_dm();
         filter_product_dm.checked=true;
         LOC_DM.classList.remove('invisible');
         // Filter_thongke_dm.classList.remove('invisible');
@@ -1165,12 +1165,12 @@ $(document).on('click', '.Tendm_thongke', function() {
     var tendm=$(this).data('tk');
     document.getElementById('TYPE_THONGKE_LOAI').value=tendm;
     menu_THONGKE_DM.classList.add('invisible');
-    fetch_data_top_products_dm();
+    fetch_data_top_products_cungloai_dm();
 
 });
 start_time.addEventListener('change',function(){
     if(filter_product_dm.checked==true){
-        fetch_data_top_products_dm();
+        fetch_data_top_products_cungloai_dm();
     }
     else if(filter_product.checked==true){
         fetch_data_top_products();
@@ -1178,7 +1178,7 @@ start_time.addEventListener('change',function(){
 })
 end_time.addEventListener('change',function(){
     if(filter_product_dm.checked==true){
-        fetch_data_top_products_dm();
+        fetch_data_top_products_cungloai_dm();
     }
     else if(filter_product.checked==true){
         fetch_data_top_products();
@@ -1186,6 +1186,10 @@ end_time.addEventListener('change',function(){
 })
 var DETAIL=document.getElementById('DETAIL');
 var SHOWOUT=document.getElementById('SHOWOUT');
+let sapxeptheocotbang1='tong_soluong';
+let sapxeptheocotbang2='tong_soluong';
+let ascordes1='false';
+let ascordes2='false';
 function fetch_data_top_products(){
     if(end_time.value!='' && start_time.value!='' && start_time.value < end_time.value &&filter_product.checked==true){
         var start=start_time.value;
@@ -1193,11 +1197,11 @@ function fetch_data_top_products(){
         $.ajax({
             url: "quanlysp/action_sp.php",
             method: "POST",
-            data: {START:start,END:end},
+            data: {START:start,END:end,COT1:sapxeptheocotbang1,COT2:sapxeptheocotbang2,SORT1:ascordes1,SORT2:ascordes2},
             success: function(response) {
                 var responseData = JSON.parse(response);
-                var output_top = responseData.output_top;
-                var output_top_loinhuan=responseData.output_top_loinhuan;
+                var output_top = responseData.output_top_dm;
+                var output_top_loinhuan=responseData.output_top_dm_loinhuan;
                 var combinedHTML = `
                 <div>
                     ${output_top}
@@ -1213,18 +1217,19 @@ function fetch_data_top_products(){
         });
     }
 }
-function fetch_data_top_products_dm(){
-    if(end_time.value!='' && start_time.value!='' && start_time.value < end_time.value){
+function fetch_data_top_products_cungloai_dm(){
+    if(LOC_DM.value!='' && end_time.value!='' && start_time.value!='' && start_time.value < end_time.value){
+        var DM=LOC_DM.value;
         var start=start_time.value;
         var end=end_time.value;
         $.ajax({
             url: "quanlysp/action_sp.php",
             method: "POST",
-            data: {START:start,END:end},
+            data: {DANHMUC:DM,START:start,END:end,COT1:sapxeptheocotbang1,COT2:sapxeptheocotbang2,SORT1:ascordes1,SORT2:ascordes2},
             success: function(response) {
                 var responseData = JSON.parse(response);
-                var output_top_dm = responseData.output_top_dm;
-                var output_top_dm_loinhuan=responseData.output_top_dm_loinhuan;
+                var output_top_dm = responseData.output_top;
+                var output_top_dm_loinhuan=responseData.output_top_loinhuan;
                 // Tạo một chuỗi HTML kết hợp cả hai giá trị
                 var combinedHTML = `
                 <div>
@@ -1241,6 +1246,72 @@ function fetch_data_top_products_dm(){
         });
     }
 }
+$(document).on('click','.sortable_tk',function(){
+    var cot=$(this).data('tk_filter');
+    sapxeptheocotbang1=cot;
+    if($(this).hasClass('click')){
+        if(ascordes1=='false'){
+            ascordes1='true';
+        }
+        else if(ascordes1=='true'){
+            ascordes1='false';
+        }
+    }
+    else{
+        ascordes1='false';
+    }
+    fetch_data_top_products();
+})
+$(document).on('click','.sortable_tk_TIEN',function(){
+    var cot=$(this).data('tk_filter');
+    sapxeptheocotbang2=cot;
+    if($(this).hasClass('click')){
+        if(ascordes2=='false'){
+            ascordes2='true';
+        }
+        else if(ascordes2=='true'){
+            ascordes2='false';
+        }
+    }
+    else{
+        ascordes2='false';
+    }
+    fetch_data_top_products();
+})
+//
+$(document).on('click','.sortable_tk_filter',function(){
+    var cot=$(this).data('tk_filter');
+    sapxeptheocotbang1=cot;
+    if($(this).hasClass('click')){
+        if(ascordes1=='false'){
+            ascordes1='true';
+        }
+        else if(ascordes1=='true'){
+            ascordes1='false';
+        }
+    }
+    else{
+        ascordes1='false';
+    }
+    fetch_data_top_products_cungloai_dm();
+})
+$(document).on('click','.sortable_tk_filter_TIEN',function(){
+    var cot=$(this).data('tk_filter');
+    sapxeptheocotbang2=cot;
+    if($(this).hasClass('click')){
+        if(ascordes2=='false'){
+            ascordes2='true';
+        }
+        else if(ascordes2=='true'){
+            ascordes2='false';
+        }
+    }
+    else{
+        ascordes2='false';
+    }
+    fetch_data_top_products_cungloai_dm();
+})
+
 
 //phiếu nhập
 var btn_add_pn=document.querySelector('.ADD-PN');

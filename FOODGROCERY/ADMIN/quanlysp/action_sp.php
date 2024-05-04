@@ -698,87 +698,190 @@ $output_thongke_year_SUM='';
     $output_thongke_year_MIN .= '</div>'; // Đóng thẻ div.chart-layout
 
 
-// thống kê top các sản phẩm 
+// thống kê top các sản phẩm CÙNG LOẠI
+// ///////////////////////////////////////////////////////
 $output_top='';
-$sql_query=mysqli_query($connect,"SELECT sanpham.masp,danhmuc.tendm, sanpham.tensp, SUM(chitiethoadon.soluong) AS tong_soluong
-                                FROM hoadon, chitiethoadon, sanpham ,danhmuc
-                                WHERE hoadon.mahd = chitiethoadon.mahd 
-                                    AND hoadon.trangthai = 1 
-                                    AND sanpham.masp = chitiethoadon.masp
-                                    AND sanpham.madm=danhmuc.madm
-                                GROUP BY sanpham.masp
-                                ORDER BY tong_soluong DESC;");
-// .= NỐI CHUỖI
-$output_top .= '
-    <table class="table" style="width: 100%">
-        <thead class="thead_dark">
-        <tr>
-            <th>
-                TOP
-            </th>
-            <th>
-                Mã sản phẩm
-            </th>
-            <th>
-                Tên sản phẩm
-            </th>
-            <th>
-                Loại
-            </th>
-            <th>
-                Số lượng đã bán
-            </th>
-        </tr>
-        </thead>
-';
-
-if(mysqli_num_rows($sql_query)>0){
-    $i=1;
-    while($row=mysqli_fetch_array($sql_query)){
+if(isset($_POST['DANHMUC'])){
+    $danhmuc=$_POST['DANHMUC'];
+    $start = $_POST['START'];
+    $end=$_POST['END'];
+    $cot=$_POST['COT1'];
+    $sort=$_POST['SORT1'];
+    if($sort=='true'){
+        if($danhmuc!='Tất cả'){
+            $sql_query=mysqli_query($connect,"SELECT sanpham.masp,danhmuc.tendm, sanpham.tensp, SUM(chitiethoadon.soluong) AS tong_soluong
+                                            FROM hoadon, chitiethoadon, sanpham ,danhmuc
+                                            WHERE hoadon.mahd = chitiethoadon.mahd 
+                                                AND hoadon.trangthai = 1 
+                                                AND sanpham.masp = chitiethoadon.masp
+                                                AND sanpham.madm=danhmuc.madm
+                                                AND hoadon.ngay BETWEEN '$start' AND '$end'
+                                                AND danhmuc.tendm='$danhmuc'
+                                            GROUP BY sanpham.masp
+                                            ORDER BY $cot ASC;");
+            
+            }
+            else{
+                $sql_query=mysqli_query($connect,"SELECT sanpham.masp,danhmuc.tendm, sanpham.tensp, SUM(chitiethoadon.soluong) AS tong_soluong
+                FROM hoadon, chitiethoadon, sanpham ,danhmuc
+                WHERE hoadon.mahd = chitiethoadon.mahd 
+                    AND hoadon.trangthai = 1 
+                    AND sanpham.masp = chitiethoadon.masp
+                    AND sanpham.madm=danhmuc.madm
+                    AND hoadon.ngay BETWEEN '$start' AND '$end'
+                GROUP BY sanpham.masp
+                ORDER BY tong_soluong ASC;");    
+            }
+    }
+    else{
+        if($danhmuc!='Tất cả'){
+            $sql_query=mysqli_query($connect,"SELECT sanpham.masp,danhmuc.tendm, sanpham.tensp, SUM(chitiethoadon.soluong) AS tong_soluong
+                                            FROM hoadon, chitiethoadon, sanpham ,danhmuc
+                                            WHERE hoadon.mahd = chitiethoadon.mahd 
+                                                AND hoadon.trangthai = 1 
+                                                AND sanpham.masp = chitiethoadon.masp
+                                                AND sanpham.madm=danhmuc.madm
+                                                AND hoadon.ngay BETWEEN '$start' AND '$end'
+                                                AND danhmuc.tendm='$danhmuc'
+                                            GROUP BY sanpham.masp
+                                            ORDER BY $cot DESC;");
+            
+            }
+            else{
+                $sql_query=mysqli_query($connect,"SELECT sanpham.masp,danhmuc.tendm, sanpham.tensp, SUM(chitiethoadon.soluong) AS tong_soluong
+                FROM hoadon, chitiethoadon, sanpham ,danhmuc
+                WHERE hoadon.mahd = chitiethoadon.mahd 
+                    AND hoadon.trangthai = 1 
+                    AND sanpham.masp = chitiethoadon.masp
+                    AND sanpham.madm=danhmuc.madm
+                    AND hoadon.ngay BETWEEN '$start' AND '$end'
+                GROUP BY sanpham.masp
+                ORDER BY tong_soluong DESC;");    
+            }        
+    }
+    // .= NỐI CHUỖI
+    $output_top .= '
+        <table class="table" style="width: 100%">
+            <thead class="thead_dark">
+            <tr>
+                <th>
+                    TOP
+                </th>
+                <th class="sortable_tk_filter '. ($cot == "sanpham.masp" ? 'click' : '') . '" data-tk_filter="sanpham.masp" '. ($cot == "sanpham.masp" ? 'style="background-color:#ccc"' : '') . '>
+                    Mã sản phẩm
+                </th>
+                <th class="sortable_tk_filter '. ($cot == "sanpham.tensp" ? 'click' : '') . '" data-tk_filter="sanpham.tensp" '. ($cot == "sanpham.tensp" ? 'style="background-color:#ccc"' : '') . '>
+                    Tên sản phẩm
+                </th>
+                <th class="sortable_tk_filter '. ($cot == "danhmuc.tendm" ? 'click' : '') . '" data-tk_filter="danhmuc.tendm" '. ($cot == "danhmuc.tendm" ? 'style="background-color:#ccc"' : '') . '>
+                    Loại
+                </th>
+                <th class="sortable_tk_filter '. ($cot == "tong_soluong" ? 'click' : '') . '" data-tk_filter="tong_soluong" '. ($cot == "tong_soluong" ? 'style="background-color:#ccc"' : '') . '>
+                    Số lượng đã bán
+                </th>
+            </tr>
+            </thead>
+    ';
+    
+    if(mysqli_num_rows($sql_query)>0){
+        $i=1;
+        while($row=mysqli_fetch_array($sql_query)){
+            $output_top .='
+            <tr style="margin:5px 0;">
+                <td class="seperate STT">
+                    '.$i++.'
+                </td>
+                <td class="seperate Masp">
+                    '.$row['masp'].'
+                </td>
+                <td class="seperate Tensp">
+                    '.$row['tensp'].'
+                </td>
+                <td class="seperate Madm">
+                    '.$row['tendm'].'
+                </td>            
+                <td class="seperate SoLuong">
+                    '.$row['tong_soluong'].'
+                </td>
+            </tr>
+            ';
+        }
+    }
+    else{
         $output_top .='
-        <tr style="margin:5px 0;">
-            <td class="seperate STT">
-                '.$i++.'
-            </td>
-            <td class="seperate Masp">
-                '.$row['masp'].'
-            </td>
-            <td class="seperate Tensp">
-                '.$row['tensp'].'
-            </td>
-            <td class="seperate Madm">
-                '.$row['tendm'].'
-            </td>            
-            <td class="seperate SoLuong">
-                '.$row['tong_soluong'].'
-            </td>
-        </tr>
+            <tr>
+                <td colspan="5">Dữ liệu chưa có</td> 
+            </tr>
         ';
     }
-}
-else{
+    
     $output_top .='
-        <tr>
-            <td colspan="5">Dữ liệu chưa có</td> 
-        </tr>
-    ';
+        </table>
+    ';    
 }
 
-$output_top .='
-    </table>
-';    
 
-
-//thống kê top sản phẩm lợi nhuận cao nhât
+//thống kê top sản phẩm CÙNG LOẠI lợi nhuận cao nhât
 $output_top_loinhuan='';
-$sql_query=mysqli_query($connect,"SELECT sanpham.masp,danhmuc.tendm, sanpham.tensp, SUM(chitiethoadon.soluong*chitiethoadon.dongia) AS tong_soluong
-                                FROM hoadon, chitiethoadon, sanpham ,danhmuc
-                                WHERE hoadon.mahd = chitiethoadon.mahd 
-                                    AND hoadon.trangthai = 1 
-                                    AND sanpham.masp = chitiethoadon.masp
-                                    AND sanpham.madm=danhmuc.madm
-                                GROUP BY sanpham.masp
-                                ORDER BY tong_soluong DESC;");
+if(isset($_POST['DANHMUC'])){
+    $danhmuc=$_POST['DANHMUC'];
+    $start = $_POST['START'];
+    $end=$_POST['END'];
+    $cot=$_POST['COT2'];
+    $sort=$_POST['SORT2'];
+    if($sort=='true'){
+        if($danhmuc!='Tất cả'){
+        $sql_query=mysqli_query($connect,"SELECT sanpham.masp,danhmuc.tendm, sanpham.tensp, SUM(chitiethoadon.soluong*chitiethoadon.dongia) AS tong_soluong
+                                        FROM hoadon, chitiethoadon, sanpham ,danhmuc
+                                        WHERE hoadon.mahd = chitiethoadon.mahd 
+                                            AND hoadon.trangthai = 1 
+                                            AND sanpham.masp = chitiethoadon.masp
+                                            AND sanpham.madm=danhmuc.madm
+                                            AND hoadon.ngay BETWEEN '$start' AND '$end'
+                                            AND danhmuc.tendm='$danhmuc'
+                                        GROUP BY sanpham.masp
+                                        ORDER BY $cot ASC;");
+
+        }
+        else{
+            $sql_query=mysqli_query($connect,"SELECT sanpham.masp,danhmuc.tendm, sanpham.tensp, SUM(chitiethoadon.soluong*chitiethoadon.dongia) AS tong_soluong
+            FROM hoadon, chitiethoadon, sanpham ,danhmuc
+            WHERE hoadon.mahd = chitiethoadon.mahd 
+                AND hoadon.trangthai = 1 
+                AND sanpham.masp = chitiethoadon.masp
+                AND sanpham.madm=danhmuc.madm
+                AND hoadon.ngay BETWEEN '$start' AND '$end'
+            GROUP BY sanpham.masp
+            ORDER BY tong_soluong ASC;");    
+        }
+    }
+    else{
+        if($danhmuc!='Tất cả'){
+            $sql_query=mysqli_query($connect,"SELECT sanpham.masp,danhmuc.tendm, sanpham.tensp, SUM(chitiethoadon.soluong*chitiethoadon.dongia) AS tong_soluong
+                                            FROM hoadon, chitiethoadon, sanpham ,danhmuc
+                                            WHERE hoadon.mahd = chitiethoadon.mahd 
+                                                AND hoadon.trangthai = 1 
+                                                AND sanpham.masp = chitiethoadon.masp
+                                                AND sanpham.madm=danhmuc.madm
+                                                AND hoadon.ngay BETWEEN '$start' AND '$end'
+                                                AND danhmuc.tendm='$danhmuc'
+                                            GROUP BY sanpham.masp
+                                            ORDER BY $cot DESC;");
+    
+            }
+            else{
+                $sql_query=mysqli_query($connect,"SELECT sanpham.masp,danhmuc.tendm, sanpham.tensp, SUM(chitiethoadon.soluong*chitiethoadon.dongia) AS tong_soluong
+                FROM hoadon, chitiethoadon, sanpham ,danhmuc
+                WHERE hoadon.mahd = chitiethoadon.mahd 
+                    AND hoadon.trangthai = 1 
+                    AND sanpham.masp = chitiethoadon.masp
+                    AND sanpham.madm=danhmuc.madm
+                    AND hoadon.ngay BETWEEN '$start' AND '$end'
+                GROUP BY sanpham.masp
+                ORDER BY tong_soluong DESC;");    
+            }        
+    }
+
 // .= NỐI CHUỖI
 $output_top_loinhuan .= '
     <table class="table" style="width: 100%">
@@ -786,17 +889,17 @@ $output_top_loinhuan .= '
         <tr>
             <th>
                 TOP
-            </th>
-            <th>
+            </th>    
+            <th class="sortable_tk_filter_TIEN '. ($cot == "sanpham.masp" ? 'click' : '') . '" data-tk_filter="sanpham.masp" '. ($cot == "sanpham.masp" ? 'style="background-color:#ccc"' : '') . '>
                 Mã sản phẩm
             </th>
-            <th>
+            <th class="sortable_tk_filter_TIEN '. ($cot == "sanpham.tensp" ? 'click' : '') . '" data-tk_filter="sanpham.tensp" '. ($cot == "sanpham.tensp" ? 'style="background-color:#ccc"' : '') . '>
                 Tên sản phẩm
             </th>
-            <th>
+            <th class="sortable_tk_filter_TIEN '. ($cot == "danhmuc.tendm" ? 'click' : '') . '" data-tk_filter="danhmuc.tendm" '. ($cot == "danhmuc.tendm" ? 'style="background-color:#ccc"' : '') . '>
                 Loại
             </th>
-            <th>
+            <th class="sortable_tk_filter_TIEN '. ($cot == "tong_soluong" ? 'click' : '') . '" data-tk_filter="tong_soluong" '. ($cot == "tong_soluong" ? 'style="background-color:#ccc"' : '') . '>
                 Tiền kiếm được
             </th>
         </tr>
@@ -838,16 +941,36 @@ else{
 $output_top_loinhuan .='
     </table>
 ';    
+}
 //top danh mục bán chạy nhất
 $output_top_dm='';
+if(isset($_POST['START'])){
+    $start = $_POST['START'];
+    $end=$_POST['END'];
+    $cot=$_POST['COT1'];
+    $sort=$_POST['SORT1'];
+    if($sort=='true'){
     $sql_query=mysqli_query($connect,"SELECT danhmuc.madm,danhmuc.tendm, SUM(chitiethoadon.soluong) AS tong_soluong
                                         FROM hoadon, chitiethoadon, sanpham ,danhmuc
                                         WHERE hoadon.mahd = chitiethoadon.mahd 
                                             AND hoadon.trangthai = 1 
                                             AND sanpham.masp = chitiethoadon.masp
                                             AND sanpham.madm=danhmuc.madm
+                                            AND hoadon.ngay BETWEEN '$start' AND '$end'
                                         GROUP BY danhmuc.madm
-                                        ORDER BY tong_soluong DESC;");
+                                        ORDER BY $cot ASC;");
+    }
+    else{
+        $sql_query=mysqli_query($connect,"SELECT danhmuc.madm,danhmuc.tendm, SUM(chitiethoadon.soluong) AS tong_soluong
+        FROM hoadon, chitiethoadon, sanpham ,danhmuc
+        WHERE hoadon.mahd = chitiethoadon.mahd 
+            AND hoadon.trangthai = 1 
+            AND sanpham.masp = chitiethoadon.masp
+            AND sanpham.madm=danhmuc.madm
+            AND hoadon.ngay BETWEEN '$start' AND '$end'
+        GROUP BY danhmuc.madm
+        ORDER BY $cot DESC;");        
+    }
     // .= NỐI CHUỖI
     $output_top_dm .= '
         <table class="table" style="width: 100%">
@@ -855,14 +978,14 @@ $output_top_dm='';
             <tr>
                 <th>
                     TOP
+                </th>    
+                <th class="sortable_tk '. ($cot == "danhmuc.madm" ? 'click' : '') . '" data-tk_filter="danhmuc.madm" '. ($cot == "danhmuc.madm" ? 'style="background-color:#ccc"' : '') . '>
+                Mã danh mục
                 </th>
-                <th>
-                    Mã danh mục
-                </th>
-                <th>
+                <th class="sortable_tk '. ($cot == "danhmuc.tendm" ? 'click' : '') . '" data-tk_filter="danhmuc.tendm" '. ($cot == "danhmuc.tendm" ? 'style="background-color:#ccc"' : '') . '>
                     Tên danh mục
                 </th>
-                <th>
+                <th class="sortable_tk '. ($cot == "tong_soluong" ? 'click' : '') . '" data-tk_filter="tong_soluong" '. ($cot == "tong_soluong" ? 'style="background-color:#ccc"' : '') . '>
                     Số lượng đã bán
                 </th>
             </tr>
@@ -897,16 +1020,36 @@ $output_top_dm='';
             </tr>
         ';
     }
+}
 //top danh mục có lợi nhuận nhất
     $output_top_dm_loinhuan='';
-    $sql_query=mysqli_query($connect,"SELECT danhmuc.madm,danhmuc.tendm, SUM(chitiethoadon.soluong*chitiethoadon.dongia) AS tong_soluong
+    if(isset($_POST['START'])){
+        $start = $_POST['START'];
+        $end=$_POST['END'];
+        $cot=$_POST['COT2'];
+        $sort=$_POST['SORT2'];
+        if($sort=='true'){
+        $sql_query=mysqli_query($connect,"SELECT danhmuc.madm,danhmuc.tendm, SUM(chitiethoadon.soluong*chitiethoadon.dongia) AS tong_soluong
                                         FROM hoadon, chitiethoadon, sanpham ,danhmuc
                                         WHERE hoadon.mahd = chitiethoadon.mahd 
                                             AND hoadon.trangthai = 1 
                                             AND sanpham.masp = chitiethoadon.masp
                                             AND sanpham.madm=danhmuc.madm
+                                            AND hoadon.ngay BETWEEN '$start' AND '$end'
                                         GROUP BY danhmuc.madm
-                                        ORDER BY tong_soluong DESC;");
+                                        ORDER BY $cot ASC;");
+        }
+        else{
+            $sql_query=mysqli_query($connect,"SELECT danhmuc.madm,danhmuc.tendm, SUM(chitiethoadon.soluong*chitiethoadon.dongia) AS tong_soluong
+            FROM hoadon, chitiethoadon, sanpham ,danhmuc
+            WHERE hoadon.mahd = chitiethoadon.mahd 
+                AND hoadon.trangthai = 1 
+                AND sanpham.masp = chitiethoadon.masp
+                AND sanpham.madm=danhmuc.madm
+                AND hoadon.ngay BETWEEN '$start' AND '$end'
+            GROUP BY danhmuc.madm
+            ORDER BY $cot DESC;");            
+        }
     // .= NỐI CHUỖI
     $output_top_dm_loinhuan .= '
         <table class="table" style="width: 100%">
@@ -915,13 +1058,13 @@ $output_top_dm='';
                 <th>
                     TOP
                 </th>
-                <th>
+                <th class="sortable_tk_TIEN '. ($cot == "danhmuc.madm" ? 'click' : '') . '" data-tk_filter="danhmuc.madm" '. ($cot == "danhmuc.madm" ? 'style="background-color:#ccc"' : '') . '>
                     Mã danh mục
                 </th>
-                <th>
+                <th class="sortable_tk_TIEN '. ($cot == "danhmuc.tendm" ? 'click' : '') . '" data-tk_filter="danhmuc.tendm" '. ($cot == "danhmuc.tendm" ? 'style="background-color:#ccc"' : '') . '>
                     Tên danh mục
                 </th>
-                <th>
+                <th class="sortable_tk_TIEN '. ($cot == "tong_soluong" ? 'click' : '') . '" data-tk_filter="tong_soluong" '. ($cot == "tong_soluong" ? 'style="background-color:#ccc"' : '') . '>
                     Tiền kiếm được
                 </th>
             </tr>
@@ -956,8 +1099,9 @@ $output_top_dm='';
             </tr>
         ';
     }
+}
 
-// echo $output;
+// echo $output;//////////////////////////////////////////////
 
 $response_array = array(
     "output" => $output,

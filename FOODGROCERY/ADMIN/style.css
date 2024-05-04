@@ -266,8 +266,8 @@ input[readonly] {
         transform: translateX(0);
       }
     }
-    #SANPHAM{
-      height: 29rem;
+    #SANPHAM,#SANPHAM_XOA{
+      height: 16rem;
     overflow: scroll;
     }
     

@@ -251,11 +251,11 @@ mysqli_close($connect);
         <input type="date" id="end_time" class="invisible" style="display: block;text-align:center;"   required >
         <div class="invisible Filter_time">
             <input type="checkbox" id="filter_product" >
-            <h5 style="display:inline;">Sản phẩm</h5>
+            <h5 style="display:inline;">Tất cả</h5>
             <input type="checkbox" id="filter_product_dm">
             <h5 style="display:inline;">Loại sản phẩm</h5>
         </div>
-        <div class="dropdown THONGKE invisible" >
+        <div class="dropdown THONGKE " >
         <input id="TYPE_THONGKE_LOAI" class="SoLuong" type="text" style="margin: 10px 0 0 0;"  readonly  required>
             <div class="dropdown-content-THONGKE-danhmuc invisible" >
 

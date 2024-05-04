@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2024 at 04:53 AM
+-- Generation Time: May 04, 2024 at 12:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -47,10 +47,20 @@ INSERT INTO `account` (`username`, `password`) VALUES
 
 CREATE TABLE `chitiethoadon` (
   `mahd` int(11) NOT NULL,
-  `masp` varchar(255) NOT NULL,
+  `masp` int(255) NOT NULL,
   `soluong` int(11) NOT NULL,
   `dongia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chitiethoadon`
+--
+
+INSERT INTO `chitiethoadon` (`mahd`, `masp`, `soluong`, `dongia`) VALUES
+(6, 2, 1, 35000),
+(6, 3, 1, 40000),
+(7, 2, 1, 35000),
+(8, 10, 1, 15000);
 
 -- --------------------------------------------------------
 
@@ -60,7 +70,7 @@ CREATE TABLE `chitiethoadon` (
 
 CREATE TABLE `chitietphieunhap` (
   `mapn` int(11) NOT NULL,
-  `masp` varchar(255) NOT NULL,
+  `masp` int(255) NOT NULL,
   `soluong` int(11) NOT NULL,
   `gianhap` int(11) NOT NULL,
   `tongtien` int(11) NOT NULL
@@ -84,7 +94,8 @@ CREATE TABLE `danhmuc` (
 
 INSERT INTO `danhmuc` (`madm`, `tendm`, `ishidden`) VALUES
 (1, 'kẹo', 0),
-(2, 'bánh', 0);
+(39, 'đồ chiên', 0),
+(42, 'nước', 0);
 
 -- --------------------------------------------------------
 
@@ -100,6 +111,15 @@ CREATE TABLE `hoadon` (
   `ngay` date NOT NULL,
   `trangthai` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hoadon`
+--
+
+INSERT INTO `hoadon` (`mahd`, `makh`, `manv`, `tongtien`, `ngay`, `trangthai`) VALUES
+(6, 1, 1, 75000, '2024-05-01', 1),
+(7, 1, 1, 35000, '2024-05-01', 1),
+(8, 1, 1, 15000, '2024-05-02', 1);
 
 -- --------------------------------------------------------
 
@@ -132,9 +152,16 @@ INSERT INTO `khachhang` (`makh`, `matk`, `hoten`, `diachi`, `email`, `dienthoai`
 --
 
 CREATE TABLE `kho` (
-  `masp` varchar(255) NOT NULL,
+  `masp` int(255) NOT NULL,
   `SOLUONG` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `kho`
+--
+
+INSERT INTO `kho` (`masp`, `SOLUONG`) VALUES
+(11, 0);
 
 -- --------------------------------------------------------
 
@@ -222,7 +249,7 @@ INSERT INTO `role` (`role_name`, `addproduct`, `updateproduct`, `deleteproduct`,
 --
 
 CREATE TABLE `sanpham` (
-  `masp` varchar(255) NOT NULL,
+  `masp` int(255) NOT NULL,
   `tensp` varchar(255) NOT NULL,
   `image` varchar(50) NOT NULL,
   `dongia` int(11) NOT NULL,
@@ -236,7 +263,11 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`masp`, `tensp`, `image`, `dongia`, `madm`, `motasp`, `ishidden`) VALUES
-('1', '2323', '2.png', 23232, 2, 'rất ngon', 0);
+(2, 'gà rán', 'ga_ran.jpg', 35000, 39, 'da giòn,thịt săn chắc', 0),
+(3, 'mực chiên xù', 'mực_chiên_xù.jpg', 40000, 39, 'giòn rụm', 0),
+(4, 'khoai tây chiên', 'Khoai_tay_chien.jpg', 10000, 39, 'khoai tây chiên giòn', 0),
+(10, 'coca cola', 'coca_cola.jpg', 15000, 42, 'mát lạnh, sảng khoái', 0),
+(11, 'pepsi', 'pepsi.jpg', 15000, 42, 'quá đã pepsi ơi', 0);
 
 --
 -- Indexes for dumped tables
@@ -252,15 +283,15 @@ ALTER TABLE `account`
 -- Indexes for table `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
-  ADD KEY `fk_masp` (`masp`),
-  ADD KEY `chitiethoadon_ibfk_1` (`mahd`);
+  ADD KEY `chitiethoadon_ibfk_1` (`mahd`),
+  ADD KEY `masp` (`masp`);
 
 --
 -- Indexes for table `chitietphieunhap`
 --
 ALTER TABLE `chitietphieunhap`
-  ADD KEY `masp` (`masp`),
-  ADD KEY `mapn` (`mapn`);
+  ADD KEY `mapn` (`mapn`),
+  ADD KEY `masp` (`masp`);
 
 --
 -- Indexes for table `danhmuc`
@@ -331,13 +362,13 @@ ALTER TABLE `sanpham`
 -- AUTO_INCREMENT for table `danhmuc`
 --
 ALTER TABLE `danhmuc`
-  MODIFY `madm` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `madm` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `hoadon`
 --
 ALTER TABLE `hoadon`
-  MODIFY `mahd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `mahd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `khachhang`
@@ -358,6 +389,12 @@ ALTER TABLE `phieunhap`
   MODIFY `mapn` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `sanpham`
+--
+ALTER TABLE `sanpham`
+  MODIFY `masp` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -366,14 +403,14 @@ ALTER TABLE `phieunhap`
 --
 ALTER TABLE `chitiethoadon`
   ADD CONSTRAINT `chitiethoadon_ibfk_1` FOREIGN KEY (`mahd`) REFERENCES `hoadon` (`mahd`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_masp` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`);
+  ADD CONSTRAINT `chitiethoadon_ibfk_2` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`);
 
 --
 -- Constraints for table `chitietphieunhap`
 --
 ALTER TABLE `chitietphieunhap`
-  ADD CONSTRAINT `chitietphieunhap_ibfk_2` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`),
-  ADD CONSTRAINT `chitietphieunhap_ibfk_3` FOREIGN KEY (`mapn`) REFERENCES `phieunhap` (`mapn`);
+  ADD CONSTRAINT `chitietphieunhap_ibfk_3` FOREIGN KEY (`mapn`) REFERENCES `phieunhap` (`mapn`),
+  ADD CONSTRAINT `chitietphieunhap_ibfk_4` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`);
 
 --
 -- Constraints for table `hoadon`
