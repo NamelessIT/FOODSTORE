@@ -87,6 +87,8 @@ input[readonly] {
       transition: background 0.3s;
       min-width: 165px;
       border-radius: 5px;
+      font-weight: bold;
+      font-size: 1.2rem;
   }
   
   .sidebar li.active {
@@ -565,4 +567,33 @@ input[readonly] {
   display: flex;
   justify-content: center;
   margin-bottom: 2vh;
+}
+
+/* Form thêm phiếu nhập */
+.div_bao_input_pn label{
+  margin-left: 1.5%;
+  font-size: 1.1rem;
+  font-weight: 550;
+}
+
+.div_bao_input_pn input {
+  margin-left: 1%;
+  border-radius: 5px;
+  width: 100%;
+}
+
+#btn_closeFormAddPN{
+  background-color: rgb(181, 8, 8);border-radius: 10px; color: white; padding: 2% 3% 2% 3%; font-weight: 550; cursor: pointer;
+}
+
+#btn_closeFormAddPN:hover {
+  background-color: rgba(181, 8, 8, 0.7);
+}
+
+#btn_xacnhan_them_pn {
+  background-color: rgb(3, 91, 3);border-radius: 10px; color: white; padding: 2% 3% 2% 3%; font-weight: 550; cursor: pointer;
+}
+
+#btn_xacnhan_them_pn:hover {
+  background-color: rgba(3, 91, 3, 0.7);
 }

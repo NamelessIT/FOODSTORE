@@ -49,9 +49,16 @@ mysqli_close($connect);
             <!-- Nội dung của trang -->
                 <!--MODAL QUẢN LÝ SẢN PHẨM  -->
     <div id="QUANLYSANPHAM" class="invisible">
-        <h4>Quản lý sản phẩm</h4>
-        <h5>TÌM KIẾM</h5>
-        <input id="Find_SANPHAM" type="text">
+        <div class="Title_ChucNang">
+            <label>Quản Lý Sản Phẩm</label>
+        </div>
+        <div class="Cover_sepherate_line">
+            <div class="sepherate_line"></div>
+        </div>
+        <div class="search_cover">
+            <label>Tìm Kiếm</label>
+            <input id="Find_SANPHAM" type="text" class="input_seacrh">
+        </div>
         <br></br>
         <button class="Modal_Add" style="width:15%">Thêm sản phẩm</button>
         <br></br>
@@ -84,20 +91,22 @@ mysqli_close($connect);
         <!-- MODAL FOR ADD SẢN PHẨM -->
     <form method="POST" id="THEM_SAN_PHAM">
         <div class="modal-admin invisible">
-            <div class="modal-container animationTransmision">
-                <div class="fa fa-times icon add-close">
-                    <i></i>
+            <div class="modal-container animationTransmision" style="width:70% ; min-height: 40%;">
+                <div style="padding-bottom: 1%">
+                    <div class="fa fa-times icon add-close" style="posittion: relative;">
+                        <i></i>
+                    </div>
                 </div>
-                <div class="modal-body">
-                <div class="img">
-                    <input type="file" id="AnhSanPham" onchange="previewImage(event)">
-                    <img id="preview" src="" title="Nhấn để thêm ảnh">
+                <div class="modal-body" style="  justify-content: space-around;">
+                <div class="img" style="display: flex;align-items: center;flex-direction: column; min-width: 10% ; min-height: 20%;">
+                    <img id="preview" src="" title="Nhấn để thêm ảnh" style="max-width: 200px; margin-bottom: 0;">
+                    <br>
+                    <input style="padding-left: 18%" type="file" id="AnhSanPham" onchange="previewImage(event)">
                 </div>
                     <div class="properties">
                         <div class="flex-box">
-                            <h4 class="Title Tensp" style="margin: 8px 5px;">Tên Sản Phẩm </h4>
-                            <input id="TenSanPham" class="SoLuong" type="text" required
-                                placeholder="#abcdef">
+                            <h4 class="Title Tensp" style="margin: 8px 5px;">Tên Sản Phẩm:</h4>
+                            <input id="TenSanPham" class="SoLuong" type="text" required placeholder="#abcdef">
                         </div>
                         <div class="flex-box" style="display: block ;">
                             <div class="dropdown OPTIONADMIN">
@@ -175,11 +184,18 @@ mysqli_close($connect);
 
     <!-- KẾT THÚC -->
 
-                <!-- MODAL QUANLYDONHANG -->
+    <!-- MODAL QUANLYDONHANG -->
     <div id="QUANLYDONHANG" class="invisible">
-        <h4>Quản lý hóa đơn</h4>
-        <h5>TÌM KIẾM HÓA ĐƠN</h5>
-        <input id="Find" type="text">
+        <div class="Title_ChucNang">
+            <label>Quản Lý Hóa Đơn</label>
+        </div>
+        <div class="Cover_sepherate_line">
+            <div class="sepherate_line"></div>
+        </div>
+        <div class="search_cover">
+            <label>Tìm Kiếm</label>
+            <input id="Find_DONHANG" type="text" class="input_seacrh">
+        </div>
         <div id="CHART_SHOW" >
         </div>
         <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>                   
@@ -191,29 +207,90 @@ mysqli_close($connect);
     </div>
     <!-- MODAL QUANLYNGUOIDUNG -->
     <div id="QUANLYNGUOIDUNG" class="invisible">
-        <h4>Quản lý người dùng</h4>
+        <div class="Title_ChucNang">
+            <label>Quản Lý Người Dùng</label>
+        </div>
+        <div class="Cover_sepherate_line">
+            <div class="sepherate_line"></div>
+        </div>
+        <div class="search_cover">
+            <label>Tìm Kiếm</label>
+            <input id="Find_NGUOIDUNG" type="text" class="input_seacrh">
+        </div>
+        <br>
         <h5 class="title_count">SỐ LƯỢNG NGƯỜI DÙNG:</h5>
         <h5 class="user_count"></h5>
         <div id="USER_SHOW"></div>
     </div>
 
-        <!-- model phiếu nhâp -->
+    <!-- modal phiếu nhâp -->
         <div id="QUANLYPHIEUNHAP" class="invisible">
-        <h4>Quản lý phiếu nhập</h4>
-        <h5>TÌM KIẾM</h5>
-        <input id="Find_PN" type="text">
-        <br></br>
-        <button class="Modal_Add ADD-PN" style="width:15%">Thêm phiếu nhập</button>
-        <!-- <br></br>
-        <button id="SHOW_DM">xem danh mục</button>
-        <br></br> -->
+        <div class="Title_ChucNang">
+            <label>Quản Lý Phiếu Nhập</label>
+        </div>
+        <div class="Cover_sepherate_line">
+            <div class="sepherate_line"></div>
+        </div>
+        <div class="search_cover" style="margin-bottom: 1%">
+            <label>Tìm Kiếm</label>
+            <input id="Find_PHIEUNHAP" type="text" class="input_seacrh">
+        </div>
+        <button class="Modal_Add ADD-PN" style="width:15%" onclick="showFormAddPN()" id="btn_showFormAddPN">Thêm phiếu nhập</button>
         <div id="PHIEUNHAP" >
         </div>
-    </div>     
+    </div>
+    
+    <!-- modal add Phiếu nhập -->
+    <div id="div_bao_FormAdd_PN" class="invisible">
+
+    <div id="div_phu_den" style=" height: 100%;width: 100%;top: 0;left: 0;background-color: rgba(0, 0, 0, 0.5);position: fixed;z-index: 50;" class="invisible"></div>
+
+    <div style="position: absolute; z-index: 50 ;  width: 100%; height: 100%; display: flex; position: fixed; left: 45.5%; top: 25%;">
+    <form id="FormAddPN">
+        <div style="border: orange 4px solid; border-radius: 10px; width: 120%; padding: 10px 0 10px 0; background-color: #fff;">
+            <div style="display: flex; justify-content: center; padding-bottom: 1%;">
+                <label style="font-size: 1.4rem;font-weight: bold;">Thêm Phiếu Nhập</label>
+            </div>
+            <div style="width: 100%; height: 0.5vh;background-color: rgb(236, 164, 29);;"></div>
+            <div style="margin: 0 0 10px 0; display: flex; justify-content: space-evenly;">
+                <div style="padding-left: 2%; margin-top: 1%;">
+                    <div class="div_bao_input_pn" style="margin-bottom: 5%;">
+                        <label>Tên sản phẩm:</label> <br>
+                        <input type="text" required>
+                    </div>
+                    <div class="div_bao_input_pn">
+                        <label>Số lượng nhập:</label> <br>
+                        <input type="text" required>
+                    </div>
+                </div>
+                <div style="padding-right: 2%; margin-top: 1%;">
+                    <div class="div_bao_input_pn" style="margin-bottom: 5%;">
+                        <label>Giá nhập:</label> <br>
+                        <input type="text" required>
+                    </div>
+                    <div class="div_bao_input_pn">
+                        <label>Thành tiền:</label> <br>
+                        <input type="text">
+                    </div>
+                </div>
+            </div>
+            <div style="width: 100%; justify-content: space-evenly; display: flex;">
+                <button onclick="closeFormAddPN()" id="btn_closeFormAddPN" style="box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);">Thoát</button>
+                <button id="btn_xacnhan_them_pn" style="box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);">Xác nhận</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
 
     <!-- MODAL THONGKEDONHANG -->
     <div id="THONGKEDONHANG" class="invisible">
-        <h4>Thống kê đơn hàng</h4>
+        <div class="Title_ChucNang">
+            <label>Thống Kê Đơn Hàng</label>
+        </div>
+        <div class="Cover_sepherate_line">
+            <div class="sepherate_line"></div>
+        </div>
         <div class="THONGKEDONHANG">
             <div class="SOLUONGMUA">
                 <div id="SoLuongMua"></div>
@@ -241,12 +318,20 @@ mysqli_close($connect);
                                 <li onclick="selectOptionType('MAX')">MAX</li>
                             </div>
         </div>
-        <input type="checkbox" id="week" >
-        <h5 style="display:inline;">tuần</h5>
-        <input type="checkbox" id="month">
-        <h5 style="display:inline;">tháng</h5>
-        <input type="checkbox" id="time" >
-        <h5 style="display:inline;">thời gian</h5>
+        <div style="display:flex;">
+        <div style="display:flex; margin-right: .5%;">
+            <input type="checkbox" id="week">
+            <label style="font-size: 1.1rem">tuần</label>
+        </div>
+        <div style="display:flex; margin-right: .5%;">
+            <input type="checkbox" id="month">
+            <label style="font-size: 1.1rem">tháng</label>
+        </div>
+        <div style="display:flex;">
+            <input type="checkbox" id="time" >
+            <label style="font-size: 1.1rem">thời gian</label>
+        </div>
+        </div>
         <input type="date" id="start_time" class="invisible" style="display: block;text-align:center;"   required >
         <input type="date" id="end_time" class="invisible" style="display: block;text-align:center;"   required >
         <div class="invisible Filter_time">
@@ -263,8 +348,11 @@ mysqli_close($connect);
         </div>
         <!-- <button class="FilterAccept">LỌC</button> -->
         <div class="dropdown MONTH">
-        <h5 class="text_month invisible">Chọn tháng</h5>
-        <input type="text" id="month_for_week" class="invisible" style="display: block;text-align:center;" readonly  required >
+            <br>
+        <div style="display: flex;">
+            <label class="text_month invisible" style="font-size: 1.1rem; font-weight: 550;">Chọn tháng:</label>
+            <input type="text" id="month_for_week" class="invisible" style="display: block;text-align:center; margin-left: 1%;" readonly  required >
+        </div>
         <div class="dropdown-content-MONTH invisible" >
                                 <li onclick="selectOption_MONTH('1')">1</li>
                                 <li onclick="selectOption_MONTH('2')">2</li>

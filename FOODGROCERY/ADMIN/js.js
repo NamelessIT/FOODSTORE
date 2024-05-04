@@ -1333,3 +1333,20 @@ window.addEventListener('load', function() {
 
 
 
+    var showFormButton = document.getElementById('btn_showFormAddPN');
+    var myForm = document.getElementById('div_bao_FormAdd_PN');
+    var divPhuden = document.getElementById('div_phu_den');
+
+    showFormButton.addEventListener('click', function () {
+        myForm.classList.remove('invisible');
+        divPhuden.classList.remove('invisible')
+    });
+
+    var showFormButton = document.getElementById('btn_closeFormAddPN');
+    var myForm = document.getElementById('div_bao_FormAdd_PN');
+    var divPhuden = document.getElementById('div_phu_den');
+
+    showFormButton.addEventListener('click', function () {
+        myForm.classList.add('invisible');
+        divPhuden.classList.add('invisible');
+    });
