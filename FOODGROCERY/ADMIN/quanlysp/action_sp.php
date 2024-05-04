@@ -429,7 +429,7 @@ if(mysqli_num_rows($sql_query_dm)>0){
             <td class="seperate Tendm" >
                 '.$row['tendm'].'
             </td>
-            <td class="seperate Del_dm" data-dm='.$row['madm'].'>
+            <td class="seperate Del_dm" style="display: flex;justify-content: center;" data-dm='.$row['madm'].'>
                 <button >Xóa</button>
             </td>
         </tr>
