@@ -103,7 +103,6 @@ const show_madm = document.querySelector('.OPTIONADMINCONTENT');
 const out_input_madm = document.querySelector('.OPTIONADMIN');
 input_madm.addEventListener('click', function (event) {
     show_madm.style.display = 'block';
-    show_madm
     event.stopPropagation();
 })
 out_input_madm.addEventListener('click', function () {
@@ -565,6 +564,7 @@ function fetch_data_edit(){
 }
 //load danh mục
 var NOIDUNG_DANHMUC=document.getElementById('NOIDUNG_DANHMUC');
+var danhmuc_cho_sanpham=document.querySelector('.OPTIONADMINCONTENT');
 function fetch_data_dm(){
     $.ajax({
         url: "quanlysp/action_sp.php",
@@ -576,6 +576,29 @@ function fetch_data_dm(){
         }
     });
 }
+function fetch_data_tendm(){
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var list_tendm = ""; // Khởi tạo một chuỗi để chứa tên danh mục
+
+            // Duyệt qua mảng danh mục và thêm tên mỗi danh mục vào chuỗi
+            for (var i = 0; i < responseData.list_madm.length; i++) {
+                list_tendm += '<li class="option_dm" data-name="' + responseData.list_madm[i]['tendm'] + '" data-idname="' + responseData.list_madm[i]['madm'] + '">' + responseData.list_madm[i]['tendm'] + '</li>';
+            }
+
+            // Hiển thị danh sách tên danh mục
+            danhmuc_cho_sanpham.innerHTML = list_tendm; 
+        }
+    });
+}
+$(document).on('click','.option_dm',function(){
+    var name=$(this).data('name');
+    var madm=$(this).data('idname');
+    selectOption(name,madm);
+})
 var btn_show_dm=document.getElementById('SHOW_DM');
 var modal_dm=document.querySelector('.modal_dm');
 var container_dm=document.querySelector('.container_dm');
@@ -612,6 +635,7 @@ btn_dm.addEventListener('click',function(){
                     success: function(response) {
                         console.log("thành công");
                         fetch_data_dm();
+                        fetch_data_tendm();
                         check=0;
                         return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
                     }
@@ -627,6 +651,7 @@ btn_dm.addEventListener('click',function(){
                         console.log('THÊM dữ liệu thành công');
                         // Assuming fetch_data() is defined elsewhere
                         fetch_data_dm();
+                        fetch_data_tendm();
                         return;
                     }
                 });
@@ -712,6 +737,7 @@ btn_dm.addEventListener('click',function(){
 // THỐNG KÊ
 const LOC_THONGKE=document.getElementById('TYPE_THONGKE');
 const LOC_DM=document.getElementById('TYPE_THONGKE_LOAI');
+// const Filter_thongke_dm=document.querySelector('.FilterAccept');
 const menu_THONGKE=document.querySelector('.dropdown-content-THONGKE');
 const menu_THONGKE_DM=document.querySelector('.dropdown-content-THONGKE-danhmuc');
 const outside_THONGKE=document.querySelector('.THONGKE');
@@ -805,15 +831,20 @@ function selectOptionType(option) {
 
 
 //checkbox
+var Filter_time=document.querySelector('.Filter_time');
+var filter_product=document.getElementById('filter_product');
+var filter_product_dm=document.getElementById('filter_product_dm');
 
 weekCheckbox.addEventListener('click', function() {
     if (weekCheckbox.checked) {
         clearElement();
+        Filter_time.classList.add('invisible');
         menu_THONGKE.classList.add('invisible');
         menu_THONGKE_DM.classList.add('invisible');
         start_time.classList.add('invisible');
         end_time.classList.add('invisible');
         LOC_DM.classList.add('invisible');
+        // Filter_thongke_dm.classList.add('invisible');
         LOC_THONGKE.classList.remove('invisible');
         timeCheckbox.checked=false;
         monthCheckbox.checked = false;
@@ -822,10 +853,12 @@ weekCheckbox.addEventListener('click', function() {
     }
     else{
         menu_THONGKE.classList.add('invisible');
+        Filter_time.classList.add('invisible');
         menu_THONGKE_DM.classList.add('invisible');
         start_time.classList.add('invisible');
         end_time.classList.add('invisible');
         LOC_DM.classList.add('invisible');
+        // Filter_thongke_dm.classList.add('invisible');
         LOC_THONGKE.classList.remove('invisible');
         weekCheckbox.checked=true;
     }
@@ -833,11 +866,13 @@ weekCheckbox.addEventListener('click', function() {
 monthCheckbox.addEventListener('click', function() {
     if (monthCheckbox.checked) {
         clearElement();
+        Filter_time.classList.add('invisible');
         menu_THONGKE.classList.add('invisible');
         menu_THONGKE_DM.classList.add('invisible');
         start_time.classList.add('invisible');
         end_time.classList.add('invisible');
         LOC_DM.classList.add('invisible');
+        // Filter_thongke_dm.classList.add('invisible');
         LOC_THONGKE.classList.remove('invisible');
         weekCheckbox.checked = false;
         timeCheckbox.checked=false;
@@ -846,12 +881,14 @@ monthCheckbox.addEventListener('click', function() {
         textcheckbox.classList.add('invisible');
     }
     else{
+        Filter_time.classList.add('invisible');
         menu_THONGKE.classList.add('invisible');
         menu_THONGKE_DM.classList.add('invisible');
         start_time.classList.add('invisible');
         end_time.classList.add('invisible');
         LOC_THONGKE.classList.remove('invisible');
         LOC_DM.classList.add('invisible');
+        // Filter_thongke_dm.classList.add('invisible');
         monthCheckbox.checked=true;
     }
     if(LOC_THONGKE.value==="TẤT CẢ"){
@@ -880,12 +917,14 @@ monthCheckbox.addEventListener('click', function() {
 
 timeCheckbox.addEventListener('click', function() {
     if (timeCheckbox.checked) {
+        Filter_time.classList.remove('invisible');
         menu_THONGKE.classList.add('invisible');
         menu_THONGKE_DM.classList.add('invisible');
         start_time.classList.remove('invisible');
         end_time.classList.remove('invisible');
         LOC_THONGKE.classList.add('invisible');
-        LOC_DM.classList.remove('invisible');
+        LOC_DM.classList.add('invisible');
+        // Filter_thongke_dm.classList.add('invisible');
         clearElement();
         weekCheckbox.checked = false;
         monthCheckbox.checked=false;
@@ -895,17 +934,50 @@ timeCheckbox.addEventListener('click', function() {
         end_time.classList.remove('invisible');
     }
     else{
+        Filter_time.classList.remove('invisible');
         menu_THONGKE.classList.add('invisible');
         menu_THONGKE_DM.classList.add('invisible');
         start_time.classList.remove('invisible');
         end_time.classList.remove('invisible');
-        LOC_DM.classList.remove('invisible');
+        LOC_DM.classList.add('invisible');
+        // Filter_thongke_dm.classList.add('invisible');
         LOC_THONGKE.classList.add('invisible');
         timeCheckbox.checked=true;
     }
 
 })
 
+filter_product.addEventListener('click', function() {
+    if (filter_product.checked) {
+        fetch_data_top_products();
+        clearElement()
+        filter_product_dm.checked=false;
+        LOC_DM.classList.add('invisible');
+        // Filter_thongke_dm.classList.add('invisible');
+        
+    }
+    else{
+        fetch_data_top_products();
+        filter_product.checked=true;
+        LOC_DM.classList.add('invisible');
+        // Filter_thongke_dm.classList.add('invisible');
+    }
+})
+filter_product_dm.addEventListener('click',function(){
+    if (filter_product_dm.checked) {
+        fetch_data_top_products_dm();
+        clearElement()
+        filter_product.checked=false;
+        LOC_DM.classList.remove('invisible');
+        // Filter_thongke_dm.classList.remove('invisible');
+    }
+    else{
+        fetch_data_top_products_dm();
+        filter_product_dm.checked=true;
+        LOC_DM.classList.remove('invisible');
+        // Filter_thongke_dm.classList.remove('invisible');
+    }
+})
 
 LOC_MONTH.addEventListener('click',function(event){
     menu_MONTH.classList.remove('invisible');
@@ -962,6 +1034,9 @@ function selectOption_MONTH(option) {
     // thêm if vào
 }
 function clearElement() {
+    start_time.value='';
+    end_time.value='';
+    DETAIL.innerHTML='';
     bieudo_tuan_sum.innerHTML='';
     bieudo_tuan_avg.innerHTML='';
     bieudo_tuan_count.innerHTML='';
@@ -1092,18 +1167,44 @@ $(document).on('click', '.Tendm_thongke', function() {
     var tendm=$(this).data('tk');
     document.getElementById('TYPE_THONGKE_LOAI').value=tendm;
     menu_THONGKE_DM.classList.add('invisible');
-    fetch_data_top_products();
+    fetch_data_top_products_dm();
 
 });
 start_time.addEventListener('change',function(){
-    fetch_data_top_products();
+    if(filter_product_dm.checked==true){
+        fetch_data_top_products_dm();
+    }
+    else if(filter_product.checked==true){
+        fetch_data_top_products();
+    }
 })
 end_time.addEventListener('change',function(){
-    fetch_data_top_products();
+    if(filter_product_dm.checked==true){
+        fetch_data_top_products_dm();
+    }
+    else if(filter_product.checked==true){
+        fetch_data_top_products();
+    }
 })
 var DETAIL=document.getElementById('DETAIL');
 
 function fetch_data_top_products(){
+    if(end_time.value!='' && start_time.value!='' && start_time.value < end_time.value &&filter_product.checked==true){
+        var start=start_time.value;
+        var end=end_time.value;
+        $.ajax({
+            url: "quanlysp/action_sp.php",
+            method: "POST",
+            data: {START:start,END:end},
+            success: function(response) {
+                var responseData = JSON.parse(response);
+                var output_top = responseData.output_top;
+                DETAIL.innerHTML = output_top; 
+            }
+        });
+    }
+}
+function fetch_data_top_products_dm(){
     if(LOC_DM.value!='' && end_time.value!='' && start_time.value!='' && start_time.value < end_time.value){
         var DANHMUC=LOC_DM.value;
         var start=start_time.value;
@@ -1114,8 +1215,8 @@ function fetch_data_top_products(){
             data: { DANHMUC: DANHMUC,START:start,END:end},
             success: function(response) {
                 var responseData = JSON.parse(response);
-                var output_top = responseData.output_top;
-                DETAIL.innerHTML = output_top; 
+                var output_top_dm = responseData.output_top_dm;
+                DETAIL.innerHTML = output_top_dm; 
             }
         });
     }
@@ -1130,9 +1231,12 @@ btn_add_pn.addEventListener('click',function(){
 
 window.addEventListener('load', function() {
     selectOptionType('TẤT CẢ');
+    show_madm.style.display = 'none';
     weekCheckbox.click();
+    filter_product.click();
     fetch_data(); // Gọi hàm để tải sản phẩm khi trang được load
     fetch_data_hidden();
+    fetch_data_tendm();
     fetch_data_dm();
 });
 

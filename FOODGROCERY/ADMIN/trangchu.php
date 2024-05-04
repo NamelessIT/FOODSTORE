@@ -103,10 +103,8 @@ mysqli_close($connect);
                             <div class="dropdown OPTIONADMIN">
                                 <h3 class="Title" style="margin-bottom: 15px;">TITLE:</h3>
                                 <input id="TIEUDE" class="SoLuong" type="text" style="width: 100%;" readonly required>
-                                <div class="dropdown-content OPTIONADMINCONTENT">
-                                <?php foreach ($list_dm as $row): ?>
-                                    <li onclick="selectOption('<?php echo $row['tendm'] ; ?>','<?php echo $row['madm']; ?>')" ><?php echo htmlspecialchars($row['tendm']); ?></li>
-                                <?php endforeach; ?>
+                                <div class="dropdown-content OPTIONADMINCONTENT ">
+                                
                                 </div>
                             </div>
                         </div>
@@ -235,7 +233,7 @@ mysqli_close($connect);
         <!-- <input id="start-day" type="date">
         <input id="end-day" type="date"> -->
         <div class="dropdown THONGKE">
-            <input id="TYPE_THONGKE" class="SoLuong" type="text"  readonly  required>
+            <input id="TYPE_THONGKE" class="SoLuong" type="text" style="display:block;margin-bottom:15px"  readonly  required>
                             <div class="dropdown-content-THONGKE invisible" >
                                 <li onclick="selectOptionType('TẤT CẢ')">TẤT CẢ</li>
                                 <li onclick="selectOptionType('TỔNG')">TỔNG</li>
@@ -245,14 +243,6 @@ mysqli_close($connect);
                                 <li onclick="selectOptionType('MAX')">MAX</li>
                             </div>
         </div>
-        <div class="dropdown THONGKE">
-            <input id="TYPE_THONGKE_LOAI" class="SoLuong" type="text"  readonly  required>
-                            <div class="dropdown-content-THONGKE-danhmuc invisible" >
-
-                            </div>
-        </div>
-        <button class="FilterAccept">LỌC</button>
-        <h5>tổng,trung bình,đếm,min,max số lượng hóa đơn trong thời gian đó</h5>
         <input type="checkbox" id="week" >
         <h5 style="display:inline;">tuần</h5>
         <input type="checkbox" id="month">
@@ -261,6 +251,19 @@ mysqli_close($connect);
         <h5 style="display:inline;">thời gian</h5>
         <input type="date" id="start_time" class="invisible" style="display: block;text-align:center;"   required >
         <input type="date" id="end_time" class="invisible" style="display: block;text-align:center;"   required >
+        <div class="invisible Filter_time">
+            <input type="checkbox" id="filter_product" >
+            <h5 style="display:inline;">Sản phẩm</h5>
+            <input type="checkbox" id="filter_product_dm">
+            <h5 style="display:inline;">Loại sản phẩm</h5>
+        </div>
+        <div class="dropdown THONGKE" >
+        <input id="TYPE_THONGKE_LOAI" class="SoLuong" type="text" style="margin: 10px 0 0 0;"  readonly  required>
+            <div class="dropdown-content-THONGKE-danhmuc invisible" >
+
+            </div>
+        </div>
+        <!-- <button class="FilterAccept">LỌC</button> -->
         <div class="dropdown MONTH">
         <h5 class="text_month invisible">Chọn tháng</h5>
         <input type="text" id="month_for_week" class="invisible" style="display: block;text-align:center;" readonly  required >
