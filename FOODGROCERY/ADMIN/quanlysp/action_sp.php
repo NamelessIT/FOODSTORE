@@ -102,87 +102,106 @@ if(isset($_POST['id_back'])){
 
 
 $output1='';
-$sql_query1=mysqli_query($connect,"SELECT * FROM sanpham,danhmuc WHERE sanpham.ishidden=0 and sanpham.madm=danhmuc.madm");
-// .= NỐI CHUỖI
-$output1 .= '
-    <table class="table" style="width: 100%">
-        <thead class="thead_dark">
-        <tr>
-            <th>
-                STT
-            </th>
-            <th>
-                Mã sản phẩm
-            </th>
-            <th>
-                Tên sản phẩm
-            </th>
-            <th>
-                Ảnh
-            </th>
-            <th>
-                Gía bán
-            </th>
-            <th>
-                Loại
-            </th>
-            <th>
-                Chi tiết
-            </th>
-            <th>
-                Xóa
-            </th>
-        </tr>
-        </thead>
-';
-
-if(mysqli_num_rows($sql_query1)>0){
-    $i=0;
-    while($row=mysqli_fetch_array($sql_query1)){
+if(isset($_POST['COT_SP'])){
+    $cot_sp=$_POST['COT_SP'];
+    $sort=$_POST['SORT_SP'];
+    if($sort=='true'){
+        $sql_query1=mysqli_query($connect,"SELECT * FROM sanpham,danhmuc WHERE sanpham.ishidden=0 and sanpham.madm=danhmuc.madm ORDER BY $cot_sp DESC");
+        
+    }
+    else{
+        $sql_query1=mysqli_query($connect,"SELECT * FROM sanpham,danhmuc WHERE sanpham.ishidden=0 and sanpham.madm=danhmuc.madm ORDER BY $cot_sp ASC");
+    }
+    // .= NỐI CHUỖI
+    $output1 .= '
+        <table class="table" style="width: 100%">
+            <thead class="thead_dark">
+            <tr>
+                <th>
+                    STT
+                </th>
+                <th class="sortable_sp '. ($cot_sp == "sanpham.masp" ? 'click' : '') . '" data-tk_sp="sanpham.masp" '. ($cot_sp == "sanpham.masp" ? 'style="background-color:#ccc"' : '') . '>
+                    Mã sản phẩm
+                </th>
+                <th class="sortable_sp '. ($cot_sp == "sanpham.tensp" ? 'click' : '') . '" data-tk_sp="sanpham.tensp" '. ($cot_sp == "sanpham.tensp" ? 'style="background-color:#ccc"' : '') . '>
+                    Tên sản phẩm
+                </th>
+                <th class="sortable_sp '. ($cot_sp == "sanpham.image" ? 'click' : '') . '" data-tk_sp="sanpham.image" '. ($cot_sp == "sanpham.image" ? 'style="background-color:#ccc"' : '') . '>
+                    Ảnh
+                </th>
+                <th class="sortable_sp '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" ? 'style="background-color:#ccc"' : '') . '>
+                    Gía bán
+                </th>
+                <th class="sortable_sp '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" ? 'style="background-color:#ccc"' : '') . '>
+                    Loại
+                </th>
+                <th>
+                    Chi tiết
+                </th>
+                <th>
+                    Xóa
+                </th>
+            </tr>
+            </thead>
+    ';
+    
+    if(mysqli_num_rows($sql_query1)>0){
+        $i=0;
+        while($row=mysqli_fetch_array($sql_query1)){
+            $output1 .='
+            <tr>
+                <td class="seperate STT">
+                    '.$i++.'
+                </td>
+                <td class="seperate Masp" data-id2='.$row['masp'].' >
+                    '.$row['masp'].'
+                </td>
+                <td class="seperate Tensp" data-id2='.$row['masp'].' >
+                    '.$row['tensp'].'
+                </td>
+                <td class="seperate style="width:80px" >
+                    <img " src="../image/'.$row['image'].'" alt="Error" style="width:100px" >  
+                </td>
+                <td class="seperate " >
+                    '.$row['dongia'].'
+                </td>
+                <td class="seperate " >
+                    '.$row['tendm'].'
+                </td>
+                <td class="seperate " >
+                    '.$row['motasp'].'
+                 </td>
+                <td class="seperate ">
+                    <button class="Del_data" data-xoa='.$row['masp'].'>Xóa</button>
+                </td>
+            </tr>
+            ';
+        }
+    }
+    else{
         $output1 .='
-        <tr>
-            <td class="seperate STT">
-                '.$i++.'
-            </td>
-            <td class="seperate Masp" data-id2='.$row['masp'].' >
-                '.$row['masp'].'
-            </td>
-            <td class="seperate Tensp" data-id2='.$row['masp'].' >
-                '.$row['tensp'].'
-            </td>
-            <td class="seperate style="width:80px" >
-                <img " src="../image/'.$row['image'].'" alt="Error" style="width:100px" >  
-            </td>
-            <td class="seperate " >
-                '.$row['dongia'].'
-            </td>
-            <td class="seperate " >
-                '.$row['tendm'].'
-            </td>
-            <td class="seperate " >
-                '.$row['motasp'].'
-             </td>
-            <td class="seperate ">
-                <button class="Del_data" data-xoa='.$row['masp'].'>Xóa</button>
-            </td>
-        </tr>
+            <tr>
+                <td colspan="8">Dữ liệu chưa có</td> 
+            </tr>
         ';
     }
-}
-else{
+    
     $output1 .='
-        <tr>
-            <td colspan="8">Dữ liệu chưa có</td> 
-        </tr>
+        </table>
     ';
 }
 
-$output1 .='
-    </table>
-';
-
 $output_hidden='';
-$sql_query_hidden=mysqli_query($connect,"SELECT * FROM sanpham WHERE sanpham.ishidden=1 ");
+if(isset($_POST['COT_SP_HIDDEN'])){
+    $cot_sp=$_POST['COT_SP_HIDDEN'];
+    $sort=$_POST['SORT_SP_HIDDEN'];
+    if($sort=='true'){
+        $sql_query_hidden=mysqli_query($connect,"SELECT * FROM sanpham,danhmuc WHERE sanpham.ishidden=1 and sanpham.madm=danhmuc.madm ORDER BY $cot_sp DESC");
+        
+    }
+    else{
+        $sql_query_hidden=mysqli_query($connect,"SELECT * FROM sanpham,danhmuc WHERE sanpham.ishidden=1 and sanpham.madm=danhmuc.madm ORDER BY $cot_sp ASC");
+    }
 // .= NỐI CHUỖI
 $output_hidden .= '
     <table class="table" style="width: 100%">
@@ -191,19 +210,19 @@ $output_hidden .= '
             <th>
                 STT
             </th>
-            <th>
+            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.masp" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.masp" '. ($cot_sp == "sanpham.masp" ? 'style="background-color:#ccc"' : '') . '>
                 Mã sản phẩm
             </th>
-            <th>
+            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.tensp" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.tensp" '. ($cot_sp == "sanpham.tensp" ? 'style="background-color:#ccc"' : '') . '>
                 Tên sản phẩm
             </th>
-            <th>
+            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.image" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.image" '. ($cot_sp == "sanpham.image" ? 'style="background-color:#ccc"' : '') . '>
                 Ảnh
             </th>
-            <th>
+            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" ? 'style="background-color:#ccc"' : '') . '>
                 Gía bán
             </th>
-            <th>
+            <th class="sortable_sp_hidden '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp_hidden="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" ? 'style="background-color:#ccc"' : '') . '>
                 Loại
             </th>
             <th>
@@ -266,7 +285,7 @@ else{
 $output_hidden .='
     </table>
 ';
-
+}
 
 //masp
 $sql_masp="SELECT masp FROM sanpham ";
@@ -767,16 +786,16 @@ if(isset($_POST['DANHMUC'])){
                 <th>
                     TOP
                 </th>
-                <th class="sortable_tk_filter '. ($cot == "sanpham.masp" ? 'click' : '') . '" data-tk_filter="sanpham.masp" '. ($cot == "sanpham.masp" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_tk_filter '. ($cot == "sanpham.masp" ? 'click' : '') . '" data-tk_filter="sanpham.masp" '. ($cot == "sanpham.masp" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Mã sản phẩm
                 </th>
-                <th class="sortable_tk_filter '. ($cot == "sanpham.tensp" ? 'click' : '') . '" data-tk_filter="sanpham.tensp" '. ($cot == "sanpham.tensp" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_tk_filter '. ($cot == "sanpham.tensp" ? 'click' : '') . '" data-tk_filter="sanpham.tensp" '. ($cot == "sanpham.tensp" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Tên sản phẩm
                 </th>
-                <th class="sortable_tk_filter '. ($cot == "danhmuc.tendm" ? 'click' : '') . '" data-tk_filter="danhmuc.tendm" '. ($cot == "danhmuc.tendm" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_tk_filter '. ($cot == "danhmuc.tendm" ? 'click' : '') . '" data-tk_filter="danhmuc.tendm" '. ($cot == "danhmuc.tendm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Loại
                 </th>
-                <th class="sortable_tk_filter '. ($cot == "tong_soluong" ? 'click' : '') . '" data-tk_filter="tong_soluong" '. ($cot == "tong_soluong" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_tk_filter '. ($cot == "tong_soluong" ? 'click' : '') . '" data-tk_filter="tong_soluong" '. ($cot == "tong_soluong" && $sort=='false' ?  'style="background-color:#ccc"' : '') . '>
                     Số lượng đã bán
                 </th>
             </tr>
@@ -890,16 +909,16 @@ $output_top_loinhuan .= '
             <th>
                 TOP
             </th>    
-            <th class="sortable_tk_filter_TIEN '. ($cot == "sanpham.masp" ? 'click' : '') . '" data-tk_filter="sanpham.masp" '. ($cot == "sanpham.masp" ? 'style="background-color:#ccc"' : '') . '>
+            <th class="sortable_tk_filter_TIEN '. ($cot == "sanpham.masp" ? 'click' : '') . '" data-tk_filter="sanpham.masp" '. ($cot == "sanpham.masp" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                 Mã sản phẩm
             </th>
-            <th class="sortable_tk_filter_TIEN '. ($cot == "sanpham.tensp" ? 'click' : '') . '" data-tk_filter="sanpham.tensp" '. ($cot == "sanpham.tensp" ? 'style="background-color:#ccc"' : '') . '>
+            <th class="sortable_tk_filter_TIEN '. ($cot == "sanpham.tensp" ? 'click' : '') . '" data-tk_filter="sanpham.tensp" '. ($cot == "sanpham.tensp" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                 Tên sản phẩm
             </th>
-            <th class="sortable_tk_filter_TIEN '. ($cot == "danhmuc.tendm" ? 'click' : '') . '" data-tk_filter="danhmuc.tendm" '. ($cot == "danhmuc.tendm" ? 'style="background-color:#ccc"' : '') . '>
+            <th class="sortable_tk_filter_TIEN '. ($cot == "danhmuc.tendm" ? 'click' : '') . '" data-tk_filter="danhmuc.tendm" '. ($cot == "danhmuc.tendm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                 Loại
             </th>
-            <th class="sortable_tk_filter_TIEN '. ($cot == "tong_soluong" ? 'click' : '') . '" data-tk_filter="tong_soluong" '. ($cot == "tong_soluong" ? 'style="background-color:#ccc"' : '') . '>
+            <th class="sortable_tk_filter_TIEN '. ($cot == "tong_soluong" ? 'click' : '') . '" data-tk_filter="tong_soluong" '. ($cot == "tong_soluong" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                 Tiền kiếm được
             </th>
         </tr>
@@ -979,13 +998,13 @@ if(isset($_POST['START'])){
                 <th>
                     TOP
                 </th>    
-                <th class="sortable_tk '. ($cot == "danhmuc.madm" ? 'click' : '') . '" data-tk_filter="danhmuc.madm" '. ($cot == "danhmuc.madm" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_tk '. ($cot == "danhmuc.madm" ? 'click' : '') . '" data-tk_filter="danhmuc.madm" '. ($cot == "danhmuc.madm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                 Mã danh mục
                 </th>
-                <th class="sortable_tk '. ($cot == "danhmuc.tendm" ? 'click' : '') . '" data-tk_filter="danhmuc.tendm" '. ($cot == "danhmuc.tendm" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_tk '. ($cot == "danhmuc.tendm" ? 'click' : '') . '" data-tk_filter="danhmuc.tendm" '. ($cot == "danhmuc.tendm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Tên danh mục
                 </th>
-                <th class="sortable_tk '. ($cot == "tong_soluong" ? 'click' : '') . '" data-tk_filter="tong_soluong" '. ($cot == "tong_soluong" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_tk '. ($cot == "tong_soluong" ? 'click' : '') . '" data-tk_filter="tong_soluong" '. ($cot == "tong_soluong" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Số lượng đã bán
                 </th>
             </tr>
@@ -1058,13 +1077,13 @@ if(isset($_POST['START'])){
                 <th>
                     TOP
                 </th>
-                <th class="sortable_tk_TIEN '. ($cot == "danhmuc.madm" ? 'click' : '') . '" data-tk_filter="danhmuc.madm" '. ($cot == "danhmuc.madm" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_tk_TIEN '. ($cot == "danhmuc.madm" ? 'click' : '') . '" data-tk_filter="danhmuc.madm" '. ($cot == "danhmuc.madm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Mã danh mục
                 </th>
-                <th class="sortable_tk_TIEN '. ($cot == "danhmuc.tendm" ? 'click' : '') . '" data-tk_filter="danhmuc.tendm" '. ($cot == "danhmuc.tendm" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_tk_TIEN '. ($cot == "danhmuc.tendm" ? 'click' : '') . '" data-tk_filter="danhmuc.tendm" '. ($cot == "danhmuc.tendm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Tên danh mục
                 </th>
-                <th class="sortable_tk_TIEN '. ($cot == "tong_soluong" ? 'click' : '') . '" data-tk_filter="tong_soluong" '. ($cot == "tong_soluong" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_tk_TIEN '. ($cot == "tong_soluong" ? 'click' : '') . '" data-tk_filter="tong_soluong" '. ($cot == "tong_soluong" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Tiền kiếm được
                 </th>
             </tr>

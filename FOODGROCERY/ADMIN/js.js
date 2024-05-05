@@ -529,10 +529,15 @@ $(document).on('click','.Back_hidden',function(){
 
 //LOAD SẢN PHẨM
 //lấy dữ liệu từ database
+let cot_sp='sanpham.masp';
+let sort_sp='false';
+let cot_sp_hidden='sanpham.masp';
+let sort_sp_hidden='false';
 function fetch_data(){
     $.ajax({
         url: "quanlysp/action_sp.php",
         method: "POST",
+        data:{COT_SP : cot_sp,SORT_SP:sort_sp},
         success: function(response) {
             var responseData = JSON.parse(response);
             var output1 = responseData.output1;
@@ -544,6 +549,7 @@ function fetch_data_hidden(){
     $.ajax({
         url: "quanlysp/action_sp.php",
         method: "POST",
+        data:{COT_SP_HIDDEN : cot_sp_hidden,SORT_SP_HIDDEN:sort_sp_hidden},
         success: function(response) {
             var responseData = JSON.parse(response);
             var output_hidden = responseData.output_hidden;
@@ -562,6 +568,41 @@ function fetch_data_edit(){
         }
     });
 }
+
+
+$(document).on('click','.sortable_sp',function(){
+    var cot=$(this).data('tk_sp');
+    cot_sp=cot;
+    if($(this).hasClass('click')){
+        if(sort_sp=='false'){
+            sort_sp='true';
+        }
+        else if(sort_sp=='true'){
+            sort_sp='false';
+        }
+    }
+    else{
+        sort_sp='false';
+    }
+    fetch_data();
+})
+
+$(document).on('click','.sortable_sp_hidden',function(){
+    var cot=$(this).data('tk_sp_hidden');
+    cot_sp_hidden=cot;
+    if($(this).hasClass('click')){
+        if(sort_sp_hidden=='false'){
+            sort_sp_hidden='true';
+        }
+        else if(sort_sp_hidden=='true'){
+            sort_sp_hidden='false';
+        }
+    }
+    else{
+        sort_sp_hidden='false';
+    }
+    fetch_data_hidden();
+})
 //load danh mục
 var NOIDUNG_DANHMUC=document.getElementById('NOIDUNG_DANHMUC');
 var danhmuc_cho_sanpham=document.querySelector('.OPTIONADMINCONTENT');
