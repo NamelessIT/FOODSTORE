@@ -120,19 +120,19 @@ if(isset($_POST['COT_SP'])){
                 <th>
                     STT
                 </th>
-                <th class="sortable_sp '. ($cot_sp == "sanpham.masp" ? 'click' : '') . '" data-tk_sp="sanpham.masp" '. ($cot_sp == "sanpham.masp" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_sp '. ($cot_sp == "sanpham.masp" ? 'click' : '') . '" data-tk_sp="sanpham.masp" '. ($cot_sp == "sanpham.masp" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Mã sản phẩm
                 </th>
-                <th class="sortable_sp '. ($cot_sp == "sanpham.tensp" ? 'click' : '') . '" data-tk_sp="sanpham.tensp" '. ($cot_sp == "sanpham.tensp" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_sp '. ($cot_sp == "sanpham.tensp" ? 'click' : '') . '" data-tk_sp="sanpham.tensp" '. ($cot_sp == "sanpham.tensp" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Tên sản phẩm
                 </th>
-                <th class="sortable_sp '. ($cot_sp == "sanpham.image" ? 'click' : '') . '" data-tk_sp="sanpham.image" '. ($cot_sp == "sanpham.image" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_sp '. ($cot_sp == "sanpham.image" ? 'click' : '') . '" data-tk_sp="sanpham.image" '. ($cot_sp == "sanpham.image" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Ảnh
                 </th>
-                <th class="sortable_sp '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_sp '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Gía bán
                 </th>
-                <th class="sortable_sp '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" ? 'style="background-color:#ccc"' : '') . '>
+                <th class="sortable_sp '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Loại
                 </th>
                 <th>
@@ -210,19 +210,19 @@ $output_hidden .= '
             <th>
                 STT
             </th>
-            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.masp" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.masp" '. ($cot_sp == "sanpham.masp" ? 'style="background-color:#ccc"' : '') . '>
+            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.masp" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.masp" '. ($cot_sp == "sanpham.masp" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                 Mã sản phẩm
             </th>
-            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.tensp" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.tensp" '. ($cot_sp == "sanpham.tensp" ? 'style="background-color:#ccc"' : '') . '>
+            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.tensp" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.tensp" '. ($cot_sp == "sanpham.tensp" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                 Tên sản phẩm
             </th>
-            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.image" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.image" '. ($cot_sp == "sanpham.image" ? 'style="background-color:#ccc"' : '') . '>
+            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.image" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.image" '. ($cot_sp == "sanpham.image" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                 Ảnh
             </th>
-            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" ? 'style="background-color:#ccc"' : '') . '>
+            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                 Gía bán
             </th>
-            <th class="sortable_sp_hidden '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp_hidden="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" ? 'style="background-color:#ccc"' : '') . '>
+            <th class="sortable_sp_hidden '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp_hidden="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                 Loại
             </th>
             <th>
