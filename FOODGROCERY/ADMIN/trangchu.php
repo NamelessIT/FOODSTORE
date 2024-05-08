@@ -93,7 +93,7 @@ mysqli_close($connect);
         <div class="modal-admin invisible">
             <div class="modal-container animationTransmision" style="width:70% ; min-height: 40%;">
                 <div style="padding-bottom: 1%">
-                    <div class="fa fa-times icon add-close" style="posittion: relative;">
+                    <div class="fa fa-times icon add-close" style="position: relative;">
                         <i></i>
                     </div>
                 </div>
@@ -235,9 +235,34 @@ mysqli_close($connect);
             <label>Tìm Kiếm</label>
             <input id="Find_PHIEUNHAP" type="text" class="input_seacrh">
         </div>
-        <button class="Modal_Add ADD-PN" style="width:15%" onclick="showFormAddPN()" id="btn_showFormAddPN">Thêm phiếu nhập</button>
-        <div id="PHIEUNHAP" >
+        <div style="margin-bottom: 5%;border-radius:5px">
+                        <label>Mã nhân viên:</label> <br>
+                        <input type="text" id="NV_PN" style="border-radius:5px" required readonly>
+                        <div class="NV_PN" style="position:relative">
+                        </div>
         </div>
+        <div>
+            <input type="date" id="Ngay_PN" style="border-radius:5px;margin-bottom: 5%;" required>
+        </div>
+        <button class="Modal_Add ADD-PN" style="width:15%"  id="btn_showFormAddPN">Nhập sản phẩm</button>
+        <div id="PHIEUNHAP" >
+            <table id="tableCHITIETPHIEUNHAP" class="table" style="width: 100%;">
+                <thead class="thead_dark">
+                <tr>
+                    <th>Mã sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Giá nhập</th>
+                    <th>Tổng tiền</th>
+                    <th>Xóa</th>
+                </tr>
+                </thead>
+                <tbody id="menuCHITIETPHIEUNHAP"></tbody>
+            </table>
+        </div>
+        <button  style="width:15%;margin:20px 0"  id="btn_ADDPN">Tạo phiếu nhập</button>
+        <div id="SHOWPHIEUNHAP"></div>
+        <button class="invisible BTN_BACK" style="display:block">Quay lại</button>
+        <div id="SHOWCHITIETPHIEUNHAP"></div>
     </div>
     
     <!-- modal add Phiếu nhập -->
@@ -249,33 +274,35 @@ mysqli_close($connect);
     <form id="FormAddPN">
         <div style="border: orange 4px solid; border-radius: 10px; width: 120%; padding: 10px 0 10px 0; background-color: #fff;">
             <div style="display: flex; justify-content: center; padding-bottom: 1%;">
-                <label style="font-size: 1.4rem;font-weight: bold;">Thêm Phiếu Nhập</label>
+                <label style="font-size: 1.4rem;font-weight: bold;">Thêm Phiếu Nhập:</label>
             </div>
             <div style="width: 100%; height: 0.5vh;background-color: rgb(236, 164, 29);;"></div>
             <div style="margin: 0 0 10px 0; display: flex; justify-content: space-evenly;">
                 <div style="padding-left: 2%; margin-top: 1%;">
                     <div class="div_bao_input_pn" style="margin-bottom: 5%;">
                         <label>Tên sản phẩm:</label> <br>
-                        <input type="text" required>
+                        <input type="text" id="SP_PN" required readonly>
+                        <div class="SP_PN" style="position:relative">
+                        </div>
                     </div>
                     <div class="div_bao_input_pn">
                         <label>Số lượng nhập:</label> <br>
-                        <input type="text" required>
+                        <input type="number" id="SOLUONG_SP_PN" required>
                     </div>
                 </div>
                 <div style="padding-right: 2%; margin-top: 1%;">
                     <div class="div_bao_input_pn" style="margin-bottom: 5%;">
                         <label>Giá nhập:</label> <br>
-                        <input type="text" required>
+                        <input type="number" id="TIEN_SP_PN" required>
                     </div>
                     <div class="div_bao_input_pn">
                         <label>Thành tiền:</label> <br>
-                        <input type="text">
+                        <input type="text" id="THANHTIEN_SP_PN">
                     </div>
                 </div>
             </div>
             <div style="width: 100%; justify-content: space-evenly; display: flex;">
-                <button onclick="closeFormAddPN()" id="btn_closeFormAddPN" style="box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);">Thoát</button>
+                <button  id="btn_closeFormAddPN" style="box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);">Thoát</button>
                 <button id="btn_xacnhan_them_pn" style="box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);">Xác nhận</button>
             </div>
         </div>

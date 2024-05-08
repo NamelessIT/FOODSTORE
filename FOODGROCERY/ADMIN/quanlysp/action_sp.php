@@ -25,6 +25,24 @@ if(isset($_POST['tendm'])){
     $tendm=$_POST['tendm'];
     mysqli_query($connect,"INSERT INTO danhmuc (tendm,ishidden) VALUES ('$tendm',0)");
 }
+// thêm phiếu nhập và chitietphieunhap vào database
+if(isset($_POST['rowCount'])){
+    $rowCount = $_POST['rowCount'];
+    $tableData = $_POST['tableData'];
+    $tongtien = $_POST['tongtien'];
+    $manv=$_POST['manv'];
+    $ngaynhap=json_decode($_POST['ngaynhap']);
+
+    mysqli_query($connect,"INSERT INTO phieunhap (manv,tongtien,ngaynhap) 
+    VALUES ('$manv','$tongtien','$ngaynhap')");
+    $ma_phieunhap = mysqli_insert_id($connect);
+    // Thêm chitietphieunhap
+    foreach ($tableData as $rowData) {
+        mysqli_query($connect,"INSERT INTO chitietphieunhap (mapn,masp,soluong,gianhap,tongtien) VALUES ('$ma_phieunhap','$rowData[0]','$rowData[1]','$rowData[2]','$rowData[3]')");
+    }
+
+}
+
 
 
 //edit dữ liệu từ database
@@ -76,6 +94,13 @@ if(isset($_POST['id_xoa_hidden'])){
     mysqli_query($connect,"DELETE FROM kho WHERE masp='$masp_del'");
 
 }
+
+//xóa phiếu nhập
+if(isset($_POST['ma_phieu_nhap_xoa'])){
+    $mapn=$_POST['ma_phieu_nhap_xoa'];
+    mysqli_query($connect,"DELETE FROM phieunhap WHERE mapn='$mapn'");
+}
+
 //xóa danh mục
 if(isset($_POST['id_xoa_dm'])){
     $madm_del=$_POST['id_xoa_dm'];
@@ -328,7 +353,75 @@ $list_masp_hoadon=array();
         // Thêm dòng dữ liệu vào mảng list_masp_hoadon
         $list_masp_hoadon[] = $row['masp'];
     }
+//masp+tênsp
+$list_masp_tensp='';
+$sql_query_dm=mysqli_query($connect,"SELECT * FROM sanpham WHERE sanpham.ishidden=0");
+// .= NỐI CHUỖI
+$list_masp_tensp .= '
+    <table class="table" style="width: 100%;position: absolute;background-color:#fff;border-radius:15px;border: 1px #333 solid;">
+        <thead class="thead_dark">
+        </thead>
+        <tr style="margin:5px 0;">
+    </tr>
+';
 
+if(mysqli_num_rows($sql_query_dm)>0){
+    $i=0;
+    while($row=mysqli_fetch_array($sql_query_dm)){
+        $list_masp_tensp .='
+        <tr style="margin:5px 0;">
+            <td class="seperate TenSP_PN" data-masppn="'.$row['masp'].'" data-tensppn="'.$row['tensp'].'" data-tiensppn="'.$row['dongia'].'" style="text-align:center">
+                '.$row['masp'].'-'.$row['tensp'].'
+            </td>
+        </tr>
+        ';
+    }
+}
+else{
+    $list_masp_tensp .='
+        <tr>
+            <td colspan="8">Dữ liệu chưa có</td> 
+        </tr>
+    ';
+}
+
+$list_masp_tensp .='
+    </table>
+';
+//nhân viên
+$list_manv_tennv='';
+$sql_query_nv=mysqli_query($connect,"SELECT * FROM nhanvien ");
+// .= NỐI CHUỖI
+$list_manv_tennv .= '
+    <table class="table" style="width: 19%;position: absolute;background-color:#fff;border-radius:15px;border: 1px #333 solid;">
+        <thead class="thead_dark">
+        </thead>
+        <tr style="margin:5px 0;">
+    </tr>
+';
+
+if(mysqli_num_rows($sql_query_nv)>0){
+    while($row=mysqli_fetch_array($sql_query_nv)){
+        $list_manv_tennv .='
+        <tr style="margin:5px 0;">
+            <td class="seperate NhanVien_PN" data-manv="'.$row['manv'].'" data-tennv="'.$row['hoten'].'" style="text-align:center">
+                '.$row['manv'].'-'.$row['hoten'].'
+            </td>
+        </tr>
+        ';
+    }
+}
+else{
+    $list_manv_tennv .='
+        <tr>
+            <td colspan="1">Dữ liệu chưa có</td> 
+        </tr>
+    ';
+}
+
+$list_manv_tennv .='
+    </table>
+';
 
 
 //load dữ liệu từ database
@@ -505,6 +598,139 @@ $output_dm_THONGKE .='
     </table>
 ';
 
+$output_phieu_nhap='';
+$sql_query_phieu_nhap=mysqli_query($connect,"SELECT * FROM phieunhap ");
+// .= NỐI CHUỖI
+$output_phieu_nhap .= '
+    <table class="table" style="width: 100%">
+        <thead class="thead_dark">
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Mã phiếu nhập
+            </th>
+            <th>
+                Mã nhân viên
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th>
+                Ngày nhập
+            </th>
+            <th>
+                Xóa
+            </th>
+        </tr>
+        </thead>
+';
+
+if(mysqli_num_rows($sql_query_phieu_nhap)>0){
+    $i=0;
+    while($row=mysqli_fetch_array($sql_query_phieu_nhap)){
+        $output_phieu_nhap .='
+        <tr style="margin:5px 0;" class="SHOW_CT" data-id_phieunhap='.$row['mapn'].'>
+            <td class="seperate STT">
+                '.$i++.'
+            </td>
+            <td class="seperate">
+                '.$row['mapn'].'
+            </td>
+            <td class="seperate">
+                '.$row['manv'].'
+            </td>
+            <td class="seperate">
+            '.$row['tongtien'].'
+            </td>
+            <td class="seperate">
+            '.$row['ngaynhap'].'
+            </td>
+            <td class="seperate ">
+                <button class="Del_phieu_nhap" data-id_phieunhap='.$row['mapn'].'>Xóa</button>
+            </td>
+        </tr>
+        ';
+    }
+}
+else{
+    $output_phieu_nhap .='
+        <tr>
+            <td colspan="4">Dữ liệu chưa có</td> 
+        </tr>
+    ';
+}
+
+$output_phieu_nhap .='
+    </table>
+';
+//chitietphieunhap
+
+
+$output_chi_tiet_phieu_nhap='';
+if(isset($_POST['ma_phieu_nhap'])){
+    $mapn=$_POST['ma_phieu_nhap'];
+$sql_query_chi_tiet_phieu_nhap=mysqli_query($connect,"SELECT * FROM chitietphieunhap WHERE mapn=$mapn ");
+// .= NỐI CHUỖI
+$output_chi_tiet_phieu_nhap .= '
+    <table class="table" style="width: 100%">
+        <thead class="thead_dark">
+        <tr>
+            <th>
+                Mã phiếu nhập
+            </th>
+            <th>
+                Mã sản phẩm
+            </th>
+            <th>
+                số lượng
+            </th>
+            <th>
+                giá nhập
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+        </tr>
+        </thead>
+';
+
+if(mysqli_num_rows($sql_query_chi_tiet_phieu_nhap)>0){
+    while($row=mysqli_fetch_array($sql_query_chi_tiet_phieu_nhap)){
+        $output_chi_tiet_phieu_nhap .='
+        <tr style="margin:5px 0;">
+            <td class="seperate">
+                '.$row['mapn'].'
+            </td>
+            <td class="seperate">
+                '.$row['masp'].'
+            </td>
+            <td class="seperate">
+            '.$row['soluong'].'
+            </td>
+            <td class="seperate">
+            '.$row['gianhap'].'
+            </td>
+            <td class="seperate">
+            '.$row['tongtien'].'
+            </td>
+        </tr>
+        ';
+    }
+}
+else{
+    $output_chi_tiet_phieu_nhap .='
+        <tr>
+            <td colspan="4">Dữ liệu chưa có</td> 
+        </tr>
+    ';
+}
+
+$output_chi_tiet_phieu_nhap .='
+    </table>
+';
+}
 //output thống kê 
 //tuần
 $output_thongke_tuan_SUM='';
@@ -1130,6 +1356,7 @@ $response_array = array(
     "list_madm_all" => $list_madm_all,
     "list_madm_sp" => $list_madm_sp,
     "list_masp_hoadon" => $list_masp_hoadon,
+    "list_masp_tensp"=>$list_masp_tensp,
     "output_hidden" => $output_hidden,
     "output_dm" => $output_dm,
     "output_dm_THONGKE"=>$output_dm_THONGKE,
@@ -1146,7 +1373,10 @@ $response_array = array(
     "output_top"=>$output_top,
     "output_top_dm"=>$output_top_dm,
     "output_top_loinhuan"=>$output_top_loinhuan,
-    "output_top_dm_loinhuan"=>$output_top_dm_loinhuan
+    "output_top_dm_loinhuan"=>$output_top_dm_loinhuan,
+    "list_manv_tennv"=>$list_manv_tennv,
+    "output_phieu_nhap"=>$output_phieu_nhap,
+    "output_chi_tiet_phieu_nhap"=>$output_chi_tiet_phieu_nhap
 );
 // Trả về dữ liệu dưới dạng JSON
 echo json_encode($response_array);

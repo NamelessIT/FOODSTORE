@@ -1354,11 +1354,6 @@ $(document).on('click','.sortable_tk_filter_TIEN',function(){
 })
 
 
-//phiếu nhập
-var btn_add_pn=document.querySelector('.ADD-PN');
-btn_add_pn.addEventListener('click',function(){
-    console.log('có bấm');
-})
 
 
 window.addEventListener('load', function() {
@@ -1368,9 +1363,54 @@ window.addEventListener('load', function() {
     filter_product.click();
     fetch_data(); // Gọi hàm để tải sản phẩm khi trang được load
     fetch_data_hidden();
+    fetch_data_phieu_nhap();
     fetch_data_tendm();
     fetch_data_dm();
+    var today = new Date();
+    var formattedDate = today.toISOString().substr(0, 10);
+    document.getElementById('Ngay_PN').value = formattedDate;
 });
+class CHITIETPHIEUNHAP {
+    constructor(CHART_BOX,masp,soluong,gianhap,tongtien) {
+      this.CHART_BOX = CHART_BOX;
+      this.masp=masp;
+      this.soluong=soluong;
+      this.gianhap=gianhap;
+      this.tongtien=tongtien;
+
+      this.element = document.createElement('tr');
+      this.element.classList.add('ChiTietPN');
+
+      const masp_PN=document.createElement('td');
+      masp_PN.classList.add('masp_PN');
+      masp_PN.textContent=masp;
+
+      const soluong_PN=document.createElement('td');
+      soluong_PN.classList.add('soluong_PN');
+      soluong_PN.textContent=soluong;
+
+      const gianhap_PN=document.createElement('td');
+      gianhap_PN.classList.add('gianhap_PN');
+      gianhap_PN.textContent=gianhap;
+
+      const tongtien_PN=document.createElement('td');
+      tongtien_PN.classList.add('tongtien_PN');
+      tongtien_PN.textContent=tongtien;
+
+      const btn_xoa=document.createElement('button');
+      btn_xoa.classList.add('xoa_PN');
+      btn_xoa.textContent='xóa';
+      btn_xoa.style.width='100%';
+
+      this.CHART_BOX.appendChild(this.element);
+      this.element.appendChild(masp_PN);
+      this.element.appendChild(soluong_PN);
+      this.element.appendChild(gianhap_PN);
+      this.element.appendChild(tongtien_PN);
+      this.element.appendChild(btn_xoa);
+    
+      }
+    }
 
 
 
@@ -1382,12 +1422,237 @@ window.addEventListener('load', function() {
         myForm.classList.remove('invisible');
         divPhuden.classList.remove('invisible')
     });
-
-    var showFormButton = document.getElementById('btn_closeFormAddPN');
+    var formPhieuNhap=document.getElementById('FormAddPN');
+    var PHIEUNHAP_TABLE=document.getElementById('PHIEUNHAP');
+    var closeFormButton = document.getElementById('btn_closeFormAddPN');
     var myForm = document.getElementById('div_bao_FormAdd_PN');
     var divPhuden = document.getElementById('div_phu_den');
+    var add_CHITIETPHIEUNHAP=document.getElementById('btn_xacnhan_them_pn');
+    var chooseSP_PN=document.getElementById('SP_PN');
+    var chooseNV_PN=document.getElementById('NV_PN');
+    var gianhap=document.getElementById('TIEN_SP_PN');
+    var soluongnhap=document.getElementById('SOLUONG_SP_PN');
+    var thanhtiennhap=document.getElementById('THANHTIEN_SP_PN');
+    var menuSP_PN=document.querySelector('.SP_PN');
+    var menuNV_PN=document.querySelector('.NV_PN');
+    var menuCHITIETPHIEUNHAP=document.getElementById('menuCHITIETPHIEUNHAP');
+    formPhieuNhap.addEventListener("submit", function(event) {
+        event.preventDefault();
+      });
 
-    showFormButton.addEventListener('click', function () {
+    let masp_CHITIETPN;
+    let manv;
+    let save_tien;
+    chooseSP_PN.addEventListener('click',function(){
+        menuSP_PN.classList.remove('invisible');
+        $.ajax({
+            url: "quanlysp/action_sp.php",
+            method: "POST",
+            success: function(response) {
+                var responseData = JSON.parse(response);
+                var list_masp_tensp = responseData.list_masp_tensp;
+                menuSP_PN.innerHTML=list_masp_tensp;
+            }
+        });
+    })
+    chooseNV_PN.addEventListener('click',function(){
+        menuNV_PN.classList.remove('invisible');
+        $.ajax({
+            url: "quanlysp/action_sp.php",
+            method: "POST",
+            success: function(response) {
+                var responseData = JSON.parse(response);
+                var list_manv_tennv = responseData.list_manv_tennv;
+                menuNV_PN.innerHTML=list_manv_tennv;
+            }
+        });
+    })
+    document.addEventListener('click',function(event){ 
+        var targetElement = event.target; // Phần tử được click
+        if (!chooseNV_PN.contains(targetElement) && !menuNV_PN.contains(targetElement)) {
+            menuNV_PN.classList.add('invisible'); // Thêm lớp 'invisible' vào .SP_PN
+        }
+    })
+    document.addEventListener('click',function(event){ 
+        var targetElement = event.target; // Phần tử được click
+        if (!menuSP_PN.contains(targetElement) && !chooseSP_PN.contains(targetElement)) {
+            menuSP_PN.classList.add('invisible'); // Thêm lớp 'invisible' vào .SP_PN
+        }
+    })
+    $(document).on('click','.NhanVien_PN',function(){
+        var tennv=$(this).data('tennv');
+        var manv_pn=$(this).data('manv');
+        chooseNV_PN.value=tennv;
+        menuNV_PN.classList.add('invisible');
+        manv=manv_pn;
+    })
+    $(document).on('click','.TenSP_PN',function(){
+        var masp=$(this).data('masppn');
+        var tensp=$(this).data('tensppn');
+        var tien=$(this).data('tiensppn');
+        masp_CHITIETPN=masp;
+        chooseSP_PN.value=tensp;
+        menuSP_PN.classList.add('invisible');
+        gianhap.value=tien;
+        soluongnhap.value=1;
+        save_tien=gianhap.value;
+        thanhtiennhap.value=gianhap.value;
+    })
+    soluongnhap.addEventListener('input',function(){
+        var soluong=soluongnhap.value;
+        if(soluong<1){
+            soluongnhap.value=1;
+            return;
+        }
+        var dongia=gianhap.value;
+        thanhtiennhap.value=soluong*dongia;
+    })
+    gianhap.addEventListener('input',function(){
+        var soluong=soluongnhap.value;
+        var dongia=gianhap.value;
+        if(dongia>save_tien || dongia<0){
+            gianhap.value=save_tien;
+            return;
+        }
+        thanhtiennhap.value=soluong*dongia;
+    })
+    add_CHITIETPHIEUNHAP.addEventListener('click',function(event){
+        const newCHITETPHIEUNHAP=new CHITIETPHIEUNHAP(
+            menuCHITIETPHIEUNHAP,
+            masp_CHITIETPN,
+            soluongnhap.value,
+            gianhap.value,
+            thanhtiennhap.value
+        )
+        // Thêm sự kiện click vào nút "xóa"
+        var btn_xoas=document.querySelectorAll('.xoa_PN');
+        btn_xoas.forEach(btn_xoa => {            
+            btn_xoa.addEventListener('click', function(event) {
+                // Tìm phần tử cha có class là "ChiTietPN"
+                const chiTietPNElement = this.closest('.ChiTietPN');
+                
+                // Kiểm tra nếu tìm thấy phần tử cha thì xóa nó đi
+                if (chiTietPNElement) {
+                    chiTietPNElement.remove();
+                }
+            });
+        });
+    })
+
+    
+
+
+    closeFormButton.addEventListener('click', function (event) {
+        event.preventDefault();
         myForm.classList.add('invisible');
         divPhuden.classList.add('invisible');
+        chooseSP_PN.value='';
+        soluongnhap.value='';
+        gianhap.value='';
+        thanhtiennhap.value='';
     });
+    var btn_addPN=document.getElementById('btn_ADDPN');
+    var ngay_Nhap=document.getElementById('Ngay_PN');
+    btn_addPN.addEventListener('click', function() {
+        var div_PHIEUNHAP = document.getElementById('menuCHITIETPHIEUNHAP');
+        if (div_PHIEUNHAP.children.length > 0) {
+            const tableData = [];
+            let tongtien_from_chitiet = 0;
+            const rowCount = menuCHITIETPHIEUNHAP.querySelectorAll('tr').length;
+            menuCHITIETPHIEUNHAP.querySelectorAll('tr').forEach(row => {
+                const rowData = [];
+                const cells = row.querySelectorAll('td');
+                const tongtien = row.querySelector('.tongtien_PN');
+                tongtien_from_chitiet += parseInt(tongtien.textContent);
+                cells.forEach(cell => {
+                    rowData.push(cell.textContent);
+                });
+                tableData.push(rowData);
+            });
+            // Gửi AJAX sau khi đã lặp qua tất cả các dòng trong bảngs
+            if(chooseNV_PN.value!=''){
+                $.ajax({
+                    url: 'quanlysp/action_sp.php',
+                    method: 'POST',
+                    data: {
+                        rowCount: rowCount,
+                        tableData: tableData,
+                        tongtien: tongtien_from_chitiet,
+                         manv:manv,
+                         ngaynhap:JSON.stringify(ngay_Nhap.value)
+                    },
+                    success: function(response) {
+                        fetch_data_phieu_nhap();
+                        alert('đã thêm thành công');
+                    },
+                    error: function(xhr, status, error) {
+                        alert('có lỗi xảy ra , không thêm phiếu nhập thành công');
+                    }
+                });
+            }
+            else{
+                alert('vui lòng chọn nhân viên đã ghi phiếu nhập');
+            }
+        } else {
+            // Xử lý khi không có phần tử con trong div PHIEUNHAP
+            alert('Phiếu nhập trống');
+        }
+    });
+    var showphieunhap=document.getElementById('SHOWPHIEUNHAP');
+    var showchitietphieunhap=document.getElementById('SHOWCHITIETPHIEUNHAP');
+    var btn_back=document.querySelector('.BTN_BACK');
+    function fetch_data_phieu_nhap(){
+        $.ajax({
+            url: 'quanlysp/action_sp.php',
+            method: 'POST',
+            success:function(response){
+                var responseData = JSON.parse(response);
+                var output_phieu_nhap = responseData.output_phieu_nhap;
+                showphieunhap.innerHTML=output_phieu_nhap;
+            }
+        })
+    }
+    function fetch_data_chi_tiet_phieu_nhap(ma_phieu_nhap){
+        $.ajax({
+            url: 'quanlysp/action_sp.php',
+            method: 'POST',
+            data:{ma_phieu_nhap:ma_phieu_nhap},
+            success:function(response){
+                var responseData = JSON.parse(response);
+                var output_chi_tiet_phieu_nhap = responseData.output_chi_tiet_phieu_nhap;
+                showchitietphieunhap.innerHTML=output_chi_tiet_phieu_nhap;
+            }
+        })
+    }
+    $(document).on('click','.SHOW_CT',function(){
+        var mapn=$(this).data('id_phieunhap');
+        btn_back.classList.remove('invisible');
+        showphieunhap.classList.add('invisible');
+        showchitietphieunhap.classList.remove('invisible');
+        showFormButton.classList.add('invisible');
+        PHIEUNHAP_TABLE.classList.add('invisible');
+        btn_addPN.classList.add('invisible');
+        console.log('load chi tiết phiếu nhập');
+        fetch_data_chi_tiet_phieu_nhap(mapn);
+    })
+    $(document).on('click','.Del_phieu_nhap',function(){
+        console.log('đã click xóa');
+        var mapn=$(this).data('id_phieunhap');
+        $.ajax({
+            url: 'quanlysp/action_sp.php',
+            method: 'POST',
+            data:{ma_phieu_nhap_xoa:mapn},
+            success:function(response){
+                fetch_data_phieu_nhap();
+            }
+        })
+    })
+    btn_back.addEventListener('click',function(){
+        showchitietphieunhap.innerHTML='';
+        btn_addPN.classList.remove('invisible');
+        showFormButton.classList.remove('invisible');
+        showchitietphieunhap.classList.add('invisible');
+        PHIEUNHAP_TABLE.classList.remove('invisible');
+        btn_back.classList.add('invisible');
+        showphieunhap.classList.remove('invisible');
+    })
