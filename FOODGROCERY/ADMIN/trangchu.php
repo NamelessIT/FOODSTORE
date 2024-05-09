@@ -231,10 +231,6 @@ mysqli_close($connect);
         <div class="Cover_sepherate_line">
             <div class="sepherate_line"></div>
         </div>
-        <div class="search_cover" style="margin-bottom: 1%">
-            <label>Tìm Kiếm</label>
-            <input id="Find_PHIEUNHAP" type="text" class="input_seacrh">
-        </div>
         <div style="margin-bottom: 5%;border-radius:5px">
                         <label>Mã nhân viên:</label> <br>
                         <input type="text" id="NV_PN" style="border-radius:5px" required readonly>
@@ -260,6 +256,12 @@ mysqli_close($connect);
             </table>
         </div>
         <button  style="width:15%;margin:20px 0"  id="btn_ADDPN">Tạo phiếu nhập</button>
+        <div class="search_cover" style="margin-bottom: 1%">
+            <label>Tìm Kiếm</label>
+            <input id="Find_PHIEUNHAP" type="text" class="input_seacrh">
+        </div>
+        <input type="date" id="Ngay_PN_start" style="border-radius:5px;margin-bottom: 5%;" required>
+        <input type="date" id="Ngay_PN_end" style="border-radius:5px;margin-bottom: 5%;" required>
         <div id="SHOWPHIEUNHAP"></div>
         <button class="invisible BTN_BACK" style="display:block">Quay lại</button>
         <div id="SHOWCHITIETPHIEUNHAP"></div>

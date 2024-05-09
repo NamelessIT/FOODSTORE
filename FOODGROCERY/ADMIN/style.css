@@ -269,7 +269,7 @@ input[readonly] {
       }
     }
     #SANPHAM,#SANPHAM_XOA{
-      height: 16rem;
+      height: 14rem;
     overflow: scroll;
     }
     
@@ -327,6 +327,7 @@ input[readonly] {
 
     .dropdown-content,.dropdown-content-THONGKE,.dropdown-content-THONGKE-danhmuc{
       position: absolute;
+      background-color: #ccc;
       top: 120%;
       left: 2px;
       text-align: center;
@@ -334,10 +335,12 @@ input[readonly] {
       min-width: 140px;
       box-shadow: 0 0 1px #ccc;
       z-index: 5;
+      border-radius: 3px;
     }
     .dropdown-content-MONTH{
       position: absolute;
       top: 100%;
+      left: 4%;
       text-align: center;
       border: 1px solid #ccc;
       min-width: 140px;

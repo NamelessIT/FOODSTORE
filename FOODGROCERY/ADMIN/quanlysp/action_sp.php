@@ -216,6 +216,112 @@ if(isset($_POST['COT_SP'])){
     ';
 }
 
+//output kết quả search
+$output1_search='';
+if(isset($_POST['SEARCH'])){
+    $search=$_POST['SEARCH'];
+    $cot_sp=$_POST['COT_SP'];
+    $sort=$_POST['SORT_SP'];
+    if($sort=='true'){
+        $sql_query1 = mysqli_query($connect, "SELECT * FROM sanpham, danhmuc WHERE sanpham.ishidden=0 AND sanpham.madm=danhmuc.madm AND 
+                                (sanpham.masp LIKE '%$search%' 
+                                OR sanpham.tensp LIKE '%$search%' 
+                                OR sanpham.image LIKE '%$search%' 
+                                OR sanpham.dongia LIKE '%$search%'  
+                                OR sanpham.motasp LIKE '%$search%'
+                                OR danhmuc.tendm LIKE '%$search%') 
+                                ORDER BY $cot_sp DESC");
+        
+    }
+    else{
+        $sql_query1 = mysqli_query($connect, "SELECT * FROM sanpham, danhmuc WHERE sanpham.ishidden=0 AND sanpham.madm=danhmuc.madm AND 
+                                (sanpham.masp LIKE '%$search%' 
+                                OR sanpham.tensp LIKE '%$search%' 
+                                OR sanpham.image LIKE '%$search%' 
+                                OR sanpham.dongia LIKE '%$search%'  
+                                OR sanpham.motasp LIKE '%$search%'
+                                OR danhmuc.tendm LIKE '%$search%')
+                                ORDER BY $cot_sp ASC");
+    }
+    // .= NỐI CHUỖI
+    $output1_search .= '
+        <table class="table" style="width: 100%">
+            <thead class="thead_dark">
+            <tr>
+                <th>
+                    STT
+                </th>
+                <th class="sortable_sp '. ($cot_sp == "sanpham.masp" ? 'click' : '') . '" data-tk_sp="sanpham.masp" '. ($cot_sp == "sanpham.masp" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
+                    Mã sản phẩm
+                </th>
+                <th class="sortable_sp '. ($cot_sp == "sanpham.tensp" ? 'click' : '') . '" data-tk_sp="sanpham.tensp" '. ($cot_sp == "sanpham.tensp" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
+                    Tên sản phẩm
+                </th>
+                <th class="sortable_sp '. ($cot_sp == "sanpham.image" ? 'click' : '') . '" data-tk_sp="sanpham.image" '. ($cot_sp == "sanpham.image" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
+                    Ảnh
+                </th>
+                <th class="sortable_sp '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
+                    Gía bán
+                </th>
+                <th class="sortable_sp '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
+                    Loại
+                </th>
+                <th>
+                    Chi tiết
+                </th>
+                <th>
+                    Xóa
+                </th>
+            </tr>
+            </thead>
+    ';
+    
+    if(mysqli_num_rows($sql_query1)>0){
+        $i=0;
+        while($row=mysqli_fetch_array($sql_query1)){
+            $output1_search .='
+            <tr>
+                <td class="seperate STT">
+                    '.$i++.'
+                </td>
+                <td class="seperate Masp" data-id2='.$row['masp'].' >
+                    '.$row['masp'].'
+                </td>
+                <td class="seperate Tensp" data-id2='.$row['masp'].' >
+                    '.$row['tensp'].'
+                </td>
+                <td class="seperate style="width:80px" >
+                    <img " src="../image/'.$row['image'].'" alt="Error" style="width:100px" >  
+                </td>
+                <td class="seperate " >
+                    '.$row['dongia'].'
+                </td>
+                <td class="seperate " >
+                    '.$row['tendm'].'
+                </td>
+                <td class="seperate " >
+                    '.$row['motasp'].'
+                 </td>
+                <td class="seperate ">
+                    <button class="Del_data" data-xoa='.$row['masp'].'>Xóa</button>
+                </td>
+            </tr>
+            ';
+        }
+    }
+    else{
+        $output1_search .='
+            <tr>
+                <td colspan="8">Dữ liệu chưa có</td> 
+            </tr>
+        ';
+    }
+    
+    $output1_search .='
+        </table>
+    ';
+}
+
 $output_hidden='';
 if(isset($_POST['COT_SP_HIDDEN'])){
     $cot_sp=$_POST['COT_SP_HIDDEN'];
@@ -308,6 +414,117 @@ else{
 }
 
 $output_hidden .='
+    </table>
+';
+}
+
+
+$output_hidden_search='';
+if(isset($_POST['SEARCH_Xoa'])){
+    $search=$_POST['SEARCH_Xoa'];
+    $cot_sp=$_POST['COT_SP_HIDDEN'];
+    $sort=$_POST['SORT_SP_HIDDEN'];
+    if($sort=='true'){
+        $sql_query_hidden = mysqli_query($connect, "SELECT * FROM sanpham, danhmuc WHERE sanpham.ishidden=1 AND sanpham.madm=danhmuc.madm AND 
+                                (sanpham.masp LIKE '%$search%' 
+                                OR sanpham.tensp LIKE '%$search%' 
+                                OR sanpham.image LIKE '%$search%' 
+                                OR sanpham.dongia LIKE '%$search%'  
+                                OR sanpham.motasp LIKE '%$search%'
+                                OR danhmuc.tendm LIKE '%$search%') 
+                                ORDER BY $cot_sp DESC");
+    }
+    else{
+        $sql_query_hidden = mysqli_query($connect, "SELECT * FROM sanpham, danhmuc WHERE sanpham.ishidden=1 AND sanpham.madm=danhmuc.madm AND 
+                                (sanpham.masp LIKE '%$search%' 
+                                OR sanpham.tensp LIKE '%$search%' 
+                                OR sanpham.image LIKE '%$search%' 
+                                OR sanpham.dongia LIKE '%$search%'  
+                                OR sanpham.motasp LIKE '%$search%'
+                                OR danhmuc.tendm LIKE '%$search%') 
+                                ORDER BY $cot_sp ASC");
+    }
+// .= NỐI CHUỖI
+$output_hidden_search .= '
+    <table class="table" style="width: 100%">
+        <thead class="thead_dark">
+        <tr>
+            <th>
+                STT
+            </th>
+            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.masp" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.masp" '. ($cot_sp == "sanpham.masp" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
+                Mã sản phẩm
+            </th>
+            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.tensp" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.tensp" '. ($cot_sp == "sanpham.tensp" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
+                Tên sản phẩm
+            </th>
+            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.image" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.image" '. ($cot_sp == "sanpham.image" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
+                Ảnh
+            </th>
+            <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
+                Gía bán
+            </th>
+            <th class="sortable_sp_hidden '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp_hidden="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
+                Loại
+            </th>
+            <th>
+                Chi tiết
+            </th>
+            <th>
+                Khôi phục
+            </th>
+            <th>
+                Xóa
+            </th>
+        </tr>
+        </thead>
+';
+
+if(mysqli_num_rows($sql_query_hidden)>0){
+    $i=0;
+    while($row=mysqli_fetch_array($sql_query_hidden)){
+        $output_hidden_search .='
+        <tr>
+            <td class="seperate STT">
+                '.$i++.'
+            </td>
+            <td class="seperate Masp" data-id2='.$row['masp'].' >
+                '.$row['masp'].'
+            </td>
+            <td class="seperate Tensp" data-id2='.$row['masp'].' >
+                '.$row['tensp'].'
+            </td>
+            <td class="seperate style="width:80px" >
+                <img  src="../image/'.$row['image'].'" alt="Error" style="width:100px" contenteditable>  
+            </td>
+            <td class="seperate " >
+                '.$row['dongia'].'
+            </td>
+            <td class="seperate " >
+                '.$row['madm'].'
+            </td>
+            <td class="seperate " >
+                '.$row['motasp'].'
+             </td>
+            <td class="seperate ">
+             <button class="Back_hidden" data-back='.$row['masp'].'>KHÔI PHỤC</button>
+            </td>
+            <td class="seperate ">
+                <button class="Del_data_hidden" data-xoa='.$row['masp'].'>Xóa</button>
+            </td>
+        </tr>
+        ';
+    }
+}
+else{
+    $output_hidden_search .='
+        <tr>
+            <td colspan="8">Dữ liệu chưa có</td> 
+        </tr>
+    ';
+}
+
+$output_hidden_search .='
     </table>
 ';
 }
@@ -665,13 +882,110 @@ else{
 $output_phieu_nhap .='
     </table>
 ';
+
+$output_phieu_nhap_search='';
+if(isset($_POST['SEARCH_PN'])){
+$search=$_POST['SEARCH_PN'];
+$Ngay_Start = $_POST['Ngay_Start'];
+$Ngay_End = $_POST['Ngay_End'];
+$sql_query_phieu_nhap = "SELECT * FROM phieunhap WHERE ";
+
+// Kiểm tra điều kiện SEARCH_PN và Ngay_Start, Ngay_End
+if (!empty($search) && empty($Ngay_Start) && empty($Ngay_End)) {
+    // Nếu SEARCH_PN có giá trị, nhưng Ngay_Start và Ngay_End không, thực hiện truy vấn theo chỉ tiêu tìm kiếm
+    $sql_query_phieu_nhap .= "(phieunhap.mapn LIKE '%$search%' 
+                        OR phieunhap.manv LIKE '%$search%' 
+                        OR phieunhap.tongtien LIKE '%$search%' 
+                        OR phieunhap.ngaynhap LIKE '%$search%')";
+} elseif (empty($search) && !empty($Ngay_Start) && !empty($Ngay_End)) {
+    // Nếu SEARCH_PN không có giá trị, nhưng Ngay_Start và Ngay_End có giá trị, thực hiện truy vấn theo khoảng ngày
+    $sql_query_phieu_nhap .= "phieunhap.ngaynhap BETWEEN '$Ngay_Start' AND '$Ngay_End'";
+} elseif (!empty($search) && !empty($Ngay_Start) && !empty($Ngay_End)) {
+    // Nếu cả SEARCH_PN và Ngay_Start, Ngay_End đều có giá trị, thực hiện truy vấn theo cả hai chỉ tiêu
+    $sql_query_phieu_nhap .= "phieunhap.ngaynhap BETWEEN '$Ngay_Start' AND '$Ngay_End' AND 
+                        (phieunhap.mapn LIKE '%$search%' 
+                        OR phieunhap.manv LIKE '%$search%' 
+                        OR phieunhap.tongtien LIKE '%$search%' 
+                        OR phieunhap.ngaynhap LIKE '%$search%')";
+} else {
+    // Trường hợp còn lại, không có điều kiện nào được áp dụng
+    $sql_query_phieu_nhap .= "1"; // Đây là một điều kiện giả để trả về tất cả các hàng
+}
+
+$sql_query_phieu_nhap = mysqli_query($connect, $sql_query_phieu_nhap);
+// .= NỐI CHUỖI
+$output_phieu_nhap_search .= '
+    <table class="table" style="width: 100%">
+        <thead class="thead_dark">
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Mã phiếu nhập
+            </th>
+            <th>
+                Mã nhân viên
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th>
+                Ngày nhập
+            </th>
+            <th>
+                Xóa
+            </th>
+        </tr>
+        </thead>
+';
+
+if(mysqli_num_rows($sql_query_phieu_nhap)>0){
+    $i=0;
+    while($row=mysqli_fetch_array($sql_query_phieu_nhap)){
+        $output_phieu_nhap_search .='
+        <tr style="margin:5px 0;" class="SHOW_CT" data-id_phieunhap='.$row['mapn'].'>
+            <td class="seperate STT">
+                '.$i++.'
+            </td>
+            <td class="seperate">
+                '.$row['mapn'].'
+            </td>
+            <td class="seperate">
+                '.$row['manv'].'
+            </td>
+            <td class="seperate">
+            '.$row['tongtien'].'
+            </td>
+            <td class="seperate">
+            '.$row['ngaynhap'].'
+            </td>
+            <td class="seperate ">
+                <button class="Del_phieu_nhap" data-id_phieunhap='.$row['mapn'].'>Xóa</button>
+            </td>
+        </tr>
+        ';
+    }
+}
+else{
+    $output_phieu_nhap_search .='
+        <tr>
+            <td colspan="4">Dữ liệu chưa có</td> 
+        </tr>
+    ';
+}
+
+$output_phieu_nhap_search .='
+    </table>
+';
+}
 //chitietphieunhap
 
 
 $output_chi_tiet_phieu_nhap='';
 if(isset($_POST['ma_phieu_nhap'])){
     $mapn=$_POST['ma_phieu_nhap'];
-$sql_query_chi_tiet_phieu_nhap=mysqli_query($connect,"SELECT * FROM chitietphieunhap WHERE mapn=$mapn ");
+$sql_query_chi_tiet_phieu_nhap=mysqli_query($connect,"SELECT * FROM chitietphieunhap,sanpham WHERE mapn=$mapn AND sanpham.masp=chitietphieunhap.masp");
 // .= NỐI CHUỖI
 $output_chi_tiet_phieu_nhap .= '
     <table class="table" style="width: 100%">
@@ -682,6 +996,9 @@ $output_chi_tiet_phieu_nhap .= '
             </th>
             <th>
                 Mã sản phẩm
+            </th>
+            <th>
+                Tên sản phẩm
             </th>
             <th>
                 số lượng
@@ -705,6 +1022,9 @@ if(mysqli_num_rows($sql_query_chi_tiet_phieu_nhap)>0){
             </td>
             <td class="seperate">
                 '.$row['masp'].'
+            </td>
+            <td class="seperate">
+            '.$row['tensp'].'
             </td>
             <td class="seperate">
             '.$row['soluong'].'
@@ -1351,6 +1671,7 @@ if(isset($_POST['START'])){
 $response_array = array(
     "output" => $output,
     "output1" => $output1,
+    "output1_search"=>$output1_search,
     "list_masp" => $list_masp,
     "list_madm" => $list_madm,
     "list_madm_all" => $list_madm_all,
@@ -1358,6 +1679,7 @@ $response_array = array(
     "list_masp_hoadon" => $list_masp_hoadon,
     "list_masp_tensp"=>$list_masp_tensp,
     "output_hidden" => $output_hidden,
+    "output_hidden_search"=>$output_hidden_search,
     "output_dm" => $output_dm,
     "output_dm_THONGKE"=>$output_dm_THONGKE,
     "output_thongke_tuan_SUM"=>$output_thongke_tuan_SUM,
@@ -1375,7 +1697,9 @@ $response_array = array(
     "output_top_loinhuan"=>$output_top_loinhuan,
     "output_top_dm_loinhuan"=>$output_top_dm_loinhuan,
     "list_manv_tennv"=>$list_manv_tennv,
+    //lưu ý khi nhân viên đăng nhập thì không cho chọn ,chỉ có quản lý mới được phép chọn nhân viên trong phiếu nhập hoặc hóa đơn
     "output_phieu_nhap"=>$output_phieu_nhap,
+    "output_phieu_nhap_search"=>$output_phieu_nhap_search,
     "output_chi_tiet_phieu_nhap"=>$output_chi_tiet_phieu_nhap
 );
 // Trả về dữ liệu dưới dạng JSON

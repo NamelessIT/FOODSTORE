@@ -137,7 +137,12 @@ var madm=document.getElementById('TIEUDE');
 var dongia=document.getElementById('GiaBan');
 var motasp=document.getElementById('motasp');
 
-
+dongia.addEventListener('input',function(){
+    if(dongia.value<0){
+        dongia.value=0;
+        return;
+    }
+})
 
 
 //kiểm tra id có trong phiếu nhập chưa, nếu rồi thì không cho sửa trùng
@@ -472,6 +477,9 @@ $(document).on('click','.Del_data',function(){
             if(btn_edit.classList.contains('running')){
                 fetch_data_edit();
             }
+            else if(Find_SANPHAM.value!=''){
+                fetch_data_search();
+            }
             else{
                 fetch_data();
             }
@@ -517,6 +525,9 @@ $(document).on('click','.Back_hidden',function(){
             // Assuming fetch_data() is defined elsewhere
             if(btn_edit.classList.contains('running')){
                 fetch_data_edit();
+            }
+            else if(Find_SANPHAM.value!=''){
+                fetch_data_search();
             }
             else{
                 fetch_data();
@@ -584,7 +595,12 @@ $(document).on('click','.sortable_sp',function(){
     else{
         sort_sp='false';
     }
-    fetch_data();
+    if(Find_SANPHAM.value!=''){
+        fetch_data_search();
+    }
+    else{
+        fetch_data();
+    }
 })
 
 $(document).on('click','.sortable_sp_hidden',function(){
@@ -601,7 +617,12 @@ $(document).on('click','.sortable_sp_hidden',function(){
     else{
         sort_sp_hidden='false';
     }
-    fetch_data_hidden();
+    if(Find_SANPHAM.value!=''){
+        fetch_data_search_xoa();
+    }
+    else{
+        fetch_data_hidden();
+    }
 })
 //load danh mục
 var NOIDUNG_DANHMUC=document.getElementById('NOIDUNG_DANHMUC');
@@ -773,6 +794,58 @@ btn_dm.addEventListener('click',function(){
             }
         });
     })
+    // tìm sản phẩm
+    var Find_SANPHAM=document.getElementById('Find_SANPHAM');
+    var Find_SANPHAM_XOA=document.getElementById('Find_SANPHAM_XOA');
+    Find_SANPHAM.addEventListener('keypress',function(event){
+        if (event.keyCode === 13) {
+            fetch_data_search();
+        }
+    })
+    Find_SANPHAM_XOA.addEventListener('keypress',function(event){
+        if (event.keyCode === 13) {
+                fetch_data_search_xoa();
+        }
+    })
+    function fetch_data_search(){
+        const search=Find_SANPHAM.value;
+        if (Find_SANPHAM.value !== '') {
+            $.ajax({
+                url: "quanlysp/action_sp.php",
+                method: "POST",
+                data: { SEARCH:search,COT_SP : cot_sp,SORT_SP:sort_sp},
+                success: function(response) {
+                    Container_products.innerHTML='';
+                    var responseData = JSON.parse(response);
+                    var output1_search = responseData.output1_search;
+                    Container_products.innerHTML = output1_search; 
+                }
+            });
+        }else{
+            Container_products.innerHTML='';
+            fetch_data();
+        }
+    }
+    function fetch_data_search_xoa(){
+        const search=Find_SANPHAM_XOA.value;
+        if (Find_SANPHAM_XOA.value !== '') {
+            $.ajax({
+                url: "quanlysp/action_sp.php",
+                method: "POST",
+                data: { SEARCH_Xoa:search,COT_SP_HIDDEN : cot_sp_hidden,SORT_SP_HIDDEN:sort_sp_hidden},
+                success: function(response) {
+                    Container_products_hidden.innerHTML='';
+                    var responseData = JSON.parse(response);
+                    var output_hidden_search = responseData.output_hidden_search;
+                    Container_products_hidden.innerHTML = output_hidden_search; 
+                }
+            });
+        }else{
+            Container_products_hidden.innerHTML='';
+            fetch_data_hidden();
+        }
+    }
+
 
 
 // THỐNG KÊ
@@ -809,6 +882,12 @@ LOC_DM.addEventListener('click',function(event){
     menu_THONGKE_DM.classList.remove('invisible');
     fetch_data_dm_THONGKE();
     event.stopPropagation();
+})
+document.addEventListener('click',function(event){
+    const target=event.target;
+    if(!menu_THONGKE_DM.contains(target)){
+        menu_THONGKE_DM.classList.add('invisible');
+    }
 })
 outside_THONGKE.addEventListener('click',function(){
     menu_THONGKE.classList.add('invisible');
@@ -1380,6 +1459,7 @@ class CHITIETPHIEUNHAP {
 
       this.element = document.createElement('tr');
       this.element.classList.add('ChiTietPN');
+      this.element.CHITIETPHIEUNHAP = this;
 
       const masp_PN=document.createElement('td');
       masp_PN.classList.add('masp_PN');
@@ -1409,6 +1489,21 @@ class CHITIETPHIEUNHAP {
       this.element.appendChild(tongtien_PN);
       this.element.appendChild(btn_xoa);
     
+      }
+      getMasp(){
+        return this.masp;
+      }
+      getSoluong(){
+        return this.soluong;
+      }
+      SetSoluong(soluongmoi){
+        this.soluong=soluongmoi;
+      }
+      getGianhap(){
+        return this.gianhap;
+      }
+      remove(){
+        this.element.remove();
       }
     }
 
@@ -1512,18 +1607,49 @@ class CHITIETPHIEUNHAP {
         var dongia=gianhap.value;
         if(dongia>save_tien || dongia<0){
             gianhap.value=save_tien;
+            thanhtiennhap.value=soluong*gianhap.value;
             return;
         }
         thanhtiennhap.value=soluong*dongia;
     })
-    add_CHITIETPHIEUNHAP.addEventListener('click',function(event){
+    function load_CHITIETPHIEUNHAP(item){
+        
+        const masp=item.getMasp();
+        const soluong=item.getSoluong();
+        const gianhap=item.getGianhap();
         const newCHITETPHIEUNHAP=new CHITIETPHIEUNHAP(
             menuCHITIETPHIEUNHAP,
-            masp_CHITIETPN,
-            soluongnhap.value,
-            gianhap.value,
-            thanhtiennhap.value
+            masp,
+            soluong,
+            gianhap,
+            soluong*gianhap
         )
+        item.remove();
+    }
+    function check_CHITIETPHIEUNHAP(masp_CHITIETPN,gianhap,soluong){
+        for (let i = 0; i < menuCHITIETPHIEUNHAP.children.length; i++) {
+            let item = menuCHITIETPHIEUNHAP.children[i].CHITIETPHIEUNHAP;
+            if (item.getMasp() === masp_CHITIETPN && item.getGianhap() === gianhap) {
+                item.SetSoluong(parseInt(item.getSoluong())+parseInt(soluong));  
+                load_CHITIETPHIEUNHAP(item);              
+                return true;
+            }
+        }
+        return false;
+    }
+    add_CHITIETPHIEUNHAP.addEventListener('click',function(event){
+        if(check_CHITIETPHIEUNHAP(masp_CHITIETPN,gianhap.value,soluongnhap.value)===true){
+            console.log('đã tồn tại');
+        }
+        else{
+            const newCHITETPHIEUNHAP=new CHITIETPHIEUNHAP(
+                menuCHITIETPHIEUNHAP,
+                masp_CHITIETPN,
+                soluongnhap.value,
+                gianhap.value,
+                thanhtiennhap.value
+            )
+        }
         // Thêm sự kiện click vào nút "xóa"
         var btn_xoas=document.querySelectorAll('.xoa_PN');
         btn_xoas.forEach(btn_xoa => {            
@@ -1656,3 +1782,42 @@ class CHITIETPHIEUNHAP {
         btn_back.classList.add('invisible');
         showphieunhap.classList.remove('invisible');
     })
+    var Find_PHIEUNHAP=document.getElementById('Find_PHIEUNHAP');
+    var ngay_phieunhap_start=document.getElementById('Ngay_PN_start');
+    var ngay_phieunhap_end=document.getElementById('Ngay_PN_end');
+
+    Find_PHIEUNHAP.addEventListener('keypress',function(event){
+        if (event.keyCode === 13) {
+            if (Find_PHIEUNHAP.value !== '') {
+                fetch_data_phieu_nhap_search();
+            }
+            else{
+                fetch_data_phieu_nhap();
+            }
+        }
+    })
+    ngay_phieunhap_end.addEventListener('input',function(){
+        fetch_data_phieu_nhap_search();
+    })
+    ngay_phieunhap_start.addEventListener('input',function(){
+        fetch_data_phieu_nhap_search();
+    })
+    function fetch_data_phieu_nhap_search(){
+        const search=Find_PHIEUNHAP.value;
+        if (Find_PHIEUNHAP.value !== '' || (ngay_phieunhap_start.value!=='' && ngay_phieunhap_end.value!=='')) {
+            $.ajax({
+                url: "quanlysp/action_sp.php",
+                method: "POST",
+                data: { SEARCH_PN:search,Ngay_Start:ngay_phieunhap_start.value,Ngay_End:ngay_phieunhap_end.value},
+                success: function(response) {
+                    showphieunhap.innerHTML='';
+                    var responseData = JSON.parse(response);
+                    var output_phieu_nhap_search = responseData.output_phieu_nhap_search;
+                    showphieunhap.innerHTML = output_phieu_nhap_search; 
+                }
+            });
+        }else{
+            showphieunhap.innerHTML='';
+            fetch_data_phieu_nhap();
+        }
+    }
