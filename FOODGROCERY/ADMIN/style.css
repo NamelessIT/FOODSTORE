@@ -272,6 +272,10 @@ input[readonly] {
       height: 14rem;
     overflow: scroll;
     }
+    #SHOWPHIEUNHAP,#SHOWCHITIETPHIEUNHAP{
+      height: 5rem;
+      scroll-behavior: auto;
+    }
     
     .THONGKEDONHANG .SANPHAMBANCHAY #TenSanPhamBanChay {
       font-size: 24px;

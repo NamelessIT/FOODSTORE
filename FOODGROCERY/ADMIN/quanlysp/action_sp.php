@@ -56,19 +56,17 @@ if(isset($_POST['id'])){
     mysqli_query($connect,"UPDATE  sanpham SET $column_name='$text_new' WHERE masp='$masp_old'");
 }
 
-
-if (isset($_POST['id_image']) && isset($_POST['imageData'])) {
+if (isset($_POST['id_image'])) {
     $id_image=$_POST['id_image'];
-    $image=$_FILES['imageData']['name']; // Access uploaded file name from $_FILES
-    $column_name=$_POST['column_name'];
+    $image=$_FILES['AnhSanPham']['name'];
 
 
     $target_dir = "../../image/"; // Directory where you want to store uploaded images
-    $target_file = $target_dir . basename($_FILES["imageData"]["name"]);
+    $target_file = $target_dir . basename($_FILES["AnhSanPham"]["name"]);
 
     // Move uploaded file to the target directory
-    move_uploaded_file($_FILES["imageData"]["tmp_name"], $target_file);
-    mysqli_query($connect,"UPDATE sanpham SET $column_name='$image' WHERE masp='$id_image'");
+    move_uploaded_file($_FILES["AnhSanPham"]["tmp_name"], $target_file);
+    mysqli_query($connect,"UPDATE sanpham SET image='$image' WHERE masp='$id_image'");
 }
 
 if(isset($_POST['edit_dm'])){
@@ -1722,7 +1720,7 @@ $response_array = array(
     //lưu ý khi nhân viên đăng nhập thì không cho chọn ,chỉ có quản lý mới được phép chọn nhân viên trong phiếu nhập hoặc hóa đơn
     "output_phieu_nhap"=>$output_phieu_nhap,
     "output_phieu_nhap_search"=>$output_phieu_nhap_search,
-    "output_chi_tiet_phieu_nhap"=>$output_chi_tiet_phieu_nhap
+    "output_chi_tiet_phieu_nhap"=>$output_chi_tiet_phieu_nhap,
 );
 // Trả về dữ liệu dưới dạng JSON
 echo json_encode($response_array);

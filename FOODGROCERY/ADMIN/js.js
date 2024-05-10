@@ -438,19 +438,17 @@ $(document).on('click', '.Image', function() {
     var id_image = $(this).data('id2');
     var input=document.getElementById('Edit_Anh');
     input.addEventListener('change', function() {
-        var imageData = document.getElementById('Edit_Anh').files[0];
-
-            edit_data_image(id_image, imageData, "image");
+        var AnhSanPham = document.getElementById('Edit_Anh').files[0];;
+            edit_data_image(id_image, AnhSanPham);
     });
     input.click();
 });
 
-function edit_data_image(id_image, imageData, column_name) {
+function edit_data_image(id_image, AnhSanPham) {
     var formData = new FormData();
     formData.append('id_image', id_image);
-    formData.append('imageData', imageData);
-    formData.append('column_name', column_name);
-    console.log(imageData);
+    formData.append('AnhSanPham', AnhSanPham);
+
     $.ajax({
         url: "quanlysp/action_sp.php",
         method: "POST",
