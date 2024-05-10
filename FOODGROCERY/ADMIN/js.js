@@ -1710,6 +1710,12 @@ class CHITIETPHIEUNHAP {
                     success: function(response) {
                         fetch_data_phieu_nhap();
                         alert('đã thêm thành công');
+                        if(Find_SANPHAM.value!=''){
+                            fetch_data_search();
+                        }
+                        else{
+                            fetch_data();
+                        }
                     },
                     error: function(xhr, status, error) {
                         alert('có lỗi xảy ra , không thêm phiếu nhập thành công');
@@ -1761,8 +1767,10 @@ class CHITIETPHIEUNHAP {
         console.log('load chi tiết phiếu nhập');
         fetch_data_chi_tiet_phieu_nhap(mapn);
     })
-    $(document).on('click','.Del_phieu_nhap',function(){
-        console.log('đã click xóa');
+    $(document).on('click','.Del_phieu_nhap',function(event){
+        event.stopPropagation();
+        var ngapnhap=$(this).data('ngnpn');
+        
         var mapn=$(this).data('id_phieunhap');
         $.ajax({
             url: 'quanlysp/action_sp.php',
@@ -1770,6 +1778,12 @@ class CHITIETPHIEUNHAP {
             data:{ma_phieu_nhap_xoa:mapn},
             success:function(response){
                 fetch_data_phieu_nhap();
+                if(Find_SANPHAM.value!=''){
+                    fetch_data_search();
+                }
+                else{
+                    fetch_data();
+                }
             }
         })
     })

@@ -39,6 +39,7 @@ if(isset($_POST['rowCount'])){
     // Thêm chitietphieunhap
     foreach ($tableData as $rowData) {
         mysqli_query($connect,"INSERT INTO chitietphieunhap (mapn,masp,soluong,gianhap,tongtien) VALUES ('$ma_phieunhap','$rowData[0]','$rowData[1]','$rowData[2]','$rowData[3]')");
+        mysqli_query($connect,"UPDATE kho SET SOLUONG = SOLUONG + '$rowData[1]' WHERE masp = '$rowData[0]'");
     }
 
 }
@@ -98,6 +99,15 @@ if(isset($_POST['id_xoa_hidden'])){
 //xóa phiếu nhập
 if(isset($_POST['ma_phieu_nhap_xoa'])){
     $mapn=$_POST['ma_phieu_nhap_xoa'];
+    $result = mysqli_query($connect, "SELECT masp, soluong FROM chitietphieunhap WHERE mapn='$mapn'");
+
+    while($row = mysqli_fetch_assoc($result)) {
+        $masp = $row['masp'];
+        $soluong = $row['soluong'];
+
+        mysqli_query($connect,"UPDATE kho SET SOLUONG = SOLUONG - '$soluong' WHERE masp = '$masp'");
+    }
+
     mysqli_query($connect,"DELETE FROM phieunhap WHERE mapn='$mapn'");
 }
 
@@ -131,11 +141,11 @@ if(isset($_POST['COT_SP'])){
     $cot_sp=$_POST['COT_SP'];
     $sort=$_POST['SORT_SP'];
     if($sort=='true'){
-        $sql_query1=mysqli_query($connect,"SELECT * FROM sanpham,danhmuc WHERE sanpham.ishidden=0 and sanpham.madm=danhmuc.madm ORDER BY $cot_sp DESC");
+        $sql_query1=mysqli_query($connect,"SELECT * FROM sanpham,danhmuc,kho WHERE sanpham.ishidden=0 and sanpham.madm=danhmuc.madm and kho.masp=sanpham.masp ORDER BY $cot_sp DESC");
         
     }
     else{
-        $sql_query1=mysqli_query($connect,"SELECT * FROM sanpham,danhmuc WHERE sanpham.ishidden=0 and sanpham.madm=danhmuc.madm ORDER BY $cot_sp ASC");
+        $sql_query1=mysqli_query($connect,"SELECT * FROM sanpham,danhmuc,kho WHERE sanpham.ishidden=0 and sanpham.madm=danhmuc.madm and kho.masp=sanpham.masp ORDER BY $cot_sp ASC");
     }
     // .= NỐI CHUỖI
     $output1 .= '
@@ -153,6 +163,9 @@ if(isset($_POST['COT_SP'])){
                 </th>
                 <th class="sortable_sp '. ($cot_sp == "sanpham.image" ? 'click' : '') . '" data-tk_sp="sanpham.image" '. ($cot_sp == "sanpham.image" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Ảnh
+                </th>
+                <th class="sortable_sp '. ($cot_sp == "kho.SOLUONG" ? 'click' : '') . '" data-tk_sp="kho.SOLUONG" '. ($cot_sp == "kho.SOLUONG" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
+                    Số lượng
                 </th>
                 <th class="sortable_sp '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Gía bán
@@ -186,6 +199,9 @@ if(isset($_POST['COT_SP'])){
                 </td>
                 <td class="seperate style="width:80px" >
                     <img " src="../image/'.$row['image'].'" alt="Error" style="width:100px" >  
+                </td>
+                <td class="seperate " >
+                '.$row['SOLUONG'].'
                 </td>
                 <td class="seperate " >
                     '.$row['dongia'].'
@@ -223,7 +239,7 @@ if(isset($_POST['SEARCH'])){
     $cot_sp=$_POST['COT_SP'];
     $sort=$_POST['SORT_SP'];
     if($sort=='true'){
-        $sql_query1 = mysqli_query($connect, "SELECT * FROM sanpham, danhmuc WHERE sanpham.ishidden=0 AND sanpham.madm=danhmuc.madm AND 
+        $sql_query1 = mysqli_query($connect, "SELECT * FROM sanpham, danhmuc,kho WHERE sanpham.ishidden=0 AND sanpham.madm=danhmuc.madm AND sanpham.masp=kho.masp AND 
                                 (sanpham.masp LIKE '%$search%' 
                                 OR sanpham.tensp LIKE '%$search%' 
                                 OR sanpham.image LIKE '%$search%' 
@@ -234,7 +250,7 @@ if(isset($_POST['SEARCH'])){
         
     }
     else{
-        $sql_query1 = mysqli_query($connect, "SELECT * FROM sanpham, danhmuc WHERE sanpham.ishidden=0 AND sanpham.madm=danhmuc.madm AND 
+        $sql_query1 = mysqli_query($connect, "SELECT * FROM sanpham, danhmuc,kho WHERE sanpham.ishidden=0 AND sanpham.madm=danhmuc.madm AND sanpham.masp=kho.masp AND 
                                 (sanpham.masp LIKE '%$search%' 
                                 OR sanpham.tensp LIKE '%$search%' 
                                 OR sanpham.image LIKE '%$search%' 
@@ -259,6 +275,9 @@ if(isset($_POST['SEARCH'])){
                 </th>
                 <th class="sortable_sp '. ($cot_sp == "sanpham.image" ? 'click' : '') . '" data-tk_sp="sanpham.image" '. ($cot_sp == "sanpham.image" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Ảnh
+                </th>
+                <th class="sortable_sp '. ($cot_sp == "kho.SOLUONG" ? 'click' : '') . '" data-tk_sp="kho.SOLUONG" '. ($cot_sp == "kho.SOLUONG" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
+                Số lượng
                 </th>
                 <th class="sortable_sp '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Gía bán
@@ -292,6 +311,9 @@ if(isset($_POST['SEARCH'])){
                 </td>
                 <td class="seperate style="width:80px" >
                     <img " src="../image/'.$row['image'].'" alt="Error" style="width:100px" >  
+                </td>
+                <td class="seperate " >
+                '.$row['SOLUONG'].'
                 </td>
                 <td class="seperate " >
                     '.$row['dongia'].'
@@ -861,11 +883,11 @@ if(mysqli_num_rows($sql_query_phieu_nhap)>0){
             <td class="seperate">
             '.$row['tongtien'].'
             </td>
-            <td class="seperate">
+            <td class="seperate" >
             '.$row['ngaynhap'].'
             </td>
             <td class="seperate ">
-                <button class="Del_phieu_nhap" data-id_phieunhap='.$row['mapn'].'>Xóa</button>
+                <button class="Del_phieu_nhap" data-id_phieunhap='.$row['mapn'].' data-ngnpn='.$row['ngaynhap'].'>Xóa</button>
             </td>
         </tr>
         ';
