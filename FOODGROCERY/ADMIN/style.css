@@ -276,6 +276,39 @@ input[readonly] {
       height: 5rem;
       scroll-behavior: auto;
     }
+    #THONGBAO {
+      width: 300px;
+      padding: 20px;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      text-align: center;
+      margin: auto;
+      margin-top: 50px;
+      position: fixed;
+      z-index: 5;
+      top: 0;
+      bottom: 50%;
+      left: 30%;
+      right: 10%;
+  }
+  
+
+  
+  #confirmButton {
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 5px;
+      width: 30%;
+      margin-top: 30%;
+      height: 50px;  }
+  
+  #cancelButton {
+      background-color: #f44336;
+      color: white;
+      border-radius: 5px;
+      width: 30%;
+      margin-top: 30%;
+      height: 50px;  }
     
     .THONGKEDONHANG .SANPHAMBANCHAY #TenSanPhamBanChay {
       font-size: 24px;

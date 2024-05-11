@@ -74,6 +74,12 @@ mysqli_close($connect);
         <div id="SANPHAM_XOA" >
                             
         </div>
+
+        <div id="THONGBAO" class="invisible">
+        <p>Bạn có chắc chắn muốn xóa không?</p>
+        <button id="confirmButton">Có</button>
+        <button id="cancelButton">Không</button>
+    </div>
     </div>
 
     <!-- MODAL  DANH MỤC SẢN PHẨM -->
@@ -138,51 +144,6 @@ mysqli_close($connect);
 
     <!-- END -->
 
-    <!-- ADJUST -->
-
-    <div class="modal-ADJUST invisible">
-        <div class="modal-container_ADJUST animationTransmision">
-            <div class="fa fa-times icon close">
-                <i></i>
-            </div>
-            <div class="modal-body_ADJUST">
-                <div class="img">
-                    <img src="" title="Nhấn để thêm ảnh">
-                </div>
-                <div class="properties">
-                    <div class="flex-box">
-                        <h4 class="Title" style="margin: 8px 5px;">Mã Sản Phẩm </h4>
-                        <input id="MaSanPham-SUA" class="SoLuong" type="number" pattern="[1-9]{4}" required
-                            placeholder="#0000">
-                    </div>
-                    <div class="flex-box">
-                        <div class="dropdown SUADROPDOWN">
-                            <h3 class="Title" style="margin-bottom: 15px;">TITLE:</h3>
-                            <input id="TIEUDE-SUA" class="SoLuong" type="text" style="width: 100%;" readonly required>
-                            <div class="dropdown-content SUAcontent">
-                                <li onclick="selectOptionTIEUDESUA('BÁNH')">BÁNH</li>
-                                <li onclick="selectOptionTIEUDESUA('TRÀ')">TRÀ</li>
-                                <li onclick="selectOptionTIEUDESUA('TRÀ SỮA')">TRÀ SỮA</li>
-                                <li onclick="selectOptionTIEUDESUA('NƯỚC ÉP')">NƯỚC ÉP</li>
-                                <li onclick="selectOptionTIEUDESUA('TOPPING')">TOPPING</li>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex-box">
-                        <h3 class="Title" style="margin-bottom: 15px;color: red;">NAME:</h3>
-                        <input id="TenSanPham-SUA" class="SoLuong" type="text" required>
-                    </div>
-                    <div class="flex-box">
-                        <h4 class="Title" style="margin: 5px 0;">GIÁ: </h4>
-                        <input id="GiaBan-SUA" class="SoLuong" type="number" pattern="[1-9]+" placeholder="000.000đ">
-                    </div>
-                    <button class="ADJUST">XÁC NHẬN</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KẾT THÚC -->
 
     <!-- MODAL QUANLYDONHANG -->
     <div id="QUANLYDONHANG" class="invisible">

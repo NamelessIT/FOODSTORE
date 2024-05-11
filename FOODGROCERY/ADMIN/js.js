@@ -202,19 +202,19 @@ function clear_input(){
 
 
 //sửa sản phẩm 
-const MASP = document.getElementById('TIEUDE-SUA');
-const SHOWOPTIONSUA = document.querySelector('.SUAcontent');
-const OUTSIDESUA = document.querySelector('.SUADROPDOWN');
-MASP.addEventListener('click', function (event) {
-    SHOWOPTIONSUA.style.display = 'block';
-    event.stopPropagation();
-})
-OUTSIDESUA.addEventListener('click', function () {
-    SHOWOPTIONSUA.style.display = 'none';
-})
-function selectOptionTIEUDESUA(option) {
-    document.getElementById("TIEUDE-SUA").value = option;
-}
+// const MASP = document.getElementById('TIEUDE-SUA');
+// const SHOWOPTIONSUA = document.querySelector('.SUAcontent');
+// const OUTSIDESUA = document.querySelector('.SUADROPDOWN');
+// MASP.addEventListener('click', function (event) {
+//     SHOWOPTIONSUA.style.display = 'block';
+//     event.stopPropagation();
+// })
+// OUTSIDESUA.addEventListener('click', function () {
+//     SHOWOPTIONSUA.style.display = 'none';
+// })
+// function selectOptionTIEUDESUA(option) {
+//     document.getElementById("TIEUDE-SUA").value = option;
+// }
 
 
 //SỬA SẢN PHẨM
@@ -457,6 +457,9 @@ function edit_data_image(id_image, AnhSanPham) {
         processData: false,
         success: function(data) {
             fetch_data_edit();
+            var responseData = JSON.parse(data);
+            var output1 = responseData.output_check;
+            document.getElementById('SANPHAM_XOA').innerHTML = output1; 
         }
     });
 }
@@ -466,24 +469,31 @@ function edit_data_image(id_image, AnhSanPham) {
 // check có trong hóa đơn không
 $(document).on('click','.Del_data',function(){
     var id_xoa =$(this).data('xoa');
-    $.ajax({
-        url: "quanlysp/action_sp.php",
-        method: "POST",
-        data: { id_xoa: id_xoa},
-        success: function(response) {
-            alert('XOá dữ liệu thành công');
-            if(btn_edit.classList.contains('running')){
-                fetch_data_edit();
+    document.getElementById('THONGBAO').classList.remove('invisible');
+    document.getElementById('confirmButton').addEventListener('click',function(){
+        $.ajax({
+            url: "quanlysp/action_sp.php",
+            method: "POST",
+            data: { id_xoa: id_xoa},
+            success: function(response) {
+                document.getElementById('THONGBAO').classList.add('invisible');
+                if(btn_edit.classList.contains('running')){
+                    fetch_data_edit();
+                }
+                else if(Find_SANPHAM.value!=''){
+                    fetch_data_search();
+                }
+                else{
+                    fetch_data();
+                }
+                fetch_data_hidden();
             }
-            else if(Find_SANPHAM.value!=''){
-                fetch_data_search();
-            }
-            else{
-                fetch_data();
-            }
-            fetch_data_hidden();
-        }
-    });
+        });
+    })
+    document.getElementById('cancelButton').addEventListener('click',function(){
+        document.getElementById('THONGBAO').classList.add('invisible');
+        return;  
+    })
 })
 
 $(document).on('click','.Del_data_hidden',function(){
