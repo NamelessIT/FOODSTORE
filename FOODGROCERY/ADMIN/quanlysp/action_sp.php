@@ -590,6 +590,14 @@ $list_masp_hoadon=array();
         // Thêm dòng dữ liệu vào mảng list_masp_hoadon
         $list_masp_hoadon[] = $row['masp'];
     }
+// masp có trong phiếu nhập
+$sql_masp_phieunhap="SELECT masp FROM chitietphieunhap ";
+$query_masp_phieunhap=mysqli_query($connect,$sql_masp_phieunhap);
+$list_masp_phieunhap=array();
+    while ($row = mysqli_fetch_assoc($query_masp_phieunhap)) {
+        // Thêm dòng dữ liệu vào mảng list_masp_phieunhap
+        $list_masp_phieunhap[] = $row['masp'];
+    }
 //masp+tênsp
 $list_masp_tensp='';
 $sql_query_dm=mysqli_query($connect,"SELECT * FROM sanpham WHERE sanpham.ishidden=0");
@@ -1697,6 +1705,7 @@ $response_array = array(
     "list_madm_all" => $list_madm_all,
     "list_madm_sp" => $list_madm_sp,
     "list_masp_hoadon" => $list_masp_hoadon,
+    "list_masp_phieunhap"=>$list_masp_phieunhap,
     "list_masp_tensp"=>$list_masp_tensp,
     "output_hidden" => $output_hidden,
     "output_hidden_search"=>$output_hidden_search,

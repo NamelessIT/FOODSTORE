@@ -286,8 +286,8 @@ input[readonly] {
       margin-top: 50px;
       position: fixed;
       z-index: 5;
-      top: 0;
-      bottom: 50%;
+      top: 20%;
+      bottom: 40%;
       left: 30%;
       right: 10%;
   }

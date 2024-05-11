@@ -251,7 +251,9 @@ function edit_data(id, text, column_name) {
 
 // thay bằng edit
 let list_sp_cthd=[];
+let list_sp_ctpn=[];
 let len_cthd=0;
+let len_ctpn=0;
 //check masp đã tồn tại hay chưa
 function update_list_masp_cthd(callback) {
     $.ajax({
@@ -260,7 +262,9 @@ function update_list_masp_cthd(callback) {
         success: function(response) {
             var responseData = JSON.parse(response);
             list_sp_cthd = responseData.list_masp_hoadon;
+            list_sp_ctpn=responseData.list_masp_phieunhap;
             len_cthd = list_sp_cthd.length;
+            len_ctpn=list_sp_ctpn.length;
             callback(); // Gọi hàm callback sau khi AJAX hoàn thành
         },
         error: function(xhr, status, error) {
@@ -313,7 +317,26 @@ function check_already_masp_cthd(masp, text, column_name) {
             for (let i = 0; i < len_cthd; i++) {      
                 if (list_sp_cthd[i].trim() === masp.toString().trim()) {
                     alert("Mã sản phẩm đã tồn tại trong hóa đơn, không thể sửa");
-                    fetch_data_edit();
+                    if(btn_edit.classList.contains('running')){
+                        fetch_data_edit();
+                    }
+                    else{
+    
+                        fetch_data();
+                    }
+                    return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
+                }
+            }
+            for (let i = 0; i < len_ctpn; i++) {      
+                if (list_sp_ctpn[i].trim() === masp.toString().trim()) {
+                    alert("Mã sản phẩm đã tồn tại trong phiếu nhập, không thể sửa");
+                    if(btn_edit.classList.contains('running')){
+                        fetch_data_edit();
+                    }
+                    else{
+    
+                        fetch_data();
+                    }
                     return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
                 }
             }
@@ -502,7 +525,26 @@ $(document).on('click','.Del_data_hidden',function(){
         for (let i = 0; i < len_cthd; i++) {      
             if (list_sp_cthd[i].trim() === id_xoa_hidden.toString().trim()) {
                 alert("Mã sản phẩm đã tồn tại trong hóa đơn, không thể sửa");
-                fetch_data_edit();
+                if(btn_edit.classList.contains('running')){
+                    fetch_data_edit();
+                }
+                else{
+
+                    fetch_data();
+                }               
+                 return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
+            }
+        }
+        for (let i = 0; i < len_ctpn; i++) {      
+            if (list_sp_ctpn[i].trim() === id_xoa_hidden.toString().trim()) {
+                alert("Mã sản phẩm đã tồn tại trong phiếu nhập, không thể sửa");
+                if(btn_edit.classList.contains('running')){
+                    fetch_data_edit();
+                }
+                else{
+
+                    fetch_data();
+                }
                 return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
             }
         }
