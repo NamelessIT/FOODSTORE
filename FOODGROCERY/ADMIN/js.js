@@ -260,6 +260,10 @@ function update_list_masp_cthd(callback) {
         url: "quanlysp/action_sp.php",
         method: "POST",
         success: function(response) {
+            list_sp_cthd=[];
+            list_sp_ctpn=[];
+            len_cthd=0;
+            len_ctpn=0;
             var responseData = JSON.parse(response);
             list_sp_cthd = responseData.list_masp_hoadon;
             list_sp_ctpn=responseData.list_masp_phieunhap;
@@ -457,14 +461,43 @@ $(document).on('blur','.Motasp',function(){
     check_already_masp_cthd(id,text,"motasp");
 })
 // sửa ảnh
+let id_image=0;
 $(document).on('click', '.Image', function() {
-    var id_image = $(this).data('id2');
+    id_image =$(this).data('id2');
     var input=document.getElementById('Edit_Anh');
-    input.addEventListener('change', function() {
-        var AnhSanPham = document.getElementById('Edit_Anh').files[0];;
-            edit_data_image(id_image, AnhSanPham);
+    update_list_masp_cthd(function() {
+        for (let i = 0; i < len_cthd; i++) {      
+            if (list_sp_cthd[i].trim() === id_image.toString().trim()) {
+                alert("Mã sản phẩm đã tồn tại trong hóa đơn, không thể sửa");
+                if(btn_edit.classList.contains('running')){
+                    fetch_data_edit();
+                }
+                else{
+
+                    fetch_data();
+                }
+                return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
+            }
+        }
+        for (let i = 0; i < len_ctpn; i++) {      
+            if (list_sp_ctpn[i].trim() === id_image.toString().trim()) {
+                alert("Mã sản phẩm đã tồn tại trong phiếu nhập, không thể sửa");
+                if(btn_edit.classList.contains('running')){
+                    fetch_data_edit();
+                }
+                else{
+
+                    fetch_data();
+                }
+                return; // Kết thúc hàm nếu mã sản phẩm đã tồn tại
+            }
+        }
+        input.click();
     });
-    input.click();
+});
+document.getElementById('Edit_Anh').addEventListener('input', function() {
+    var AnhSanPham = document.getElementById('Edit_Anh').files[0];
+    edit_data_image(id_image, AnhSanPham);
 });
 
 function edit_data_image(id_image, AnhSanPham) {
@@ -480,11 +513,9 @@ function edit_data_image(id_image, AnhSanPham) {
         processData: false,
         success: function(data) {
             fetch_data_edit();
-            var responseData = JSON.parse(data);
-            var output1 = responseData.output_check;
-            document.getElementById('SANPHAM_XOA').innerHTML = output1; 
         }
     });
+
 }
 
 

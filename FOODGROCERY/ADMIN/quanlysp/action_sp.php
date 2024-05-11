@@ -720,7 +720,7 @@ if(mysqli_num_rows($sql_query)>0){
             <td class="seperate Tensp" data-id2='.$row['masp'].' contenteditable>
                 '.$row['tensp'].'
             </td>
-            <td class="seperate style="width:80px" >
+            <td class="seperate style="width:80px;" >
                 <img class="Image" data-id2='.$row['masp'].' src="../image/'.$row['image'].'" alt="Error" style="width:100px" contenteditable>  
             </td>
             <td class="seperate Giaban" data-id2='.$row['masp'].' contenteditable>
