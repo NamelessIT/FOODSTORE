@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2024 at 12:45 PM
+-- Generation Time: May 11, 2024 at 05:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,6 +37,8 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`username`, `password`) VALUES
+('dương', '123'),
+('duy', '123'),
 ('huy', '123');
 
 -- --------------------------------------------------------
@@ -75,6 +77,14 @@ CREATE TABLE `chitietphieunhap` (
   `gianhap` int(11) NOT NULL,
   `tongtien` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chitietphieunhap`
+--
+
+INSERT INTO `chitietphieunhap` (`mapn`, `masp`, `soluong`, `gianhap`, `tongtien`) VALUES
+(10, 2, 4, 35000, 140000),
+(10, 4, 1, 10000, 10000);
 
 -- --------------------------------------------------------
 
@@ -161,7 +171,12 @@ CREATE TABLE `kho` (
 --
 
 INSERT INTO `kho` (`masp`, `SOLUONG`) VALUES
-(11, 0);
+(11, 0),
+(3, 0),
+(4, 0),
+(2, 0),
+(10, 0),
+(13, 0);
 
 -- --------------------------------------------------------
 
@@ -183,7 +198,8 @@ CREATE TABLE `nhanvien` (
 --
 
 INSERT INTO `nhanvien` (`manv`, `matk`, `hoten`, `diachi`, `email`, `dienthoai`) VALUES
-(1, NULL, 'huy', '179', 'huy', 98);
+(1, NULL, 'huy', '179', 'huy', 98),
+(2, 'duy', 'duy', '180/61', 'duy@gmail.com', 98);
 
 -- --------------------------------------------------------
 
@@ -193,10 +209,17 @@ INSERT INTO `nhanvien` (`manv`, `matk`, `hoten`, `diachi`, `email`, `dienthoai`)
 
 CREATE TABLE `phieunhap` (
   `mapn` int(11) NOT NULL,
-  `manv` int(255) NOT NULL,
+  `manv` int(255) DEFAULT NULL,
   `tongtien` int(11) NOT NULL,
   `ngaynhap` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `phieunhap`
+--
+
+INSERT INTO `phieunhap` (`mapn`, `manv`, `tongtien`, `ngaynhap`) VALUES
+(10, 1, 150000, '2024-05-11');
 
 -- --------------------------------------------------------
 
@@ -208,6 +231,16 @@ CREATE TABLE `quyen` (
   `rolename` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `quyen`
+--
+
+INSERT INTO `quyen` (`rolename`, `username`) VALUES
+('user', 'huy'),
+('admin', 'huy'),
+('nhân viên', 'duy'),
+('thaphonnhanvien', 'dương');
 
 -- --------------------------------------------------------
 
@@ -224,6 +257,8 @@ CREATE TABLE `role` (
   `buy` tinyint(1) NOT NULL,
   `printbill` tinyint(1) NOT NULL,
   `deletebill` tinyint(1) NOT NULL,
+  `addpn` tinyint(1) NOT NULL,
+  `deletpn` tinyint(1) NOT NULL,
   `addaccount` tinyint(1) NOT NULL,
   `updateaccount` tinyint(1) NOT NULL,
   `deleteaccount` tinyint(1) NOT NULL,
@@ -239,8 +274,11 @@ CREATE TABLE `role` (
 -- Dumping data for table `role`
 --
 
-INSERT INTO `role` (`role_name`, `addproduct`, `updateproduct`, `deleteproduct`, `deletedproducts`, `buy`, `printbill`, `deletebill`, `addaccount`, `updateaccount`, `deleteaccount`, `addrole`, `addcategories`, `updatecategories`, `deletecategories`, `statistics`, `ishidden`) VALUES
-('user', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `role` (`role_name`, `addproduct`, `updateproduct`, `deleteproduct`, `deletedproducts`, `buy`, `printbill`, `deletebill`, `addpn`, `deletpn`, `addaccount`, `updateaccount`, `deleteaccount`, `addrole`, `addcategories`, `updatecategories`, `deletecategories`, `statistics`, `ishidden`) VALUES
+('admin', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0),
+('nhân viên', 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0),
+('thaphonnhanvien', 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('user', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -267,7 +305,8 @@ INSERT INTO `sanpham` (`masp`, `tensp`, `image`, `dongia`, `madm`, `motasp`, `is
 (3, 'mực chiên xù', 'mực_chiên_xù.jpg', 40000, 39, 'giòn rụm', 0),
 (4, 'khoai tây chiên', 'Khoai_tay_chien.jpg', 10000, 39, 'khoai tây chiên giòn', 0),
 (10, 'coca cola', 'coca_cola.jpg', 15000, 42, 'mát lạnh, sảng khoái', 0),
-(11, 'pepsi', 'pepsi.jpg', 15000, 42, 'quá đã pepsi ơi', 0);
+(11, 'pepsi', 'pepsi.jpg', 16000, 42, 'quá đã pepsi ơi', 0),
+(13, 'SUSHI CHIÊN', 'sushi_chiên.jpg', 35000, 39, 'NGON', 0);
 
 --
 -- Indexes for dumped tables
@@ -290,8 +329,8 @@ ALTER TABLE `chitiethoadon`
 -- Indexes for table `chitietphieunhap`
 --
 ALTER TABLE `chitietphieunhap`
-  ADD KEY `mapn` (`mapn`),
-  ADD KEY `masp` (`masp`);
+  ADD KEY `masp` (`masp`),
+  ADD KEY `chitietphieunhap_ibfk_3` (`mapn`);
 
 --
 -- Indexes for table `danhmuc`
@@ -318,7 +357,7 @@ ALTER TABLE `khachhang`
 -- Indexes for table `kho`
 --
 ALTER TABLE `kho`
-  ADD KEY `masp` (`masp`);
+  ADD KEY `kho_ibfk_1` (`masp`);
 
 --
 -- Indexes for table `nhanvien`
@@ -380,19 +419,19 @@ ALTER TABLE `khachhang`
 -- AUTO_INCREMENT for table `nhanvien`
 --
 ALTER TABLE `nhanvien`
-  MODIFY `manv` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `manv` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `phieunhap`
 --
 ALTER TABLE `phieunhap`
-  MODIFY `mapn` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `mapn` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `masp` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `masp` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
@@ -409,7 +448,7 @@ ALTER TABLE `chitiethoadon`
 -- Constraints for table `chitietphieunhap`
 --
 ALTER TABLE `chitietphieunhap`
-  ADD CONSTRAINT `chitietphieunhap_ibfk_3` FOREIGN KEY (`mapn`) REFERENCES `phieunhap` (`mapn`),
+  ADD CONSTRAINT `chitietphieunhap_ibfk_3` FOREIGN KEY (`mapn`) REFERENCES `phieunhap` (`mapn`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `chitietphieunhap_ibfk_4` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`);
 
 --
@@ -429,7 +468,7 @@ ALTER TABLE `khachhang`
 -- Constraints for table `kho`
 --
 ALTER TABLE `kho`
-  ADD CONSTRAINT `kho_ibfk_1` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`);
+  ADD CONSTRAINT `kho_ibfk_1` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `nhanvien`

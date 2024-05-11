@@ -192,7 +192,7 @@ mysqli_close($connect);
         <div class="Cover_sepherate_line">
             <div class="sepherate_line"></div>
         </div>
-        <div style="margin-bottom: 5%;border-radius:5px">
+        <div style="margin-bottom: 5%;border-radius:5px" class="chon_nhanvien">
                         <label>Mã nhân viên:</label> <br>
                         <input type="text" id="NV_PN" style="border-radius:5px" required readonly>
                         <div class="NV_PN" style="position:relative">

@@ -1512,11 +1512,31 @@ $(document).on('click','.sortable_tk_filter_TIEN',function(){
     }
     fetch_data_top_products_cungloai_dm();
 })
+let role_current=[];
+function hide_function(username){
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        data:{username:username},
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var role = responseData.role;
+            role_current=role[0];
+            console.log(role);
+            var manv_data=responseData.nhanvien;
+            if(role[0].addpn != 0 && role[0].deletpn == 0 && manv_data!=''){
+                document.querySelector('.chon_nhanvien').classList.add('invisible');
+                manv=parseInt(manv_data['manv']);
+            }
 
-
+        }
+    });
+}
 
 
 window.addEventListener('load', function() {
+    // lấy username đăng nhập bỏ vào
+    hide_function('huy');
     selectOptionType('TẤT CẢ');
     show_madm.style.display = 'none';
     weekCheckbox.click();
@@ -1822,6 +1842,11 @@ class CHITIETPHIEUNHAP {
                 var responseData = JSON.parse(response);
                 var output_phieu_nhap = responseData.output_phieu_nhap;
                 showphieunhap.innerHTML=output_phieu_nhap;
+                if (role_current.deletpn == 0) {
+                    $(document).ready(function() {
+                        $('.Del_phieu_nhap').addClass('invisible');
+                    });
+                }
             }
         })
     }
@@ -1845,7 +1870,6 @@ class CHITIETPHIEUNHAP {
         showFormButton.classList.add('invisible');
         PHIEUNHAP_TABLE.classList.add('invisible');
         btn_addPN.classList.add('invisible');
-        console.log('load chi tiết phiếu nhập');
         fetch_data_chi_tiet_phieu_nhap(mapn);
     })
     $(document).on('click','.Del_phieu_nhap',function(event){

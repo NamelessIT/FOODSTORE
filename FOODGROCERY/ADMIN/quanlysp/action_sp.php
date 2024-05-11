@@ -43,8 +43,61 @@ if(isset($_POST['rowCount'])){
     }
 
 }
-
-
+// mảng thể hiện quyền
+$role = array();
+$addproduct = $updateproduct = $deleteproduct = $deletedproducts = $buy = $printbill = $deletebill = $addpn = $deletpn = $addaccount = $updateaccount = $deleteaccount = $addrole = $addcategories = $updatecategories = $deletecategories = $statistics = 0;
+if (isset($_POST['username'])) {
+    $username = $_POST['username'];
+    $mysqli_query_role = mysqli_query($connect, "SELECT * FROM account,quyen,role WHERE account.username='$username' AND account.username=quyen.username AND role.role_name=quyen.rolename");
+    while ($row = mysqli_fetch_assoc($mysqli_query_role)) {
+        // Tạo biến tương ứng với các cột ngoại trừ username, password, rolename, ishidden
+        $addproduct = ($row['addproduct'] != 0) ? 1 : ($row['addproduct'] == 0 ? 0 : 1);
+        $updateproduct = ($row['updateproduct'] != 0) ? 1 : ($row['updateproduct'] == 0 ? 0 : 1);
+        $deleteproduct = ($row['deleteproduct'] != 0) ? 1 : ($row['deleteproduct'] == 0 ? 0 : 1);
+        $deletedproducts = ($row['deletedproducts'] != 0) ? 1 : ($row['deletedproducts'] == 0 ? 0 : 1);
+        $buy = ($row['buy'] != 0) ? 1 : ($row['buy'] == 0 ? 0 : 1);
+        $printbill = ($row['printbill'] != 0) ? 1 : ($row['printbill'] == 0 ? 0 : 1);
+        $deletebill = ($row['deletebill'] != 0) ? 1 : ($row['deletebill'] == 0 ? 0 : 1);
+        $addpn = ($row['addpn'] != 0) ? 1 : ($row['addpn'] == 0 ? 0 : 1);
+        $deletpn = ($row['deletpn'] != 0) ? 1 : ($row['deletpn'] == 0 ? 0 : 1);
+        $addaccount = ($row['addaccount'] != 0) ? 1 : ($row['addaccount'] == 0 ? 0 : 1);
+        $updateaccount = ($row['updateaccount'] != 0) ? 1 : ($row['updateaccount'] == 0 ? 0 : 1);
+        $deleteaccount = ($row['deleteaccount'] != 0) ? 1 : ($row['deleteaccount'] == 0 ? 0 : 1);
+        $addrole = ($row['addrole'] != 0) ? 1 : ($row['addrole'] == 0 ? 0 : 1);
+        $addcategories = ($row['addcategories'] != 0) ? 1 : ($row['addcategories'] == 0 ? 0 : 1);
+        $updatecategories = ($row['updatecategories'] != 0) ? 1 : ($row['updatecategories'] == 0 ? 0 : 1);
+        $deletecategories = ($row['deletecategories'] != 0) ? 1 : ($row['deletecategories'] == 0 ? 0 : 1);
+        $statistics = ($row['statistics'] != 0) ? 1 : ($row['statistics'] == 0 ? 0 : 1);
+    }
+}
+        // Thêm các biến vào mảng $role
+        $role[] = array(
+            'addproduct' => $addproduct,
+            'updateproduct' => $updateproduct,
+            'deleteproduct' => $deleteproduct,
+            'deletedproducts' => $deletedproducts,
+            'buy' => $buy,
+            'printbill' => $printbill,
+            'deletebill' => $deletebill,
+            'addpn' => $addpn,
+            'deletpn' => $deletpn,
+            'addaccount' => $addaccount,
+            'updateaccount' => $updateaccount,
+            'deleteaccount' => $deleteaccount,
+            'addrole' => $addrole,
+            'addcategories' => $addcategories,
+            'updatecategories' => $updatecategories,
+            'deletecategories' => $deletecategories,
+            'statistics' => $statistics
+        );
+$nhanvien = array();
+if (isset($_POST['username'])) {
+    $username = $_POST['username'];
+    $mysqli_query_role = mysqli_query($connect, "SELECT * FROM account,nhanvien WHERE account.username=nhanvien.matk AND account.username='$username'");
+    while ($row = mysqli_fetch_assoc($mysqli_query_role)) {
+        $nhanvien=$row;
+    }
+}
 
 //edit dữ liệu từ database
 
@@ -103,7 +156,12 @@ if(isset($_POST['ma_phieu_nhap_xoa'])){
         $masp = $row['masp'];
         $soluong = $row['soluong'];
 
-        mysqli_query($connect,"UPDATE kho SET SOLUONG = SOLUONG - '$soluong' WHERE masp = '$masp'");
+        mysqli_query($connect, "UPDATE kho 
+        SET SOLUONG = CASE 
+                        WHEN (SOLUONG > '$soluong') THEN SOLUONG - '$soluong' 
+                        ELSE 0 
+                    END 
+        WHERE masp = '$masp'");
     }
 
     mysqli_query($connect,"DELETE FROM phieunhap WHERE mapn='$mapn'");
@@ -893,7 +951,7 @@ if(mysqli_num_rows($sql_query_phieu_nhap)>0){
             '.$row['ngaynhap'].'
             </td>
             <td class="seperate ">
-                <button class="Del_phieu_nhap" data-id_phieunhap='.$row['mapn'].' data-ngnpn='.$row['ngaynhap'].'>Xóa</button>
+                <button class="Del_phieu_nhap " data-id_phieunhap='.$row['mapn'].' data-ngnpn='.$row['ngaynhap'].'>Xóa</button>
             </td>
         </tr>
         ';
@@ -1730,6 +1788,8 @@ $response_array = array(
     "output_phieu_nhap"=>$output_phieu_nhap,
     "output_phieu_nhap_search"=>$output_phieu_nhap_search,
     "output_chi_tiet_phieu_nhap"=>$output_chi_tiet_phieu_nhap,
+    "role"=>$role,
+    "nhanvien"=>$nhanvien,
 );
 // Trả về dữ liệu dưới dạng JSON
 echo json_encode($response_array);
