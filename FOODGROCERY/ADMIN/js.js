@@ -1526,6 +1526,7 @@ function hide_function(username){
             var manv_data=responseData.nhanvien;
             if(role[0].addpn != 0 && role[0].deletpn == 0 && manv_data!=''){
                 document.querySelector('.chon_nhanvien').classList.add('invisible');
+                chooseNV_PN.value=manv_data['hoten'];
                 manv=parseInt(manv_data['manv']);
             }
 
@@ -1536,7 +1537,7 @@ function hide_function(username){
 
 window.addEventListener('load', function() {
     // lấy username đăng nhập bỏ vào
-    hide_function('huy');
+    hide_function('duy');
     selectOptionType('TẤT CẢ');
     show_madm.style.display = 'none';
     weekCheckbox.click();
