@@ -60,7 +60,7 @@ mysqli_close($connect);
             <input id="Find_SANPHAM" type="text" class="input_seacrh">
         </div>
         <br></br>
-        <button class="Modal_Add" style="width:15%">Thêm sản phẩm</button>
+        <button class="Modal_Add ADD_SP_BTN" style="width:15%">Thêm sản phẩm</button>
         <br></br>
         <button id="SHOW_DM">xem danh mục</button>
         <br></br>
@@ -217,7 +217,7 @@ mysqli_close($connect);
             </table>
         </div>
         <button  style="width:15%;margin:20px 0"  id="btn_ADDPN">Tạo phiếu nhập</button>
-        <div class="search_cover" style="margin-bottom: 1%">
+        <div class="search_cover search_phieunhap" style="margin-bottom: 1%">
             <label>Tìm Kiếm</label>
             <input id="Find_PHIEUNHAP" type="text" class="input_seacrh">
         </div>

@@ -634,6 +634,11 @@ function fetch_data(){
             var responseData = JSON.parse(response);
             var output1 = responseData.output1;
             Container_products.innerHTML = output1; 
+            if (role_current.deleteproduct == 0) {
+                $(document).ready(function() {
+                    $('.Del_data').addClass('invisible');
+                });
+            }
         }
     });
 }
@@ -645,7 +650,12 @@ function fetch_data_hidden(){
         success: function(response) {
             var responseData = JSON.parse(response);
             var output_hidden = responseData.output_hidden;
-            Container_products_hidden.innerHTML = output_hidden; 
+            Container_products_hidden.innerHTML = output_hidden;
+            if (role_current.deletedproducts == 0) {
+                $(document).ready(function() {
+                    $('.Del_data_hidden').addClass('invisible');
+                });
+            } 
         }
     });
 }
@@ -716,6 +726,11 @@ function fetch_data_dm(){
             var responseData = JSON.parse(response);
             var output_dm = responseData.output_dm;
             NOIDUNG_DANHMUC.innerHTML = output_dm; 
+            if(role_current.deletecategories==0){
+                $(document).ready(function() {
+                    $('.Del_dm').addClass('invisible');
+                });
+            }
         }
     });
 }
@@ -1524,12 +1539,33 @@ function hide_function(username){
             role_current=role[0];
             console.log(role);
             var manv_data=responseData.nhanvien;
-            if(role[0].addpn != 0 && role[0].deletpn == 0 && manv_data!=''){
+            if(role[0].addaccount == 0 && role[0].updateaccount == 0 && manv_data!='' && role[0].deleteaccount == 0){
                 document.querySelector('.chon_nhanvien').classList.add('invisible');
                 chooseNV_PN.value=manv_data['hoten'];
                 manv=parseInt(manv_data['manv']);
             }
-
+            else{
+                chooseNV_PN.value='';
+                manv=null; 
+            }
+            if(role_current.updateproduct==0){
+                document.querySelector('.ADD_SP_BTN').classList.add('invisible');
+            }
+            if(role_current.statistics==0){
+                document.querySelector('.THONGKEDONHANG').classList.add('invisible');
+            }
+            if(role_current.updateproduct==0){
+                document.querySelector('.edit').classList.add('invisible');
+            }
+            if(role_current.addcategories==0){
+                document.getElementById('add_dm').classList.add('invisible');
+                document.getElementById('add_danh_muc').classList.add('invisible');
+            }
+            // ẩn trong fetch_Data
+            // role_current.deleteproduct
+            // role_current.deletecategories
+            // role_Current.deletpn
+            // role_Current.deletedproducts
         }
     });
 }
@@ -1537,7 +1573,7 @@ function hide_function(username){
 
 window.addEventListener('load', function() {
     // lấy username đăng nhập bỏ vào
-    hide_function('duy');
+    hide_function('huy');
     selectOptionType('TẤT CẢ');
     show_madm.style.display = 'none';
     weekCheckbox.click();
@@ -1871,6 +1907,10 @@ class CHITIETPHIEUNHAP {
         showFormButton.classList.add('invisible');
         PHIEUNHAP_TABLE.classList.add('invisible');
         btn_addPN.classList.add('invisible');
+        document.querySelector('.search_phieunhap').classList.add('invisible');
+        document.getElementById('Ngay_PN_start').classList.add('invisible');
+        document.getElementById('Ngay_PN_end').classList.add('invisible');
+        document.getElementById('Ngay_PN').classList.add('invisible');
         fetch_data_chi_tiet_phieu_nhap(mapn);
     })
     $(document).on('click','.Del_phieu_nhap',function(event){
@@ -1901,6 +1941,10 @@ class CHITIETPHIEUNHAP {
         PHIEUNHAP_TABLE.classList.remove('invisible');
         btn_back.classList.add('invisible');
         showphieunhap.classList.remove('invisible');
+        document.querySelector('.search_phieunhap').classList.remove('invisible');
+        document.getElementById('Ngay_PN_start').classList.remove('invisible');
+        document.getElementById('Ngay_PN').classList.remove('invisible');
+        document.getElementById('Ngay_PN_end').classList.remove('invisible');
     })
     var Find_PHIEUNHAP=document.getElementById('Find_PHIEUNHAP');
     var ngay_phieunhap_start=document.getElementById('Ngay_PN_start');
