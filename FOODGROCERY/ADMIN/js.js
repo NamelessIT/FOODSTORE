@@ -1899,6 +1899,18 @@ class CHITIETPHIEUNHAP {
             }
         })
     }
+    $(document).on('mouseover', '.SHOW_CT', function() {
+        $(this).css({
+            cursor: 'pointer',
+            opacity: '0.5'
+        });
+    });
+    
+    $(document).on('mouseout', '.SHOW_CT', function() {
+        $(this).css({
+            opacity: '1'
+        });
+    });
     $(document).on('click','.SHOW_CT',function(){
         var mapn=$(this).data('id_phieunhap');
         btn_back.classList.remove('invisible');
