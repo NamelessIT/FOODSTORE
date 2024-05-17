@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2024 at 05:04 PM
+-- Generation Time: May 17, 2024 at 05:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,17 +29,19 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `account` (
   `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `ngaytao` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`username`, `password`) VALUES
-('dương', '123'),
-('duy', '123'),
-('huy', '123');
+INSERT INTO `account` (`username`, `password`, `ngaytao`) VALUES
+('dương', '123', NULL),
+('duy', '123', NULL),
+('huy', '123', NULL),
+('khang', '123', NULL);
 
 -- --------------------------------------------------------
 
@@ -140,11 +142,10 @@ INSERT INTO `hoadon` (`mahd`, `makh`, `manv`, `tongtien`, `ngay`, `trangthai`) V
 CREATE TABLE `khachhang` (
   `makh` int(255) NOT NULL,
   `matk` varchar(255) DEFAULT NULL,
-  `hoten` varchar(255) NOT NULL,
-  `diachi` varchar(255) NOT NULL,
+  `hoten` varchar(255) DEFAULT NULL,
+  `diachi` varchar(255) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
-  `dienthoai` int(11) NOT NULL,
-  `ngaytao` date NOT NULL,
+  `dienthoai` int(11) DEFAULT NULL,
   `tttk` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -152,8 +153,9 @@ CREATE TABLE `khachhang` (
 -- Dumping data for table `khachhang`
 --
 
-INSERT INTO `khachhang` (`makh`, `matk`, `hoten`, `diachi`, `email`, `dienthoai`, `ngaytao`, `tttk`) VALUES
-(1, NULL, 'huy', '179', 'huy@', 98, '2024-04-02', 0);
+INSERT INTO `khachhang` (`makh`, `matk`, `hoten`, `diachi`, `email`, `dienthoai`, `tttk`) VALUES
+(1, NULL, 'huy', '179', 'huy@', 98, 0),
+(3, 'khang', NULL, NULL, 'khang', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -228,7 +230,7 @@ INSERT INTO `phieunhap` (`mapn`, `manv`, `tongtien`, `ngaynhap`) VALUES
 --
 
 CREATE TABLE `quyen` (
-  `rolename` varchar(255) NOT NULL,
+  `rolename` varchar(255) DEFAULT NULL,
   `username` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -237,7 +239,7 @@ CREATE TABLE `quyen` (
 --
 
 INSERT INTO `quyen` (`rolename`, `username`) VALUES
-('user', 'huy'),
+('khachhang', 'huy'),
 ('admin', 'huy'),
 ('nhân viên', 'duy'),
 ('thaphonnhanvien', 'dương');
@@ -276,9 +278,9 @@ CREATE TABLE `role` (
 
 INSERT INTO `role` (`role_name`, `addproduct`, `updateproduct`, `deleteproduct`, `deletedproducts`, `buy`, `printbill`, `deletebill`, `addpn`, `deletpn`, `addaccount`, `updateaccount`, `deleteaccount`, `addrole`, `addcategories`, `updatecategories`, `deletecategories`, `statistics`, `ishidden`) VALUES
 ('admin', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0),
+('khachhang', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('nhân viên', 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0),
-('thaphonnhanvien', 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('user', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+('thaphonnhanvien', 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -413,7 +415,7 @@ ALTER TABLE `hoadon`
 -- AUTO_INCREMENT for table `khachhang`
 --
 ALTER TABLE `khachhang`
-  MODIFY `makh` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `makh` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `nhanvien`
