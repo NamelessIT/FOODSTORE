@@ -29,6 +29,7 @@ mysqli_close($connect);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="quanlykh/kh2.css">
     <title>Admin</title>
 </head>
 <body>
@@ -39,9 +40,10 @@ mysqli_close($connect);
             <ul>
                 <li class="QUANLYSANPHAM active">QUẢN LÝ SẢN PHẨM</li>
                 <li class="QUANLYDONHANG ">QUẢN LÝ HÓA ĐƠN</li>
-                <li class="QUANLYNGUOIDUNG">QUẢN LÝ NGƯỜI DÙNG</li>
+                <li class="QUANLYTAIKHOAN">QUẢN LÝ TÀI KHOẢN</li>
                 <li class="THONGKEDONHANG">THỐNG KÊ ĐƠN HÀNG</li>
                 <li class="PHIẾU NHẬP">PHIẾU NHẬP</li>
+                <li class="QUANLYKHACHHANG">QUẢN LÝ KHÁCH HÀNG</li>
                 <li class="TROVE">TRỞ VỀ</li>
             </ul>
         </div>
@@ -166,10 +168,29 @@ mysqli_close($connect);
                             
         </div>
     </div>
-    <!-- MODAL QUANLYNGUOIDUNG -->
-    <div id="QUANLYNGUOIDUNG" class="invisible">
+
+     <!-- MODAL QUANLYKHACHHANG -->
+    <div id="QUANLYKHACHHANG" class="invisible">
         <div class="Title_ChucNang">
-            <label>Quản Lý Người Dùng</label>
+            <label>Quản Lý Khách Hàng</label>
+        </div>
+        <div class="Cover_sepherate_line">
+            <div class="sepherate_line"></div>
+        </div>
+        <div class="search_cover">
+            <label>Tìm Kiếm</label>
+            <input id="Find_KHACHHANG" type="text" class="input_seacrh">
+        </div>
+        <br></br>
+        <div id="KHACHHANG">
+        </div>
+        <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>
+    </div>
+
+    <!-- MODAL QUANLYTAIKHOAN -->
+    <div id="QUANLYTAIKHOAN" class="invisible">
+        <div class="Title_ChucNang">
+            <label>Quản Lý Tài Khoản</label>
         </div>
         <div class="Cover_sepherate_line">
             <div class="sepherate_line"></div>
@@ -179,10 +200,10 @@ mysqli_close($connect);
             <input id="Find_NGUOIDUNG" type="text" class="input_seacrh">
         </div>
         <br>
-        <h5 class="title_count">SỐ LƯỢNG NGƯỜI DÙNG:</h5>
+        <h5 class="title_count">Số Lượng Tài Khoản:</h5>
         <h5 class="user_count"></h5>
         <div id="USER_SHOW"></div>
-    </div>
+    </div>            
 
     <!-- modal phiếu nhâp -->
         <div id="QUANLYPHIEUNHAP" class="invisible">
@@ -381,12 +402,13 @@ mysqli_close($connect);
         </div>
     </div>
 
+
                           
 
     
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="js.js"></script>
-
+<script src="js1.js"></script>
+<script src="quanlykh/kh4.js"></script>
 </body>
 </html>

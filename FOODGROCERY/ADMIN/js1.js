@@ -31,48 +31,63 @@ sidebarItems.forEach(function(item) {
 });
 var Quanlysanpham=document.getElementById('QUANLYSANPHAM');
 var Quanlydonhang=document.getElementById('QUANLYDONHANG');
-var Quanlynguoidung=document.getElementById('QUANLYNGUOIDUNG');
+var Quanlytaikhoan=document.getElementById('QUANLYTAIKHOAN');
 var Thongkedonhang=document.getElementById('THONGKEDONHANG');
 var Phieunhap=document.getElementById('QUANLYPHIEUNHAP');
+var quanlykhachhang=document.getElementById('QUANLYKHACHHANG');
 Quanlysanpham.classList.remove('invisible');
 // Quanlydonhang.classList.remove('invisible');
 sidebarItems[0].addEventListener('click',function(){
     Quanlysanpham.classList.remove('invisible');
     Quanlydonhang.classList.add('invisible');
-    Quanlynguoidung.classList.add('invisible');
+    Quanlytaikhoan.classList.add('invisible');
     Thongkedonhang.classList.add('invisible');
     Phieunhap.classList.add('invisible');
+    quanlykhachhang.classList.add('invisible');
 })
 sidebarItems[1].addEventListener('click',function(){
     Quanlysanpham.classList.add('invisible');
     Quanlydonhang.classList.remove('invisible');
-    Quanlynguoidung.classList.add('invisible');
+    Quanlytaikhoan.classList.add('invisible');
     Thongkedonhang.classList.add('invisible');
     Phieunhap.classList.add('invisible');
+    quanlykhachhang.classList.add('invisible');
 })
 sidebarItems[2].addEventListener('click',function(){
     Quanlysanpham.classList.add('invisible');
     Quanlydonhang.classList.add('invisible');
-    Quanlynguoidung.classList.remove('invisible');
+    Quanlytaikhoan.classList.remove('invisible');
     Thongkedonhang.classList.add('invisible');
     Phieunhap.classList.add('invisible');
+    quanlykhachhang.classList.add('invisible');
 })
 sidebarItems[3].addEventListener('click',function(){
     Quanlysanpham.classList.add('invisible');
     Quanlydonhang.classList.add('invisible');
-    Quanlynguoidung.classList.add('invisible');
+    Quanlytaikhoan.classList.add('invisible');
     Thongkedonhang.classList.remove('invisible');
     Phieunhap.classList.add('invisible');
+    quanlykhachhang.classList.add('invisible');
 })
 sidebarItems[4].addEventListener('click',function(){
     Quanlysanpham.classList.add('invisible');
     Quanlydonhang.classList.add('invisible');
-    Quanlynguoidung.classList.add('invisible');
+    Quanlytaikhoan.classList.add('invisible');
     Thongkedonhang.classList.add('invisible');
     Phieunhap.classList.remove('invisible');
+    quanlykhachhang.classList.add('invisible');
 })
 
 sidebarItems[5].addEventListener('click',function(){
+    Quanlysanpham.classList.add('invisible');
+    Quanlydonhang.classList.add('invisible');
+    Quanlytaikhoan.classList.add('invisible');
+    Thongkedonhang.classList.add('invisible');
+    Phieunhap.classList.add('invisible');
+    quanlykhachhang.classList.remove('invisible');
+})
+
+sidebarItems[6].addEventListener('click',function(){
     // window.location.href = 'http://localhost:3000/FOODGROCERY/index.php?page_layout=danhsach';
     alert('chưa có đường dẫn về trang chủ');
   })

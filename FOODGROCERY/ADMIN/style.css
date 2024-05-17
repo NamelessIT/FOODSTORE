@@ -228,7 +228,7 @@ input[readonly] {
       margin: 0;
     }
     #QUANLYDONHANG h4,
-    #QUANLYNGUOIDUNG h4,
+    #QUANLYTAIKHOAN h4,
     #THONGKEDONHANG h4{
       margin: 10px;
     }
@@ -330,17 +330,17 @@ input[readonly] {
     .THONGKEDONHANG .SANPHAMBANCHAY #TenSanPhamBanChay span:nth-child(2) {
       animation-delay: 0.1s;
     }
-    #QUANLYNGUOIDUNG .delete-button{
+    #QUANLYTAIKHOAN .delete-button{
       cursor: pointer;
       padding: 6px;
       background-color: black;
       color: white;
     }
-    #QUANLYNGUOIDUNG .title_count,#QUANLYNGUOIDUNG .user_count{
+    #QUANLYTAIKHOAN .title_count,#QUANLYTAIKHOAN .user_count{
       display: inline-block;
       margin: 2px 5px;
     }
-    #QUANLYNGUOIDUNG .title_count{
+    #QUANLYTAIKHOAN .title_count{
       margin-left: 10px;
     }
     #THONGKEDONHANG .Filter{
@@ -638,3 +638,4 @@ input[readonly] {
 #btn_xacnhan_them_pn:hover {
   background-color: rgba(3, 91, 3, 0.7);
 }
+
