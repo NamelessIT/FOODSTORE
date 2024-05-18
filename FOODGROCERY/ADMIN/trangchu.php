@@ -39,12 +39,12 @@ mysqli_close($connect);
     <div class="container">
         <div class="sidebar">
             <ul>
-                <li class="QUANLYSANPHAM active">QUẢN LÝ SẢN PHẨM</li>
-                <li class="QUANLYDONHANG ">QUẢN LÝ HÓA ĐƠN</li>
-                <li class="QUANLYTAIKHOAN">QUẢN LÝ TÀI KHOẢN</li>
-                <li class="THONGKEDONHANG">THỐNG KÊ ĐƠN HÀNG</li>
-                <li class="PHIẾU NHẬP">PHIẾU NHẬP</li>
-                <li class="QUANLYKHACHHANG">QUẢN LÝ KHÁCH HÀNG</li>
+                <li class="QUANLYSANPHAM2 active">QUẢN LÝ SẢN PHẨM</li>
+                <li class="QUANLYDONHANG2 ">QUẢN LÝ HÓA ĐƠN</li>
+                <li class="QUANLYTAIKHOAN2">QUẢN LÝ TÀI KHOẢN</li>
+                <li class="THONGKEDONHANG2">THỐNG KÊ ĐƠN HÀNG</li>
+                <li class="PHIẾU NHẬP2">PHIẾU NHẬP</li>
+                <li class="QUANLYKHACHHANG2">QUẢN LÝ KHÁCH HÀNG</li>
                 <li class="TROVE">TRỞ VỀ</li>
             </ul>
         </div>
