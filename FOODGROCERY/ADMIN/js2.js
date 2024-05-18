@@ -1552,9 +1552,9 @@ function hide_function(username){
             var responseData = JSON.parse(response);
             var role = responseData.role;
             role_current=role[0];
-            console.log(role);
+            console.log(role +" "+username);
             var manv_data=responseData.nhanvien;
-            if(role[0].addaccount == 0 && role[0].updateaccount == 0 && manv_data!='' && role[0].deleteaccount == 0){
+            if(role[0].addrole == 0 && role[0].updateaccount == 0 && manv_data!='' ){
                 document.querySelector('.chon_nhanvien').classList.add('invisible');
                 chooseNV_PN.value=manv_data['hoten'];
                 manv=parseInt(manv_data['manv']);
@@ -1576,6 +1576,13 @@ function hide_function(username){
                 document.getElementById('add_dm').classList.add('invisible');
                 document.getElementById('add_danh_muc').classList.add('invisible');
             }
+            if(role_current.addpn==0){
+                document.getElementById('Ngay_PN').classList.add('invisible');
+                document.querySelector('.chon_nhanvien').classList.add('invisible');
+                document.getElementById('btn_showFormAddPN').classList.add('invisible');
+                document.getElementById('PHIEUNHAP').classList.add('invisible');
+                document.getElementById('btn_ADDPN').classList.add('invisible');
+            }
             // ẩn trong fetch_Data
             // role_current.deleteproduct
             // role_current.deletecategories
@@ -1588,7 +1595,7 @@ function hide_function(username){
 
 window.addEventListener('load', function() {
     // lấy username đăng nhập bỏ vào
-    hide_function('huy');
+    hide_function('duy');
     selectOptionType('TẤT CẢ');
     show_madm.style.display = 'none';
     weekCheckbox.click();
@@ -1914,17 +1921,22 @@ class CHITIETPHIEUNHAP {
             }
         })
     }
+    let mouse_switch=0;
     $(document).on('mouseover', '.SHOW_CT', function() {
         $(this).css({
             cursor: 'pointer',
             opacity: '0.5'
         });
+        mouse_switch=1;
     });
     
     $(document).on('mouseout', '.SHOW_CT', function() {
+        if(mouse_switch==1)
         $(this).css({
             opacity: '1'
         });
+        mouse_switch=0;
+
     });
     $(document).on('click','.SHOW_CT',function(){
         var mapn=$(this).data('id_phieunhap');

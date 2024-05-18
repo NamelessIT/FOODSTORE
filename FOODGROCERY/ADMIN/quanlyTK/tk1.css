@@ -1,0 +1,105 @@
+#TAIKHOAN {
+    width: 100%;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.account-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.account-table th,
+.account-table td {
+    border: 2px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.account-table th {
+    background-color: #0c0b0b;
+    color: #fff;
+}
+
+.form-Container-tk {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 70;
+  }
+
+  .form-Container-tk.active {
+    display: block;
+  }
+
+  
+  .form-Container-tk form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-Container-tk button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+  }
+
+  .form-Container-tk input {
+    width: 90%;
+    margin-bottom: 10px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+  }
+  
+  .form-Container-tk button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+  }
+
+  .form-Container-tk h2 {
+    text-align: center;
+    margin-top: 0;
+  }
+
+  #createAccountForm {
+    width: 300px;
+  }
+
+  .form-Container-tk #close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+  }
+  
+  .form-Container-tk #close-btn:hover {
+    color: #333;
+  }
+
+  #overlay_form_them {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    display: none;
+    z-index: 20;
+  }
+

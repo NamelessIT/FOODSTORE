@@ -30,6 +30,7 @@ mysqli_close($connect);
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="quanlykh/kh2.css">
+    <link rel="stylesheet" href="quanlyTK/tk1.css">
     <title>Admin</title>
 </head>
 <body>
@@ -200,9 +201,35 @@ mysqli_close($connect);
             <input id="Find_NGUOIDUNG" type="text" class="input_seacrh">
         </div>
         <br>
-        <h5 class="title_count">Số Lượng Tài Khoản:</h5>
-        <h5 class="user_count"></h5>
-        <div id="USER_SHOW"></div>
+            <div id="user_count" style="font-size: 1.1em;font-weight: bold;"></div>
+        <br></br>
+        <div style="display: flex">
+            <div style="font-size: 1.1em;font-weight: bold;margin-right: 1%">Thêm tài khoản nhân viên: </div>
+            <button id="showFormtk" class="add_account" style="width: 10%;background-color: greenyellow;font-weight: bold;cursor: pointer">Thêm</button>
+        </div>
+        <div id="overlay_form_them"></div>
+        <div class="form-Container-tk">
+        <span id="close-btn">&times;</span>
+        <h2>Tạo Tài Khoản</h2>
+        <form id="createAccountForm">
+            <label for="employee">Chọn nhân viên:</label>
+            <select id="employeenv" name="employee" style="border: 1px solid black;"></select>
+            <br>
+            <label for="username">Username:</label>
+            <input type="text" id="usernamenv" name="username">
+            <br>
+            <label for="password">Password:</label>
+            <input type="text" id="passwordnv" name="password">
+            <br>
+            <label for="role">Chọn quyền:</label>
+            <select id="rolenv" name="role" style="border: 1px solid black;"></select>
+            <br>
+            <button type="submit">Tạo</button>
+        </form>
+    </div>
+        <div id="TAIKHOAN">
+        </div>
+        <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>
     </div>            
 
     <!-- modal phiếu nhâp -->
@@ -408,7 +435,9 @@ mysqli_close($connect);
     
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="js1.js"></script>
+<script src="js2.js"></script>
+<script src="quanlyTK/tk4.js"></script>
 <script src="quanlykh/kh4.js"></script>
+<script src="quanlyTK/qltk.php"></script>
 </body>
 </html>
