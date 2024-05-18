@@ -38,7 +38,7 @@
             $table .= '<td><button class="lock-button_KH" onclick="showLockModal('.$row["makh"].')">Khóa</button></td>';
         } 
         if($row["tttk"] == 1){
-            $table .= '<td><button class="lock-button_KH" onclick="showUnlockModal('.$row["makh"].')">Gỡ Khóa</button></td>';
+            $table .= '<td><button class="lock-button_KH" onclick="showUnlockModal('.$row["makh"].')" style="background-color: rgb(14, 124, 7)">Gỡ Khóa</button></td>';
         }
 
         $table .= '<td><button class="delete-button_KH" onclick="showDeleteModal('.$row["makh"].', \''.$row["matk"].'\')">Xóa</button></td>';

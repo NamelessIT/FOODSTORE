@@ -438,6 +438,5 @@ mysqli_close($connect);
 <script src="js2.js"></script>
 <script src="quanlyTK/tk4.js"></script>
 <script src="quanlykh/kh4.js"></script>
-<script src="quanlyTK/qltk.php"></script>
 </body>
 </html>

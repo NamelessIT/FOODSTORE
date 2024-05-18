@@ -12,7 +12,7 @@
 .account-table th,
 .account-table td {
     border: 2px solid #ddd;
-    padding: 8px;
+    padding: 5px;
     text-align: center;
 }
 
@@ -103,3 +103,52 @@
     z-index: 20;
   }
 
+  .delete-button_TK {
+    background-color: rgb(195, 6, 6);
+    color: white;
+    padding: 6px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+  /* Hiệu ứng mờ ảo */
+.modal-TK {
+  display: none;
+  position: fixed;
+  z-index: 50;
+  /* Đặt z-index cao để hiển thị lên trên */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Trung tâm hóa modal */
+.modal-dialog-TK {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+}
+
+.modal-content-TK {
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 91%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+  

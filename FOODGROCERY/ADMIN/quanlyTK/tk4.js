@@ -6,7 +6,7 @@ fetch('quanlyTK/qltk.php')
 })
 .catch(error => console.error('Error:', error));
 
-function updateCustomerTable() {
+function updateTKTable() {
     // Fetch data from the server
     fetch('quanlyTK/qltk.php')
       .then(response => response.text())
@@ -106,3 +106,57 @@ function updateCustomerTable() {
         });
     });      
 
+
+
+function showDeleteModalTK(username) {
+    // Tạo modal
+    var modal = $('<div class="modal-TK" tabindex="-1" role="dialog">' +
+      '<div class="modal-dialog-TK" role="document">' +
+      '<div class="modal-content-TK">' +
+      '<div class="modal-header">' +
+      '<h2 class="modal-title">Xóa tài khoản</h2>' +
+      '</div>' +
+      '<div class="modal-body">' +
+      '<p style="font-size: 1.2rem;">Bạn có chắc chắn muốn xóa tài khoản này?</p>' +
+      '</div>' +
+      '<div class="modal-footer">' +
+      '<button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Hủy</button>' +
+      '<button type="button" class="btn btn-danger delete-confirmtk" data-account-id="' + username + '">Xóa</button>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>');
+  
+    // Thêm modal vào DOM
+    $("body").append(modal);
+  
+    // Hiển thị modal
+    modal.show();
+  
+    // Lắng nghe sự kiện khi nhấn nút "Xóa"
+    $(".delete-confirmtk").click(function() {
+      var makh = $(this).data("account-id");
+      deleteAccount(username);
+      modal.hide();
+    });
+  
+    // Lắng nghe sự kiện khi nhấn nút "Hủy"
+    $(".btn-cancel").click(function() {
+      modal.hide();
+    });
+  }
+
+  function deleteAccount(username) {
+    // Gửi yêu cầu AJAX lên server để xóa tài khoản
+    $.ajax({
+      type: "POST",
+      url: "quanlyTK/qltk.php",
+      data: { username: username, action: "delete" },
+      success: function(response) {
+        updateTKTable();
+      },
+      error: function(xhr, status, error) {
+        alert("Đã xảy ra lỗi: " + error);
+      }
+    });
+  }

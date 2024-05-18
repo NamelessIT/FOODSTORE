@@ -57,6 +57,7 @@ function showLockModal(accountId) {
         // Cập nhật trạng thái tài khoản trên giao diện
         var lockButton = $(".lock-button_KH[onclick='showLockModal(" + accountId + ")']");
         lockButton.text("Gỡ khóa");
+        lockButton.css("background-color", "rgb(14, 124, 7)");
         lockButton.attr("onclick", "showUnlockModal(" + accountId + ")");
         updateCustomerTable();
       },
@@ -145,7 +146,7 @@ function showLockModal(accountId) {
       '<h2 class="modal-title">Xóa tài khoản</h2>' +
       '</div>' +
       '<div class="modal-body">' +
-      '<p style="font-size: 1.2rem;">Bạn có chắc chắn muốn xóa tài khoản này?</p>' +
+      '<p style="font-size: 1.2rem;">Bạn có chắc chắn muốn xóa khách hàng này?</p>' +
       '</div>' +
       '<div class="modal-footer">' +
       '<button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal">Hủy</button>' +
@@ -164,7 +165,7 @@ function showLockModal(accountId) {
     // Lắng nghe sự kiện khi nhấn nút "Xóa"
     $(".delete-confirm").click(function() {
       var makh = $(this).data("account-id");
-      deleteAccount(makh , matk);
+      deleteKH(makh , matk);
       modal.hide();
     });
   
@@ -174,7 +175,7 @@ function showLockModal(accountId) {
     });
   }
   
-  function deleteAccount(makh , matk) {
+  function deleteKH(makh , matk) {
     // Gửi yêu cầu AJAX lên server để xóa tài khoản
     $.ajax({
       type: "POST",
