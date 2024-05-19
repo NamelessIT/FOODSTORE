@@ -367,7 +367,7 @@ input[readonly] {
 
     } */
 
-    .dropdown-content,.dropdown-content-THONGKE,.dropdown-content-THONGKE-danhmuc{
+    .dropdown-content,.dropdown-content-THONGKE,.dropdown-content-THONGKE-danhmuc,.dropdown-content-DONHANG{
       position: absolute;
       background-color: #ccc;
       top: 120%;
@@ -382,7 +382,7 @@ input[readonly] {
     .dropdown-content-MONTH{
       position: absolute;
       top: 100%;
-      left: .1%;
+      left: 4%;
       text-align: center;
       border: 1px solid #ccc;
       min-width: 140px;
@@ -390,11 +390,11 @@ input[readonly] {
       padding: 0 13px 0 13px;
       margin-left: 9%;
     }
-    .dropdown-content li,.dropdown-content-THONGKE li,.dropdown-content-MONTH li{
+    .dropdown-content li,.dropdown-content-THONGKE li,.dropdown-content-MONTH li,.dropdown-content-DONHANG li{
       list-style-type: none;
       margin: 5px;
     }
-    .dropdown-content li:hover,.dropdown-content-THONGKE li:hover,.dropdown-content-MONTH li:hover{
+    .dropdown-content li:hover,.dropdown-content-THONGKE li:hover,.dropdown-content-MONTH li:hover,.dropdown-content-DONHANG li:hover{
       opacity: 0.5;
       background-color: #ccc;
       padding: 0 2px;
