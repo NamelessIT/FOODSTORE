@@ -30,7 +30,7 @@ mysqli_close($connect);
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="quanlykh/kh2.css">
-    <link rel="stylesheet" href="quanlyTK/tk1.css">
+    <link rel="stylesheet" href="quanlytk/tk5.css">
     <title>Admin</title>
 </head>
 <body>
@@ -201,7 +201,8 @@ mysqli_close($connect);
             <input id="Find_NGUOIDUNG" type="text" class="input_seacrh">
         </div>
         <br>
-            <div id="user_count" style="font-size: 1.1em;font-weight: bold;"></div>
+            <div id="nv_count" style="font-size: 1.1em;font-weight: bold;"></div>
+            <div id="kh_count" style="font-size: 1.1em;font-weight: bold;"></div>
         <br></br>
         <div style="display: flex">
             <div style="font-size: 1.1em;font-weight: bold;margin-right: 1%">Thêm tài khoản nhân viên: </div>
@@ -212,24 +213,52 @@ mysqli_close($connect);
         <span id="close-btn">&times;</span>
         <h2>Tạo Tài Khoản</h2>
         <form id="createAccountForm">
-            <label for="employee">Chọn nhân viên:</label>
+            <div style="display: flex">
+            <label for="employee" style="margin-right: 5px;">Chọn nhân viên:</label>
             <select id="employeenv" name="employee" style="border: 1px solid black;"></select>
+            </div>
             <br>
-            <label for="username">Username:</label>
+            <label for="username">Tên đăng nhập:</label>
             <input type="text" id="usernamenv" name="username">
             <br>
-            <label for="password">Password:</label>
+            <label for="password">Mật khẩu:</label>
             <input type="text" id="passwordnv" name="password">
             <br>
-            <label for="role">Chọn quyền:</label>
+            <div style="display: flex">
+            <label for="role" style="margin-right: 5px;">Chọn quyền:</label>
             <select id="rolenv" name="role" style="border: 1px solid black;"></select>
+            </div>
             <br>
             <button type="submit">Tạo</button>
         </form>
     </div>
+        <h4>Bảng tài khoản nhân viên:</h4>
         <div id="TAIKHOAN">
         </div>
         <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>
+        <h4>Bảng tài khoản khách hàng:</h4>
+        <div id="TAIKHOAN2">
+        </div>
+        <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>
+        
+        <div id="overlay_form_sua"></div>
+        <div class="form-Container-tk-sua">
+        <span id="close-btn-sua">&times;</span>
+        <h2>Sửa Tài Khoản</h2>
+        <form id="updateAccountForm">
+            <input type="text" id="usernamenv-sua" name="username" style="display: none;">
+            <br>
+            <label for="username">Mật khẩu:</label>
+            <input type="text" id="passwordnv-sua" name="username">
+            <br>
+            <div style="display: flex">
+            <label for="role" style="margin-right: 5px;">Chọn quyền:</label>
+            <select id="rolenv-sua" name="role" style="border: 1px solid black;"></select>
+            </div>
+            <br>
+            <button type="submit">Cập nhật</button>
+        </form>
+    </div>
     </div>            
 
     <!-- modal phiếu nhâp -->
@@ -436,7 +465,7 @@ mysqli_close($connect);
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="js2.js"></script>
-<script src="quanlyTK/tk4.js"></script>
+<script src="quanlytk/tk18.js"></script>
 <script src="quanlykh/kh4.js"></script>
 </body>
 </html>

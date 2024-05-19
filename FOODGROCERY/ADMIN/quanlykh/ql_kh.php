@@ -9,7 +9,7 @@
    $table = '<table class="khachhang-table" style="border-collapse: collapse; width: 100%;">
        <thead>
            <tr>
-               <th>Mã khách hàng</th>
+               <th>Mã KH</th>
                <th>Mã tài khoản</th>
                <th>Họ tên</th>
                <th>Địa chỉ</th>
