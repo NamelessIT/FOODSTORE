@@ -399,6 +399,148 @@ function check_already_masp_cthd(masp, text, column_name) {
     });
 }
 
+
+
+function load_cthd(tmp,mahd,makh) {
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        data: { mahd: mahd, makh: makh,tmp:tmp},
+        success: function(data) {
+            var responseData = JSON.parse(data);
+            var outputct = responseData.outputct;
+            document.getElementById('SHOWCTHD').innerHTML = outputct; 
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", error);
+            // Xử lý lỗi ở đây nếu cần
+        }
+    });
+}
+$(document).on('click', '.btn_hthd', function() {
+var ttmp = $(this).data('ttmp');
+var mahd = $(this).data('mahd'); // sửa từ 'mhdd' thành 'mahd'
+var makh = $(this).data('makh'); // sửa từ 'mkhh' thành 'makh'
+
+xacnhanhoanthanhhd(ttmp, mahd, makh);
+});
+
+function xacnhanhoanthanhhd(ttmp, mhddd, mkhhh){
+let data = new FormData();
+data.append('ttmp', ttmp);
+data.append('mhddd', mhddd); // sửa từ 'mahdd' thành 'mahd'
+data.append('mkhhh', mkhhh); // sửa từ 'makhh' thành 'makh'
+
+// Gửi yêu cầu POST đến tệp PHP
+fetch('quanlysp/action_sp.php', {
+    method: 'POST',
+    body: data
+})
+.then(response => response.text()) // Xử lý phản hồi từ máy chủ
+.then(result => {
+    if(ttmp == 2) fetch_data_hienhd2(); // Gọi hàm fetch_data_hienhd2() sau khi yêu cầu hoàn tất
+    else if(ttmp == 1) fetch_data_hienhd1(); // Gọi hàm fetch_data_hienhd1() sau khi yêu cầu hoàn tất
+    else if(ttmp == 0) fetch_data_hienhd(); // Gọi hàm fetch_data_hienhd() sau khi yêu cầu hoàn tất
+    else if(ttmp == 3) fetch_data_hienhd3(); // Gọi hàm fetch_data_hienhd() sau khi yêu cầu hoàn tất
+
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+}
+
+function xacnhandangxulyddh(ttmp, mhdddd, mkhhhh){
+let data = new FormData();
+data.append('ttmp', ttmp);
+data.append('mhdddd', mhdddd); // sửa từ 'mahdd' thành 'mahd'
+data.append('mkhhhh', mkhhhh); // sửa từ 'makhh' thành 'makh'
+
+// Gửi yêu cầu POST đến tệp PHP
+fetch('quanlysp/action_sp.php', {
+    method: 'POST',
+    body: data
+})
+.then(response => response.text()) // Xử lý phản hồi từ máy chủ
+.then(result => {
+    if(ttmp == 2) fetch_data_hienhd2(); // Gọi hàm fetch_data_hienhd2() sau khi yêu cầu hoàn tất
+    else if(ttmp == 1) fetch_data_hienhd1(); // Gọi hàm fetch_data_hienhd1() sau khi yêu cầu hoàn tất
+    else if(ttmp == 0) fetch_data_hienhd(); // Gọi hàm fetch_data_hienhd() sau khi yêu cầu hoàn tất
+    else if(ttmp == 3) fetch_data_hienhd3(); // Gọi hàm fetch_data_hienhd() sau khi yêu cầu hoàn tất
+
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+}
+
+function xacnhanhuyhang(ttmp, mhddddd, mkhhhhh){
+let data = new FormData();
+data.append('ttmp', ttmp);
+data.append('mhddddd', mhddddd); // sửa từ 'mahdd' thành 'mahd'
+data.append('mkhhhhh', mkhhhhh); // sửa từ 'makhh' thành 'makh'
+
+// Gửi yêu cầu POST đến tệp PHP
+fetch('quanlysp/action_sp.php', {
+    method: 'POST',
+    body: data
+})
+.then(response => response.text()) // Xử lý phản hồi từ máy chủ
+.then(result => {
+    if(ttmp == 2) fetch_data_hienhd2(); // Gọi hàm fetch_data_hienhd2() sau khi yêu cầu hoàn tất
+    else if(ttmp == 1) fetch_data_hienhd1(); // Gọi hàm fetch_data_hienhd1() sau khi yêu cầu hoàn tất
+    else if(ttmp == 0) fetch_data_hienhd(); // Gọi hàm fetch_data_hienhd() sau khi yêu cầu hoàn tất
+    else if(ttmp == 3) fetch_data_hienhd3(); // Gọi hàm fetch_data_hienhd() sau khi yêu cầu hoàn tất
+
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+}
+// Laydulieuhoadon
+$(document).on('click', '.laythongtinhd', function() {
+var tmp = $(this).data('tmp');
+var mahd = $(this).data('mhd');
+var makh = $(this).data('mkh');
+
+// console.log(tmp);
+// var text = $(this).text();
+// check_already_masp_cthd(id, text, "tensp");
+load_cthd(tmp,mahd,makh);
+});
+$(document).on('click', '.btn_hthd', function() {
+var ttmp = $(this).data('ttmp');
+var mhddd = $(this).data('mhddd');
+var mkhhh = $(this).data('mkhhh');
+
+// var text = $(this).text();
+// check_already_masp_cthd(id, text, "tensp");
+xacnhanhoanthanhhd(ttmp,mhddd,mkhhh);
+document.getElementById('SHOWCTHD').innerHTML='';
+
+});
+$(document).on('click', '.bthd-hdh', function() {
+var ttmp = $(this).data('ttmp');
+var mhddddd = $(this).data('mhddddd');
+var mkhhhhh = $(this).data('mkhhhhh');
+// var text = $(this).text();
+// check_already_masp_cthd(id, text, "tensp");
+xacnhanhuyhang(ttmp,mhddddd,mkhhhhh);
+document.getElementById('SHOWCTHD').innerHTML='';
+});
+$(document).on('click', '.bthd-ddxl', function() {
+var ttmp = $(this).data('ttmp');
+var mhdddd = $(this).data('mhdddd');
+var mkhhhh = $(this).data('mkhhhh');
+
+// var text = $(this).text();
+// check_already_masp_cthd(id, text, "tensp");
+xacnhandangxulyddh(ttmp,mhdddd,mkhhhh);
+document.getElementById('SHOWCTHD').innerHTML='';
+});
+// ------------------------------------------------
+$(document).on('click', '.btn-dong', function() {
+document.getElementById('SHOWCTHD').innerHTML='';
+});
 // Sửa tên
 $(document).on('blur', '.Tensp', function () {
     var id = $(this).data('id2');
@@ -1633,6 +1775,8 @@ window.addEventListener('load', function () {
     fetch_data_phieu_nhap();
     fetch_data_tendm();
     fetch_data_dm();
+    fetch_data_hienhd();
+
     var today = new Date();
     var formattedDate = today.toISOString().substr(0, 10);
     document.getElementById('Ngay_PN').value = formattedDate;
@@ -2052,3 +2196,154 @@ function fetch_data_phieu_nhap_search() {
         fetch_data_phieu_nhap();
     }
 }
+
+
+
+function fetch_data_hienhd(){
+    document.getElementById('HOADON2').classList.add('invisible')
+    document.getElementById('HOADON1').classList.add('invisible')
+    document.getElementById('HOADON').classList.remove('invisible')
+        document.getElementById('HOADON3').classList.add('invisible')
+        document.getElementById('HOADON4').classList.add('invisible')
+
+            $.ajax({
+                url: "quanlysp/action_sp.php",
+                method: "POST",
+                success: function(response) {
+                    var responseData = JSON.parse(response);
+                    var ouput_hoadon = responseData.ouput_hoadon;
+                    document.getElementById('HOADON').innerHTML = ouput_hoadon; 
+                }
+            });
+    }
+    function fetch_data_hienhd1(){
+        document.getElementById('HOADON2').classList.add('invisible')
+        document.getElementById('HOADON1').classList.remove('invisible')
+        document.getElementById('HOADON').classList.add('invisible')
+        document.getElementById('HOADON3').classList.add('invisible')
+        document.getElementById('HOADON4').classList.add('invisible')
+
+        $.ajax({
+            url: "quanlysp/action_sp.php",
+            method: "POST",
+            success: function(response) {
+                var responseData = JSON.parse(response);
+                var ouput_hoadon1 = responseData.ouput_hoadon1;
+                document.getElementById('HOADON1').innerHTML = ouput_hoadon1; 
+            }
+        });
+}
+function fetch_data_hienhd2(){
+    document.getElementById('HOADON2').classList.remove('invisible')
+    document.getElementById('HOADON1').classList.add('invisible')
+    document.getElementById('HOADON').classList.add('invisible')
+    document.getElementById('HOADON3').classList.add('invisible')
+    document.getElementById('HOADON4').classList.add('invisible')
+
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var ouput_hoadon2 = responseData.ouput_hoadon2;
+            document.getElementById('HOADON2').innerHTML = ouput_hoadon2; 
+        }
+    });
+}
+
+function fetch_data_hienhd3(){
+    document.getElementById('HOADON2').classList.add('invisible')
+    document.getElementById('HOADON1').classList.add('invisible')
+    document.getElementById('HOADON').classList.add('invisible')
+    document.getElementById('HOADON3').classList.remove('invisible')
+    document.getElementById('HOADON4').classList.add('invisible')
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var ouput_hoadon3 = responseData.ouput_hoadon3;
+            document.getElementById('HOADON3').innerHTML = ouput_hoadon3; 
+        }
+    });
+}
+function fetch_data_hienhd4(){
+    document.getElementById('HOADON2').classList.add('invisible')
+    document.getElementById('HOADON1').classList.add('invisible')
+    document.getElementById('HOADON').classList.add('invisible')
+    document.getElementById('HOADON3').classList.add('invisible')
+    document.getElementById('HOADON4').classList.remove('invisible')
+
+    $.ajax({
+        url: "quanlysp/action_sp.php",
+        method: "POST",
+        success: function(response) {
+            var responseData = JSON.parse(response);
+            var ouput_hoadon4 = responseData.ouput_hoadon4;
+            document.getElementById('HOADON4').innerHTML = ouput_hoadon4; 
+        }
+    });
+}
+    var Find_DONHANG=document.getElementById('Find_DONHANG');
+    Find_DONHANG.addEventListener('keypress',function(event){
+        if (event.keyCode === 13) {
+            if (Find_DONHANG.value !== '') {
+                fetch_data_hoadon();
+            }
+            else{
+                fetch_data_hienhd();
+            }
+        }
+    })
+    function fetch_data_hoadon(){
+        const search1=Find_DONHANG.value;
+        // console.log(Find_DONHANG.value);
+        if (Find_DONHANG.value !== '') {
+            $.ajax({
+                url: "quanlysp/action_sp.php",
+                method: "POST",
+                data: { SEARCH_hd:search1},
+                success: function(data) {
+                    document.getElementById('HOADON').innerHTML='';
+                    var responseData = JSON.parse(data);
+                    var output2_search = responseData.output2_search;
+                    khunghoadon.innerHTML = output2_search; 
+                }
+            });
+        }else{
+            // fetch_data_phieu_nhap();
+        }
+    }
+
+    function selectdon(op) {
+        document.getElementById("TYPE_DONHANG").value = op;
+        // clearElement();
+            if(op==="TẤT CẢ ĐƠN"){
+                fetch_data_hienhd();
+            }
+            else if(op==="ĐƠN HÀNG ĐÃ ĐƯỢC XỬ LÝ"){
+                // fetch_data_month_SUM(option2);
+                fetch_data_hienhd1();
+            }
+            else if(op==="ĐƠN HÀNG ĐANG ĐƯỢC XỬ LÝ"){
+                fetch_data_hienhd2();
+            }
+            else if(op==="ĐƠN HÀNG CHƯA ĐƯỢC XỬ LÝ"){
+                fetch_data_hienhd3();
+            }
+            else if(op==="ĐƠN HÀNG ĐÃ HỦY"){
+                fetch_data_hienhd4();
+            }
+    }
+
+    const LOC_DONHANG=document.getElementById('TYPE_DONHANG');
+    document.getElementById("TYPE_DONHANG").value ="TẤT CẢ";
+    const menu_DONHANG=document.querySelector('.dropdown-content-DONHANG');
+    const outside_DONHANG=document.querySelector('.DONHANGG');
+    LOC_DONHANG.addEventListener('click',function(event){
+        menu_DONHANG.classList.remove('invisible');
+        event.stopPropagation();
+    })
+    outside_DONHANG.addEventListener('click',function(){
+        menu_DONHANG.classList.add('invisible');
+    })

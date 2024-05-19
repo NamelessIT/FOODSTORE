@@ -45,7 +45,7 @@ if(isset($_POST['rowCount'])){
 }
 // mảng thể hiện quyền
 $role = array();
-$addproduct = $updateproduct = $deleteproduct = $deletedproducts = $buy = $printbill = $deletebill = $addpn = $deletpn = $addaccount = $updateaccount = $deleteaccount = $addrole = $addcategories = $updatecategories = $deletecategories = $statistics = $lockkh = $deletekh =0;
+$addproduct = $updateproduct = $deleteproduct = $deletedproducts = $buy = $printbill = $deletebill = $addpn = $deletpn = $addaccount = $updateaccount = $deleteaccount = $addrole = $addcategories = $updatecategories = $deletecategories = $statistics = 0;
 if (isset($_POST['username'])) {
     $username = $_POST['username'];
     $mysqli_query_role = mysqli_query($connect, "SELECT * FROM account,quyen,role WHERE account.username='$username' AND account.username=quyen.username AND role.role_name=quyen.rolename");
@@ -68,8 +68,6 @@ if (isset($_POST['username'])) {
         $updatecategories = ($row['updatecategories'] != 0) ? 1 : ($row['updatecategories'] == 0 ? 0 : 1);
         $deletecategories = ($row['deletecategories'] != 0) ? 1 : ($row['deletecategories'] == 0 ? 0 : 1);
         $statistics = ($row['statistics'] != 0) ? 1 : ($row['statistics'] == 0 ? 0 : 1);
-        $lockkh = ($row['lockkh'] != 0) ? 1 : ($row['lockkh'] == 0 ? 0 : 1);
-        $deletekh = ($row['deletekh'] != 0) ? 1 : ($row['deletekh'] == 0 ? 0 : 1);
     }
 }
         // Thêm các biến vào mảng $role
@@ -90,9 +88,7 @@ if (isset($_POST['username'])) {
             'addcategories' => $addcategories,
             'updatecategories' => $updatecategories,
             'deletecategories' => $deletecategories,
-            'statistics' => $statistics,
-            'lockkh' => $lockkh,
-            'deletekh' => $deletekh,
+            'statistics' => $statistics
         );
 $nhanvien = array();
 if (isset($_POST['username'])) {
@@ -228,7 +224,7 @@ if(isset($_POST['COT_SP'])){
                     Số lượng
                 </th>
                 <th class="sortable_sp '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
-                    Giá bán
+                    Gía bán
                 </th>
                 <th class="sortable_sp '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Loại
@@ -244,7 +240,7 @@ if(isset($_POST['COT_SP'])){
     ';
     
     if(mysqli_num_rows($sql_query1)>0){
-        $i=1;
+        $i=0;
         while($row=mysqli_fetch_array($sql_query1)){
             $output1 .='
             <tr>
@@ -340,7 +336,7 @@ if(isset($_POST['SEARCH'])){
                 Số lượng
                 </th>
                 <th class="sortable_sp '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
-                    Giá bán
+                    Gía bán
                 </th>
                 <th class="sortable_sp '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Loại
@@ -356,7 +352,7 @@ if(isset($_POST['SEARCH'])){
     ';
     
     if(mysqli_num_rows($sql_query1)>0){
-        $i=1;
+        $i=0;
         while($row=mysqli_fetch_array($sql_query1)){
             $output1_search .='
             <tr>
@@ -394,7 +390,7 @@ if(isset($_POST['SEARCH'])){
     else{
         $output1_search .='
             <tr>
-                <td colspan="9">Dữ liệu chưa có</td> 
+                <td colspan="8">Dữ liệu chưa có</td> 
             </tr>
         ';
     }
@@ -433,7 +429,7 @@ $output_hidden .= '
                 Ảnh
             </th>
             <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
-                Giá bán
+                Gía bán
             </th>
             <th class="sortable_sp_hidden '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp_hidden="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                 Loại
@@ -452,7 +448,7 @@ $output_hidden .= '
 ';
 
 if(mysqli_num_rows($sql_query_hidden)>0){
-    $i=1;
+    $i=0;
     while($row=mysqli_fetch_array($sql_query_hidden)){
         $output_hidden .='
         <tr>
@@ -490,7 +486,7 @@ if(mysqli_num_rows($sql_query_hidden)>0){
 else{
     $output_hidden .='
         <tr>
-            <td colspan="9">Dữ liệu chưa có</td> 
+            <td colspan="8">Dữ liệu chưa có</td> 
         </tr>
     ';
 }
@@ -563,7 +559,7 @@ $output_hidden_search .= '
 ';
 
 if(mysqli_num_rows($sql_query_hidden)>0){
-    $i=1;
+    $i=0;
     while($row=mysqli_fetch_array($sql_query_hidden)){
         $output_hidden_search .='
         <tr>
@@ -601,7 +597,7 @@ if(mysqli_num_rows($sql_query_hidden)>0){
 else{
     $output_hidden_search .='
         <tr>
-            <td colspan="9">Dữ liệu chưa có</td> 
+            <td colspan="8">Dữ liệu chưa có</td> 
         </tr>
     ';
 }
@@ -769,7 +765,7 @@ $output .= '
 ';
 
 if(mysqli_num_rows($sql_query)>0){
-    $i=1;
+    $i=0;
     while($row=mysqli_fetch_array($sql_query)){
         $output .='
         <tr style="margin:5px 0;">
@@ -821,16 +817,16 @@ $output_dm='';
 $sql_query_dm=mysqli_query($connect,"SELECT * FROM danhmuc WHERE danhmuc.ishidden=0");
 // .= NỐI CHUỖI
 $output_dm .= '
-    <table class="table" style="width: 100%;border-collapse: collapse;">
+    <table class="table" style="width: 100%">
         <thead class="thead_dark">
         <tr>
-            <th style="border: 2px solid #ddd;padding: 8px;">
+            <th>
                 STT
             </th>
-            <th style="border: 2px solid #ddd;padding: 8px;">
+            <th>
                 Tên danh mục
             </th>
-            <th style="border: 2px solid #ddd;padding: 8px;">
+            <th>
                 Xóa
             </th>
         </tr>
@@ -838,17 +834,17 @@ $output_dm .= '
 ';
 
 if(mysqli_num_rows($sql_query_dm)>0){
-    $i=1;
+    $i=0;
     while($row=mysqli_fetch_array($sql_query_dm)){
         $output_dm .='
-        <tr style="margin:5px 0;border: 2px solid #ddd;padding: 8px;">
-            <td class="seperate STT" style="text-align: center">
+        <tr style="margin:5px 0;">
+            <td class="seperate STT">
                 '.$i++.'
             </td>
-            <td class="seperate Tendm" style="border: 2px solid #ddd;padding: 8px;">
+            <td class="seperate Tendm" >
                 '.$row['tendm'].'
             </td>
-            <td class="seperate Del_dm" style="border: 2px solid #ddd;padding: 8px;text-align: center" data-dm='.$row['madm'].'>
+            <td class="seperate Del_dm" style="display: flex;justify-content: center;" data-dm='.$row['madm'].'>
                 <button >Xóa</button>
             </td>
         </tr>
@@ -1755,7 +1751,574 @@ if(isset($_POST['START'])){
         ';
     }
 }
+// -----------------
+$ouput_hoadon='';
+        $sql_hoadon=mysqli_query($connect,"SELECT * FROM hoadon");            
+// .= NỐI CHUỖI
 
+$ouput_hoadon .= '    <div class="chuchitiet">TẤT CẢ ĐƠN HÀNG</div>
+';
+$ouput_hoadon .= '
+    <table class="table" style="width: 100%">
+        <thead class="thead_dark">
+        <tr>
+            <th>
+                Mã hóa đơn
+            </th>
+            <th>
+                Mã khách hàng
+            </th>
+            <th>
+                Mã nhân viên
+            </th>
+            <th>
+                Ngày tạo
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th>Trạng thái đơn hàng</th>
+
+            <th>Xem chi tiết</th>
+        </tr>
+        </thead>
+';
+
+if(mysqli_num_rows($sql_hoadon)>0){
+    $i=1;
+    while($row=mysqli_fetch_array($sql_hoadon)){
+        $date = new DateTime($row['ngay']);
+    $formattedDate = $date->format('d-m-Y');
+        $ouput_hoadon .='
+        <tr style="margin:5px 0;">
+           
+            <td class="seperate " style="text-align: center;">
+                '.$row['mahd'].'
+            </td>
+            <td class="seperate " style="text-align: center;">
+                '.$row['makh'].'
+            </td>         
+            <td class="seperate " style="text-align: center;">
+                '.$row['manv'].'
+            </td>
+            <td class="seperate " style="text-align: center;">
+                '.$formattedDate.'
+            </td>
+            <td class="seperate " style="text-align: center;">
+            '.$row['tongtien'].'
+        </td>';
+        if($row['trangthai']==0){
+            $ouput_hoadon .='  <td class="seperate " style="text-align: center;">
+            Chưa xử lý
+        </td>';
+        }if($row['trangthai']==1){
+            $ouput_hoadon .='  <td class="seperate " style="text-align: center;">
+            Đã xử lý
+        </td>';
+        }if($row['trangthai']==2){
+            $ouput_hoadon .='  <td class="seperate " style="text-align: center;">
+            Đang được xử lý
+        </td>';
+        }if($row['trangthai']==3){
+            $ouput_hoadon .='  <td class="seperate " style="text-align: center;">
+            Đơn khách hàng bỏ
+        </td>';
+        }
+        $ouput_hoadon .=' <td class="seperate " >
+        <button class="laythongtinhd" data-tmp=0  data-mhd='.$row['mahd'].' data-mkh='.$row['makh'].'>Xem</button>
+    </td>
+</tr>
+';
+    }
+}
+else{
+    $ouput_hoadon .='
+        <tr>
+            <td colspan="4">Dữ liệu chưa có</td> 
+        </tr>
+    ';
+}
+
+// ---------------chitiethoadon
+$outputct='';
+if(isset($_POST['mahd'])){
+    $mahdd = $_POST['mahd'];
+    $makhh=$_POST['makh'];
+    $tmp=$_POST['tmp'];
+
+    // $sql_cthoadon=mysqli_query($connect,"SELECT * FROM chitiethoadon,khachhang WHERE mahd=$mahd AND makh=$makh");            
+// .= NỐI CHUỖI
+$outputct .= '<div class="xemchitiethoadoncuakhach" >
+    <div class="modal-container" style="overflow-y: auto;overflow-x: auto;">
+    <div class="chuchitiet">Chi tiết hóa đơn</div>
+    <h2>Mã hóa đơn: '.$mahdd.'</h2>
+';
+$sql_cthoadon1=mysqli_query($connect,"SELECT * FROM khachhang WHERE makh=$makhh");            
+if(mysqli_num_rows($sql_cthoadon1)>0){
+    while($row1=mysqli_fetch_array($sql_cthoadon1)){
+    $outputct .='<h2>Người mua hàng: '. $row1['hoten'] .'</h2>
+                <h2>Số điện thoại: '. $row1['dienthoai'] .'</h2>
+                <h2>Địa chỉ: '. $row1['diachi'] .'</h2>
+';
+$sql_cthoadonnn=mysqli_query($connect,"SELECT * FROM hoadon WHERE mahd=$mahdd");            
+while($roww=mysqli_fetch_array($sql_cthoadonnn)){
+    $date2 = new DateTime($roww['ngay']);
+        $formattedDate2 = $date2->format('d-m-Y');
+        $outputct .= '<h2> Ngày tạo đơn: ' . $formattedDate2 . '</h2>';
+        // $outputct .= '<h2>Tình trạng: '.$roww['trangthai'].'</h2>';
+        if($roww['trangthai']==0){
+            $outputct .= '<h2>Tình trạng: Chưa được xử lý</h2>';
+        }
+        if($roww['trangthai']==1){
+            $outputct .= '<h2>Tình trạng: Đã được xử lý</h2>';
+        }
+        if($roww['trangthai']==2){
+            $outputct .= '<h2>Tình trạng: Đang được xử lý</h2>';
+        }
+        if($roww['trangthai']==3){
+            $outputct .= '<h2>Tình trạng: Khách hàng bỏ đơn</h2>';
+        }
+    }
+    }
+}
+$outputct .= '<table>';
+
+$outputct .='<tr style="margin:5px 0;" class="">
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Đơn giá</th>
+            </tr>
+';
+    $sql_cthoadon=mysqli_query($connect,"SELECT * FROM chitiethoadon WHERE mahd=$mahdd");            
+
+if(mysqli_num_rows($sql_cthoadon)>0){
+    $tongtienn=0;
+    while($row=mysqli_fetch_array($sql_cthoadon)){
+        $outputct .='<tr style="margin:5px 0;" class="">
+            <td class="seperate ">
+                '.$row['masp'].'
+            </td>';
+            $sql_ctho1 = mysqli_query($connect, "SELECT * FROM sanpham WHERE masp='".$row['masp']."'");
+while($row3 = mysqli_fetch_array($sql_ctho1)) {
+    $outputct .= '<td class="seperate ">
+        '.$row3['tensp'].'
+    </td>';
+}
+
+        $outputct .='<td class="seperate ">
+                '.$row['soluong'].'
+                 </td>         
+            <td class="seperate ">
+                '.$row['dongia'].'
+            </td> 
+        </tr>
+        </div>
+        </div>';
+        $tongtienn += $row['dongia'];
+    }
+    $outputct .= '</table>';
+    $outputct .= '<h2>Tổng tiền: ' . $tongtienn . '</h2>';
+    $outputct .= '<div class="cacchucnangnut">';
+    $outputct .= '<button class="btn-dong">Đóng lại</button>';
+    $sql_cthoadonn=mysqli_query($connect,"SELECT * FROM hoadon WHERE mahd=$mahdd");            
+    while($row4 = mysqli_fetch_array($sql_cthoadonn)) {
+        if($row4['trangthai']==2){
+        $outputct .= '<button class="btn_hthd"  data-ttmp='.$tmp.' data-mhddd='.$row4['mahd'].' data-mkhhh='.$row4['makh'].'>Hoàn thành hóa đơn</button>';
+        } if($row4['trangthai']==0){
+            $outputct .= '<button style="margin-right:30px;" class="bthd-ddxl"  data-ttmp='.$tmp.' data-mhdddd='.$row4['mahd'].' data-mkhhhh='.$row4['makh'].'>Cho hóa đơn xử lý</button>';
+            $outputct .= '<button class="bthd-hdh"  data-ttmp='.$tmp.' data-mhddddd='.$row4['mahd'].' data-mkhhhhh='.$row4['makh'].'>Hủy hóa đơn</button>';
+ 
+        }
+    }
+
+}
+else{
+    $outputct .='
+    </div>
+        <tr>
+            <td colspan="4">Dữ liệu chưa có</td> 
+        </tr>
+    ';
+}
+}
+
+// echo
+$output2_search='';
+if(isset($_POST['SEARCH_hd'])){
+    $search=$_POST['SEARCH_hd'];
+    $output2_search .= '
+    <table class="table" style="width: 100%">
+        <thead class="thead_dark">
+        <tr>
+            <th>
+                TOP
+            </th>
+            <th>
+                Mã danh mục
+            </th>
+            <th>
+                Tên danh mục
+            </th>
+            <th>
+                Tiền kiếm được
+            </th>
+            <th>Xem chi tiết</th>
+        </tr>
+        </thead>
+';
+    $sql_query3 = mysqli_query($connect, "SELECT * FROM hoadon WHERE hoadon.isDelete=0  AND 
+    (hoadon.mahd LIKE '%$search%' 
+    OR hoadon.makh LIKE '%$search%' 
+    OR hoadon.manv LIKE '%$search%'  ) ");
+    if(mysqli_num_rows($sql_query3)>0){
+        while($row=mysqli_fetch_array($sql_query3)){
+            $output2_search .='
+            <tr style="margin:5px 0;">
+                <td class="seperate STT">
+                    '.$i++.'
+                </td>
+                <td class="seperate ">
+                    '.$row['mahd'].'
+                </td>
+                <td class="seperate ">
+                    '.$row['makh'].'
+                </td>         
+                <td class="seperate ">
+                    '.$row['manv'].'
+                </td>
+                <td class="seperate ">
+                    <button class="laythongtinhd" data-mhd='.$row['mahd'].' data-mkh='.$row['makh'].'>Xem</button>
+                </td>
+            </tr>
+            ';
+        }
+    }
+    else{
+        $output2_search .='
+            <tr>
+                <td colspan="8">Dữ liệu chưa có</td> 
+            </tr>
+        ';
+    }
+    
+    $output2_search .='
+        </table>
+    ';
+}
+
+
+
+
+$ouput_hoadon1='';
+        $sql_hoadonn=mysqli_query($connect,"SELECT * FROM hoadon WHERE trangthai=1");            
+// .= NỐI CHUỖI
+$ouput_hoadon1 .= '    <div class="chuchitiet">ĐƠN HÀNG ĐÃ ĐƯỢC XỬ LÝ</div>
+';
+$ouput_hoadon1 .= '
+    <table class="table" style="width: 100%">
+        <thead class="thead_dark">
+        <tr>
+            <th>
+                Mã hóa đơn
+            </th>
+            <th>
+                Mã khách hàng
+            </th>
+            <th>
+                Mã nhân viên
+            </th>
+            <th>
+                Ngày tạo
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th>Trạng thái đơn hàng</th>
+
+            <th>Xem chi tiết</th>
+        </tr>
+        </thead>
+';
+
+if(mysqli_num_rows($sql_hoadonn)>0){
+    $i=1;
+    while($row=mysqli_fetch_array($sql_hoadonn)){
+        $date = new DateTime($row['ngay']);
+    $formattedDate = $date->format('d-m-Y');
+        $ouput_hoadon1 .='
+        <tr style="margin:5px 0;">
+           
+            <td class="seperate " style="text-align: center;">
+                '.$row['mahd'].'
+            </td>
+            <td class="seperate " style="text-align: center;">
+                '.$row['makh'].'
+            </td>         
+            <td class="seperate " style="text-align: center;">
+                '.$row['manv'].'
+            </td>
+            <td class="seperate " style="text-align: center;">
+                '.$formattedDate.'
+            </td>
+            <td class="seperate " style="text-align: center;">
+            '.$row['tongtien'].'
+        </td>';
+            $ouput_hoadon1 .='  <td class="seperate " style="text-align: center;">
+            Đã xử lý
+        </td>';
+        $ouput_hoadon1 .=' <td class="seperate " >
+        <button class="laythongtinhd" data-tmp=1  data-mhd='.$row['mahd'].' data-mkh='.$row['makh'].'>Xem</button>
+    </td>
+</tr>
+';
+    }
+}
+else{
+    $ouput_hoadon1 .='
+        <tr>
+            <td colspan="4">Dữ liệu chưa có</td> 
+        </tr>
+    ';
+}
+
+
+
+
+$ouput_hoadon2='';
+        $sql_hoadonnn=mysqli_query($connect,"SELECT * FROM hoadon WHERE trangthai=2");            
+// .= NỐI CHUỖI
+$ouput_hoadon2 .= '    <div class="chuchitiet">ĐƠN HÀNG ĐANG ĐƯỢC XỬ LÝ</div>
+';
+$ouput_hoadon2 .= '
+    <table class="table" style="width: 100%">
+        <thead class="thead_dark">
+        <tr>
+            <th>
+                Mã hóa đơn
+            </th>
+            <th>
+                Mã khách hàng
+            </th>
+            <th>
+                Mã nhân viên
+            </th>
+            <th>
+                Ngày tạo
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th>Trạng thái đơn hàng</th>
+
+            <th>Xem chi tiết</th>
+        </tr>
+        </thead>
+';
+
+if(mysqli_num_rows($sql_hoadonnn)>0){
+    $i=1;
+    while($row=mysqli_fetch_array($sql_hoadonnn)){
+        $date = new DateTime($row['ngay']);
+    $formattedDate = $date->format('d-m-Y');
+        $ouput_hoadon2 .='
+        <tr style="margin:5px 0;">
+           
+            <td class="seperate " style="text-align: center;">
+                '.$row['mahd'].'
+            </td>
+            <td class="seperate " style="text-align: center;">
+                '.$row['makh'].'
+            </td>         
+            <td class="seperate " style="text-align: center;">
+                '.$row['manv'].'
+            </td>
+            <td class="seperate " style="text-align: center;">
+                '.$formattedDate.'
+            </td>
+            <td class="seperate " style="text-align: center;">
+            '.$row['tongtien'].'
+        </td>';
+            $ouput_hoadon2 .='  <td class="seperate " style="text-align: center;">
+            Đang được xử lý
+        </td>';
+        $ouput_hoadon2 .=' <td class="seperate " >
+        <button class="laythongtinhd" data-tmp=2  data-mhd='.$row['mahd'].' data-mkh='.$row['makh'].'>Xem</button>
+    </td>
+</tr>
+';
+    }
+}
+else{
+    $ouput_hoadon2 .='
+        <tr>
+            <td colspan="4">Dữ liệu chưa có</td> 
+        </tr>
+    ';
+}
+
+
+$ouput_hoadon3='';
+        $sql_hoadonnn=mysqli_query($connect,"SELECT * FROM hoadon WHERE trangthai=0");            
+// .= NỐI CHUỖI
+$ouput_hoadon3 .= '    <div class="chuchitiet">ĐƠN HÀNG ĐANG ĐƯỢC XỬ LÝ</div>
+';
+$ouput_hoadon3 .= '
+    <table class="table" style="width: 100%">
+        <thead class="thead_dark">
+        <tr>
+            <th>
+                Mã hóa đơn
+            </th>
+            <th>
+                Mã khách hàng
+            </th>
+            <th>
+                Mã nhân viên
+            </th>
+            <th>
+                Ngày tạo
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th>Trạng thái đơn hàng</th>
+
+            <th>Xem chi tiết</th>
+        </tr>
+        </thead>
+';
+
+if(mysqli_num_rows($sql_hoadonnn)>0){
+    $i=1;
+    while($row=mysqli_fetch_array($sql_hoadonnn)){
+        $date = new DateTime($row['ngay']);
+    $formattedDate = $date->format('d-m-Y');
+        $ouput_hoadon3 .='
+        <tr style="margin:5px 0;">
+           
+            <td class="seperate " style="text-align: center;">
+                '.$row['mahd'].'
+            </td>
+            <td class="seperate " style="text-align: center;">
+                '.$row['makh'].'
+            </td>         
+            <td class="seperate " style="text-align: center;">
+                '.$row['manv'].'
+            </td>
+            <td class="seperate " style="text-align: center;">
+                '.$formattedDate.'
+            </td>
+            <td class="seperate " style="text-align: center;">
+            '.$row['tongtien'].'
+        </td>';
+            $ouput_hoadon3 .='  <td class="seperate " style="text-align: center;">
+            Đơn hàng chưa được xử lý
+        </td>';
+        $ouput_hoadon3 .=' <td class="seperate " >
+        <button class="laythongtinhd" data-tmp=2  data-mhd='.$row['mahd'].' data-mkh='.$row['makh'].'>Xem</button>
+    </td>
+</tr>
+';
+    }
+}
+else{
+    $ouput_hoadon3 .='
+        <tr>
+            <td colspan="4">Dữ liệu chưa có</td> 
+        </tr>
+    ';
+}
+
+$ouput_hoadon4='';
+        $sql_hoadonnn=mysqli_query($connect,"SELECT * FROM hoadon WHERE trangthai=3");            
+// .= NỐI CHUỖI
+$ouput_hoadon4 .= '    <div class="chuchitiet">ĐƠN HÀNG ĐANG ĐƯỢC XỬ LÝ</div>
+';
+$ouput_hoadon4 .= '
+    <table class="table" style="width: 100%">
+        <thead class="thead_dark">
+        <tr>
+            <th>
+                Mã hóa đơn
+            </th>
+            <th>
+                Mã khách hàng
+            </th>
+            <th>
+                Mã nhân viên
+            </th>
+            <th>
+                Ngày tạo
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+            <th>Trạng thái đơn hàng</th>
+
+            <th>Xem chi tiết</th>
+        </tr>
+        </thead>
+';
+
+if(mysqli_num_rows($sql_hoadonnn)>0){
+    $i=1;
+    while($row=mysqli_fetch_array($sql_hoadonnn)){
+        $date = new DateTime($row['ngay']);
+    $formattedDate = $date->format('d-m-Y');
+        $ouput_hoadon4 .='
+        <tr style="margin:5px 0;">
+           
+            <td class="seperate " style="text-align: center;">
+                '.$row['mahd'].'
+            </td>
+            <td class="seperate " style="text-align: center;">
+                '.$row['makh'].'
+            </td>         
+            <td class="seperate " style="text-align: center;">
+                '.$row['manv'].'
+            </td>
+            <td class="seperate " style="text-align: center;">
+                '.$formattedDate.'
+            </td>
+            <td class="seperate " style="text-align: center;">
+            '.$row['tongtien'].'
+        </td>';
+            $ouput_hoadon4 .='  <td class="seperate " style="text-align: center;">
+            Khách hàng đã hủy
+        </td>';
+        $ouput_hoadon4 .=' <td class="seperate " >
+        <button class="laythongtinhd" data-tmp=2  data-mhd='.$row['mahd'].' data-mkh='.$row['makh'].'>Xem</button>
+    </td>
+</tr>
+';
+    }
+}
+else{
+    $ouput_hoadon4 .='
+        <tr>
+            <td colspan="4">Dữ liệu chưa có</td> 
+        </tr>
+    ';
+}
+
+
+
+if(isset($_POST['mhddd'])){
+    $mahoadon=$_POST['mhddd'];
+    mysqli_query($connect,"UPDATE  hoadon SET trangthai=1 WHERE mahd='$mahoadon'");
+
+}
+if(isset($_POST['mhdddd'])){
+    $mahoadonn=$_POST['mhdddd'];
+    mysqli_query($connect,"UPDATE  hoadon SET trangthai=2 WHERE mahd='$mahoadonn'");
+
+}
+if(isset($_POST['mhddddd'])){
+    $mahoadonnn=$_POST['mhddddd'];
+    mysqli_query($connect,"UPDATE  hoadon SET trangthai=3 WHERE mahd='$mahoadonnn'");
+
+}
 // echo $output;//////////////////////////////////////////////
 
 $response_array = array(
@@ -1794,7 +2357,15 @@ $response_array = array(
     "output_chi_tiet_phieu_nhap"=>$output_chi_tiet_phieu_nhap,
     "role"=>$role,
     "nhanvien"=>$nhanvien,
+    "ouput_hoadon"=>$ouput_hoadon,
+    "outputct"=>$outputct,
+    "output2_search"=>$output2_search,
+    "ouput_hoadon1"=>$ouput_hoadon1,
+    "ouput_hoadon2"=>$ouput_hoadon2,
+    "ouput_hoadon3"=>$ouput_hoadon3,
+    "ouput_hoadon4"=>$ouput_hoadon4,
 );
 // Trả về dữ liệu dưới dạng JSON
 echo json_encode($response_array);
 ?>
+
