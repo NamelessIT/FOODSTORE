@@ -85,7 +85,7 @@ input[readonly] {
       padding: 15px;
       cursor: pointer;
       transition: background 0.3s;
-      min-width: 165px;
+      width: 16.83vw;
       border-radius: 5px;
       font-weight: bold;
       font-size: 1.1rem;
@@ -273,9 +273,14 @@ input[readonly] {
     overflow: scroll;
     }
     #SHOWPHIEUNHAP,#SHOWCHITIETPHIEUNHAP{
-      height: 5rem;
+      height: 6rem;
       scroll-behavior: auto;
     }
+
+    #SHOWPHIEUNHAP table td{
+      text-align: center;
+    }
+
     #THONGBAO {
       width: 300px;
       padding: 20px;
@@ -377,7 +382,7 @@ input[readonly] {
     .dropdown-content-MONTH{
       position: absolute;
       top: 100%;
-      left: 4%;
+      left: .1%;
       text-align: center;
       border: 1px solid #ccc;
       min-width: 140px;
@@ -444,7 +449,7 @@ input[readonly] {
 .modal-admin .modal-container,
 .modal-ADJUST .modal-container_ADJUST,.modal_dm .modal-container {
   background-color: #fff;
-  width: 75%;
+  width: 55%;
   min-height: 250px;
   border-radius: 50px;
   position: relative;
@@ -483,7 +488,6 @@ input[readonly] {
 }
 
 .modal .modal-container .modal-body,
-.modal-admin .modal-container .modal-body,
 .modal-ADJUST .modal-container_ADJUST .modal-body_ADJUST {
   display: flex;
   justify-content: space-evenly;
@@ -494,6 +498,11 @@ input[readonly] {
 .modal-admin .modal-body .img,
 .modal-ADJUST .modal-body_ADJUST .img {
   width: 40%;
+}
+.modal-admin .modal-container .modal-body{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .modal .modal-body .img img,
@@ -519,18 +528,23 @@ input[readonly] {
 .modal .modal-body .properties,
 .modal-admin .modal-body .properties,
 .modal-ADJUST .modal-body_ADJUST .properties {
-  width: 58%;
+  width: 50%;
 }
 
 .modal-admin .properties .flex-box,
 .modal-ADJUST .properties .flex-box {
   display: flex;
-  align-items: baseline;
+  /* align-items: baseline; */
+  flex-direction: row; align-items: center;
+  justify-content: flex-end;
 }
 
-.modal-admin .flex-box .Title,
 .modal-ADJUST .flex-box .Title {
   min-width: 65px;
+}
+
+.modal-admin .flex-box .Title {
+  min-width: 35px;
 }
 
 .modal-admin .flex-box .SoLuong,
@@ -639,3 +653,17 @@ input[readonly] {
   background-color: rgba(3, 91, 3, 0.7);
 }
 
+#QUANLYSANPHAM table th , #QUANLYSANPHAM table td {
+  border: 2px solid #ddd;padding: 5px;text-align: center;
+}
+
+#QUANLYSANPHAM table button {
+  background-color: #f44336;
+  font-weight: bold;
+  color: #fff;
+}
+
+#THEM_SAN_PHAM input {
+  max-width: 70%;
+  margin-left: 1%;
+}

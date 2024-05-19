@@ -28,7 +28,7 @@ mysqli_close($connect);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style3.css">
     <link rel="stylesheet" href="quanlykh/kh2.css">
     <link rel="stylesheet" href="quanlytk/tk5.css">
     <title>Admin</title>
@@ -62,18 +62,19 @@ mysqli_close($connect);
             <label>Tìm Kiếm</label>
             <input id="Find_SANPHAM" type="text" class="input_seacrh">
         </div>
-        <br></br>
-        <button class="Modal_Add ADD_SP_BTN" style="width:15%">Thêm sản phẩm</button>
-        <br></br>
-        <button id="SHOW_DM">xem danh mục</button>
-        <br></br>
-        <button class="edit" style="width:15%" >Sửa sản phẩm</button>
+        <div style="display: flex ; margin: 1% 0">
+        <button class="Modal_Add ADD_SP_BTN" style="width:15%; margin-right: 1%;">Thêm sản phẩm</button>
+        <button id="SHOW_DM" style="margin-right: 1%;">xem danh mục</button>
+        <button class="edit" style="width:15%;margin-right: 1%;" >Sửa sản phẩm</button>
+        </div>
         <input type="file" id="Edit_Anh" class="invisible" >
         <div id="SANPHAM" >
         </div>
-        <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>                   
-        <h5>TÌM KIẾM SẢN PHẨM ĐÃ XÓA</h5>
+        <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>
+        <div style="display: flex; align-items: center;">                  
+        <h5 style="margin-right: .5%;">Tìm kiếm sản phẩm đã xóa: </h5>
         <input id="Find_SANPHAM_XOA" type="text">
+        </div> 
         <div id="SANPHAM_XOA" >
                             
         </div>
@@ -90,7 +91,7 @@ mysqli_close($connect);
         <div class="modal-container container_dm animationTransmision">
             <button   button class="Modal_Add_dm" id="add_dm" style="width:15%; display:inline">Thêm danh mục</button>
             <input type="text" id="add_danh_muc">
-            <div id="NOIDUNG_DANHMUC">
+            <div id="NOIDUNG_DANHMUC" style="max-height: 220px; overflow: auto;">
             </div>
         </div>
 
@@ -101,40 +102,42 @@ mysqli_close($connect);
     <form method="POST" id="THEM_SAN_PHAM">
         <div class="modal-admin invisible">
             <div class="modal-container animationTransmision" style="width:70% ; min-height: 40%;">
-                <div style="padding-bottom: 1%">
-                    <div class="fa fa-times icon add-close" style="position: relative;">
+                <div>
+                    <div class="fa fa-times icon add-close" style="position: absolute;">
                         <i></i>
                     </div>
                 </div>
-                <div class="modal-body" style="  justify-content: space-around;">
-                <div class="img" style="display: flex;align-items: center;flex-direction: column; min-width: 10% ; min-height: 20%;">
+                <div class="modal-body">
+                <div class="img" style="display: flex;align-items: center;flex-direction: column; min-width: 46% ; min-height: 20%;">
                     <img id="preview" src="" title="Nhấn để thêm ảnh" style="max-width: 200px; margin-bottom: 0;">
                     <br>
-                    <input style="padding-left: 18%" type="file" id="AnhSanPham" onchange="previewImage(event)">
+                    <input type="file" id="AnhSanPham" onchange="previewImage(event)" style="margin:0 0 2% 17%">
                 </div>
-                    <div class="properties">
+                    <div class="properties" style="padding-right: 5%">
                         <div class="flex-box">
-                            <h4 class="Title Tensp" style="margin: 8px 5px;">Tên Sản Phẩm:</h4>
+                            <h4 class="Title Tensp">Tên Sản Phẩm:</h4>
                             <input id="TenSanPham" class="SoLuong" type="text" required placeholder="#abcdef">
                         </div>
-                        <div class="flex-box" style="display: block ;">
+                        <div class="flex-box" style="display: block">
                             <div class="dropdown OPTIONADMIN">
-                                <h3 class="Title" style="margin-bottom: 15px;">TITLE:</h3>
+                            <div class="flex-box">
+                                <h3 class="Title">Danh mục:</h3>
                                 <input id="TIEUDE" class="SoLuong" type="text" style="width: 100%;" readonly required>
-                                <div class="dropdown-content OPTIONADMINCONTENT ">
+                                </div>
+                                <div class="dropdown-content OPTIONADMINCONTENT " style="top: 5.5vh">
                                 
                                 </div>
                             </div>
                         </div>
                         <div class="flex-box">
-                            <h4 class="Title" style="margin: 5px 0;">GIÁ: </h4>
+                            <h4 class="Title">GIÁ: </h4>
                             <input id="GiaBan" class="SoLuong" type="number" pattern="[1-9]+" placeholder="000.000đ" required>
                         </div>
                         <div class="flex-box">
-                            <h4 class="Title" style="margin: 5px 0;">Mô tả sản phẩm: </h4>
+                            <h4 class="Title">Mô tả sản phẩm: </h4>
                             <input id="motasp" class="SoLuong" type="text">
                         </div>
-                        <button class="Accept" id="Add_sp_btn">XÁC NHẬN</button>
+                        <button class="Accept" id="Add_sp_btn" style="margin: 1% 0 1% 23%;">XÁC NHẬN</button>
                     </div>
                 </div>
             </div>
@@ -269,14 +272,14 @@ mysqli_close($connect);
         <div class="Cover_sepherate_line">
             <div class="sepherate_line"></div>
         </div>
-        <div style="margin-bottom: 5%;border-radius:5px" class="chon_nhanvien">
+        <div style="margin-bottom: 2%;border-radius:5px; display: flex" class="chon_nhanvien">
                         <label>Mã nhân viên:</label> <br>
-                        <input type="text" id="NV_PN" style="border-radius:5px" required readonly>
+                        <input type="text" id="NV_PN" style="border-radius:5px; margin-left: .5%" required readonly>
                         <div class="NV_PN" style="position:relative">
                         </div>
         </div>
         <div>
-            <input type="date" id="Ngay_PN" style="border-radius:5px;margin-bottom: 5%;" required>
+            <input type="date" id="Ngay_PN" style="border-radius:5px;margin-bottom: 2%;" required>
         </div>
         <button class="Modal_Add ADD-PN" style="width:15%"  id="btn_showFormAddPN">Nhập sản phẩm</button>
         <div id="PHIEUNHAP" >
@@ -298,8 +301,8 @@ mysqli_close($connect);
             <label>Tìm Kiếm</label>
             <input id="Find_PHIEUNHAP" type="text" class="input_seacrh">
         </div>
-        <input type="date" id="Ngay_PN_start" style="border-radius:5px;margin-bottom: 5%;" required>
-        <input type="date" id="Ngay_PN_end" style="border-radius:5px;margin-bottom: 5%;" required>
+        <input type="date" id="Ngay_PN_start" style="border-radius:5px;margin-bottom: 3%;" required>
+        <input type="date" id="Ngay_PN_end" style="border-radius:5px;margin-bottom: 3%;" required>
         <div id="SHOWPHIEUNHAP"></div>
         <button class="invisible BTN_BACK" style="display:block">Quay lại</button>
         <div id="SHOWCHITIETPHIEUNHAP"></div>
@@ -359,16 +362,6 @@ mysqli_close($connect);
             <div class="sepherate_line"></div>
         </div>
         <div class="THONGKEDONHANG">
-            <div class="SOLUONGMUA">
-                <div id="SoLuongMua"></div>
-                <div class="underline"></div>
-                <div class="SoLuongMuaNumber"></div>
-              </div>
-              <div class="DOANHTHU">
-                <div id="SoDoanhThu"></div>
-                <div class="underline"></div>
-                <div class="DoanhThuNumber"></div>
-              </div>
         </div>
     <div class="Filter">
 
@@ -464,7 +457,7 @@ mysqli_close($connect);
     
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="js2.js"></script>
+<script src="js6.js"></script>
 <script src="quanlytk/tk18.js"></script>
 <script src="quanlykh/kh4.js"></script>
 </body>

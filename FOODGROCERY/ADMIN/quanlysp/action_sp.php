@@ -45,7 +45,7 @@ if(isset($_POST['rowCount'])){
 }
 // mảng thể hiện quyền
 $role = array();
-$addproduct = $updateproduct = $deleteproduct = $deletedproducts = $buy = $printbill = $deletebill = $addpn = $deletpn = $addaccount = $updateaccount = $deleteaccount = $addrole = $addcategories = $updatecategories = $deletecategories = $statistics = 0;
+$addproduct = $updateproduct = $deleteproduct = $deletedproducts = $buy = $printbill = $deletebill = $addpn = $deletpn = $addaccount = $updateaccount = $deleteaccount = $addrole = $addcategories = $updatecategories = $deletecategories = $statistics = $lockkh = $deletekh =0;
 if (isset($_POST['username'])) {
     $username = $_POST['username'];
     $mysqli_query_role = mysqli_query($connect, "SELECT * FROM account,quyen,role WHERE account.username='$username' AND account.username=quyen.username AND role.role_name=quyen.rolename");
@@ -68,6 +68,8 @@ if (isset($_POST['username'])) {
         $updatecategories = ($row['updatecategories'] != 0) ? 1 : ($row['updatecategories'] == 0 ? 0 : 1);
         $deletecategories = ($row['deletecategories'] != 0) ? 1 : ($row['deletecategories'] == 0 ? 0 : 1);
         $statistics = ($row['statistics'] != 0) ? 1 : ($row['statistics'] == 0 ? 0 : 1);
+        $lockkh = ($row['lockkh'] != 0) ? 1 : ($row['lockkh'] == 0 ? 0 : 1);
+        $deletekh = ($row['deletekh'] != 0) ? 1 : ($row['deletekh'] == 0 ? 0 : 1);
     }
 }
         // Thêm các biến vào mảng $role
@@ -88,7 +90,9 @@ if (isset($_POST['username'])) {
             'addcategories' => $addcategories,
             'updatecategories' => $updatecategories,
             'deletecategories' => $deletecategories,
-            'statistics' => $statistics
+            'statistics' => $statistics,
+            'lockkh' => $lockkh,
+            'deletekh' => $deletekh,
         );
 $nhanvien = array();
 if (isset($_POST['username'])) {
@@ -240,7 +244,7 @@ if(isset($_POST['COT_SP'])){
     ';
     
     if(mysqli_num_rows($sql_query1)>0){
-        $i=0;
+        $i=1;
         while($row=mysqli_fetch_array($sql_query1)){
             $output1 .='
             <tr>
@@ -352,7 +356,7 @@ if(isset($_POST['SEARCH'])){
     ';
     
     if(mysqli_num_rows($sql_query1)>0){
-        $i=0;
+        $i=1;
         while($row=mysqli_fetch_array($sql_query1)){
             $output1_search .='
             <tr>
@@ -390,7 +394,7 @@ if(isset($_POST['SEARCH'])){
     else{
         $output1_search .='
             <tr>
-                <td colspan="8">Dữ liệu chưa có</td> 
+                <td colspan="9">Dữ liệu chưa có</td> 
             </tr>
         ';
     }
@@ -448,7 +452,7 @@ $output_hidden .= '
 ';
 
 if(mysqli_num_rows($sql_query_hidden)>0){
-    $i=0;
+    $i=1;
     while($row=mysqli_fetch_array($sql_query_hidden)){
         $output_hidden .='
         <tr>
@@ -486,7 +490,7 @@ if(mysqli_num_rows($sql_query_hidden)>0){
 else{
     $output_hidden .='
         <tr>
-            <td colspan="8">Dữ liệu chưa có</td> 
+            <td colspan="9">Dữ liệu chưa có</td> 
         </tr>
     ';
 }
@@ -559,7 +563,7 @@ $output_hidden_search .= '
 ';
 
 if(mysqli_num_rows($sql_query_hidden)>0){
-    $i=0;
+    $i=1;
     while($row=mysqli_fetch_array($sql_query_hidden)){
         $output_hidden_search .='
         <tr>
@@ -597,7 +601,7 @@ if(mysqli_num_rows($sql_query_hidden)>0){
 else{
     $output_hidden_search .='
         <tr>
-            <td colspan="8">Dữ liệu chưa có</td> 
+            <td colspan="9">Dữ liệu chưa có</td> 
         </tr>
     ';
 }
@@ -765,7 +769,7 @@ $output .= '
 ';
 
 if(mysqli_num_rows($sql_query)>0){
-    $i=0;
+    $i=1;
     while($row=mysqli_fetch_array($sql_query)){
         $output .='
         <tr style="margin:5px 0;">
@@ -817,16 +821,16 @@ $output_dm='';
 $sql_query_dm=mysqli_query($connect,"SELECT * FROM danhmuc WHERE danhmuc.ishidden=0");
 // .= NỐI CHUỖI
 $output_dm .= '
-    <table class="table" style="width: 100%">
+    <table class="table" style="width: 100%;border-collapse: collapse;">
         <thead class="thead_dark">
         <tr>
-            <th>
+            <th style="border: 2px solid #ddd;padding: 8px;">
                 STT
             </th>
-            <th>
+            <th style="border: 2px solid #ddd;padding: 8px;">
                 Tên danh mục
             </th>
-            <th>
+            <th style="border: 2px solid #ddd;padding: 8px;">
                 Xóa
             </th>
         </tr>
@@ -834,17 +838,17 @@ $output_dm .= '
 ';
 
 if(mysqli_num_rows($sql_query_dm)>0){
-    $i=0;
+    $i=1;
     while($row=mysqli_fetch_array($sql_query_dm)){
         $output_dm .='
-        <tr style="margin:5px 0;">
-            <td class="seperate STT">
+        <tr style="margin:5px 0;border: 2px solid #ddd;padding: 8px;">
+            <td class="seperate STT" style="text-align: center">
                 '.$i++.'
             </td>
-            <td class="seperate Tendm" >
+            <td class="seperate Tendm" style="border: 2px solid #ddd;padding: 8px;">
                 '.$row['tendm'].'
             </td>
-            <td class="seperate Del_dm" style="display: flex;justify-content: center;" data-dm='.$row['madm'].'>
+            <td class="seperate Del_dm" style="border: 2px solid #ddd;padding: 8px;text-align: center" data-dm='.$row['madm'].'>
                 <button >Xóa</button>
             </td>
         </tr>
