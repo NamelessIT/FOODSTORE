@@ -45,6 +45,7 @@ mysqli_close($connect);
                 <li class="THONGKEDONHANG">THỐNG KÊ ĐƠN HÀNG</li>
                 <li class="PHIẾU NHẬP">PHIẾU NHẬP</li>
                 <li class="QUANLYKHACHHANG">QUẢN LÝ KHÁCH HÀNG</li>
+                <li class="QUANLYKHACHHANG">QUẢN LÝ NHÂN VIÊN</li>
                 <li class="TROVE">TRỞ VỀ</li>
             </ul>
         </div>
@@ -187,6 +188,25 @@ mysqli_close($connect);
         </div>
         <br></br>
         <div id="KHACHHANG">
+        </div>
+        <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>
+    </div>
+
+
+    <!--- MODAL QUANLYNHANVIEN -->
+    <div id="QUANLYNHANVIEN" class="invisible">
+        <div class="Title_ChucNang">
+            <label>Quản Lý Nhân Viên</label>
+        </div>
+        <div class="Cover_sepherate_line">
+            <div class="sepherate_line"></div>
+        </div>
+        <div class="search_cover">
+            <label>Tìm Kiếm</label>
+            <input id="Find_NHANVIEN" type="text" class="input_seacrh">
+        </div>
+        <br></br>
+        <div id="NHANVIEN">
         </div>
         <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>
     </div>
