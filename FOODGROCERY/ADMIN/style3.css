@@ -667,3 +667,86 @@ input[readonly] {
   max-width: 70%;
   margin-left: 1%;
 }
+
+.xemchitiethoadoncuakhach{
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 8;
+}
+
+.modal-container{
+  background: #fff;
+  /* width: 900px;
+  min-height: 200px; */
+
+  /* max-width: calc(100%-32px); */
+
+  width: 500px;
+  height: 500px;
+  position: relative;
+
+  animation: modalFadeIn ease 0.5s;
+}
+
+.chuchitiet{
+  font-weight: 900;
+  font-size: 40px;
+  background-color: rgba(102, 101, 102, 0.9);
+  /* background-color: gray; */
+  height: 50px;
+  text-align: center;
+  width: 100%;
+  line-height: 50px;
+}
+
+/* -------------------------------------------- */
+/* .modal-container {
+  transition: all 0.25s ease-in-out;
+  width: 90%;
+  margin: 0 auto;
+  border: #9d9494 2px solid;
+} */
+.modal-container table {
+  width: 100%;
+}
+.modal-container tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  unicode-bidi: isolate;
+  border-color: inherit;
+}
+.modal-container table th {
+  color: #eaeaea;
+  background-color: rgba(102, 101, 102, 0.9);
+  padding: 10px 0px 10px 0px;
+}
+.modal-container tr {
+  text-align: center;
+  display: table-row;
+  vertical-align: inherit;
+  unicode-bidi: isolate;
+  border-color: inherit;
+}
+.modal-container table tbody tr td{
+  color: #2f2f2f;
+  background-color: rgba(197, 197, 197, 0.9);
+  padding: 10px 0px 10px 0px;
+  text-align: center;
+}
+.cacchucnangnut{
+  display: flex;
+  justify-content: center;
+}
+.cacchucnangnut .btn-dong{
+  margin-right: 30px;
+}
+.cacchucnangnut .bthd-ddxl{
+  margin-right: 30px;
+}
