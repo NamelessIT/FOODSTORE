@@ -2161,7 +2161,7 @@ else{
 $ouput_hoadon3='';
         $sql_hoadonnn=mysqli_query($connect,"SELECT * FROM hoadon WHERE trangthai=0");            
 // .= NỐI CHUỖI
-$ouput_hoadon3 .= '    <div class="chuchitiet">ĐƠN HÀNG ĐANG ĐƯỢC XỬ LÝ</div>
+$ouput_hoadon3 .= '    <div class="chuchitiet">ĐƠN HÀNG CHƯA ĐƯỢC XỬ LÝ</div>
 ';
 $ouput_hoadon3 .= '
     <table class="table" style="width: 100%">
@@ -2233,7 +2233,7 @@ else{
 $ouput_hoadon4='';
         $sql_hoadonnn=mysqli_query($connect,"SELECT * FROM hoadon WHERE trangthai=3");            
 // .= NỐI CHUỖI
-$ouput_hoadon4 .= '    <div class="chuchitiet">ĐƠN HÀNG ĐANG ĐƯỢC XỬ LÝ</div>
+$ouput_hoadon4 .= '    <div class="chuchitiet">ĐƠN HÀNG ĐÃ HỦY</div>
 ';
 $ouput_hoadon4 .= '
     <table class="table" style="width: 100%">
