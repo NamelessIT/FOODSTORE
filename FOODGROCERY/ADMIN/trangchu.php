@@ -160,19 +160,42 @@ mysqli_close($connect);
         <div class="Cover_sepherate_line">
             <div class="sepherate_line"></div>
         </div>
+        <div class="dropdown DONHANGG">
+            <input id="TYPE_DONHANG" class="SoLuong" type="text" style="display:block;margin-bottom:15px"  readonly  required>
+                            <div class="dropdown-content-DONHANG invisible" >
+                                <li onclick="selectdon('TẤT CẢ ĐƠN')">TẤT CẢ</li>
+                                <li onclick="selectdon('ĐƠN HÀNG ĐÃ ĐƯỢC XỬ LÝ')">ĐƠN HÀNG ĐÃ ĐƯỢC XỬ LÝ</li>
+                                <li onclick="selectdon('ĐƠN HÀNG ĐANG ĐƯỢC XỬ LÝ')">ĐƠN HÀNG ĐANG ĐƯỢC XỬ LÝ</li>
+                                <li onclick="selectdon('ĐƠN HÀNG CHƯA ĐƯỢC XỬ LÝ')">ĐƠN HÀNG CHƯA ĐƯỢC XỬ LÝ</li>
+                                <li onclick="selectdon('ĐƠN HÀNG ĐÃ HỦY')">ĐƠN HÀNG ĐÃ HỦY</li>
+
+                            </div>
+        </div>
         <div class="search_cover">
             <label>Tìm Kiếm</label>
-            <input id="Find_DONHANG" type="text" class="input_seacrh">
+            <input id="Find_DONHANG" type="text" class="input_seacrh" placeholder='Nhập mã cần tìm'>
         </div>
         <div id="CHART_SHOW" >
         </div>
+        <!-- <br> -->
+        <div id="HOADON">
+        </div>
+        <div id="HOADON1" class="invisible">
+        </div>
+        <div id="HOADON2" class="invisible">
+        </div>
+        <div id="HOADON3" class="invisible">
+        </div>
+        <div id="HOADON4" class="invisible">
+        </div>
         <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>                   
-        <h5>TÌM KIẾM HÓA ĐƠN ĐÃ HOÀN THÀNH</h5>
-        <input id="FindOLD" type="text">
+        <!-- <h5>TÌM KIẾM HÓA ĐƠN ĐÃ HOÀN THÀNH</h5>
+        <input id="FindOLD" type="text"> -->
         <div id="CHART_SHOWOLD" >
                             
         </div>
     </div>
+    <div id="SHOWCTHD"></div>
 
      <!-- MODAL QUANLYKHACHHANG -->
     <div id="QUANLYKHACHHANG" class="invisible">
