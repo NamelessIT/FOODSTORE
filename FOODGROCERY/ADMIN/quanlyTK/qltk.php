@@ -40,7 +40,7 @@
         $table1 .= '</tr>';
        }
    } else {
-       $table1 .= '<tr><td colspan="4">Không có dữ liệu</td></tr>';
+       $table1 .= '<tr><td colspan="6">Không có dữ liệu</td></tr>';
    }
    
    $table1 .= '</tbody></table>';
@@ -83,7 +83,7 @@
         $table2 .= '</tr>';
        }
    } else {
-       $table2 .= '<tr><td colspan="4">Không có dữ liệu</td></tr>';
+       $table2 .= '<tr><td colspan="5">Không có dữ liệu</td></tr>';
    }
    
    $table2 .= '</tbody></table>';

@@ -228,7 +228,7 @@ if(isset($_POST['COT_SP'])){
                     Số lượng
                 </th>
                 <th class="sortable_sp '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
-                    Gía bán
+                    Giá bán
                 </th>
                 <th class="sortable_sp '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Loại
@@ -340,7 +340,7 @@ if(isset($_POST['SEARCH'])){
                 Số lượng
                 </th>
                 <th class="sortable_sp '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
-                    Gía bán
+                    Giá bán
                 </th>
                 <th class="sortable_sp '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                     Loại
@@ -433,7 +433,7 @@ $output_hidden .= '
                 Ảnh
             </th>
             <th class="sortable_sp_hidden '. ($cot_sp == "sanpham.dongia" ? 'click' : '') . '" data-tk_sp_hidden="sanpham.dongia" '. ($cot_sp == "sanpham.dongia" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
-                Gía bán
+                Giá bán
             </th>
             <th class="sortable_sp_hidden '. ($cot_sp == "danhmuc.madm" ? 'click' : '') . '" data-tk_sp_hidden="danhmuc.madm" '. ($cot_sp == "danhmuc.madm" && $sort=='false' ? 'style="background-color:#ccc"' : '') . '>
                 Loại
