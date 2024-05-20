@@ -31,6 +31,7 @@ function searchData(searchTerm) {
     .then(data => {
       // Cập nhật nội dung của div #NhanVien với kết quả tìm kiếm
       document.getElementById('NHANVIEN').innerHTML = data;
+      loadbtnsua();
     });
 }
 
@@ -276,6 +277,7 @@ $(document).ready(function () {
           document.querySelector(".form-container-nv-add").classList.remove('show');
           console.log('oke');
           updateNVTable();
+          loadbtnsua();
         } else {
           console.log('not oke');
           alert('Thêm thất bại');

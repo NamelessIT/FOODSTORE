@@ -46,7 +46,7 @@ mysqli_close($connect);
                 <li class="THONGKEDONHANG">THỐNG KÊ ĐƠN HÀNG</li>
                 <li class="PHIẾU NHẬP">PHIẾU NHẬP</li>
                 <li class="QUANLYKHACHHANG">QUẢN LÝ KHÁCH HÀNG</li>
-                <li class="QUANLYKHACHHANG">QUẢN LÝ NHÂN VIÊN</li>
+                <li class="QUANLYNHANVIEN">QUẢN LÝ NHÂN VIÊN</li>
                 <li class="TROVE">TRỞ VỀ</li>
             </ul>
         </div>
@@ -556,9 +556,9 @@ mysqli_close($connect);
     
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="js6.js"></script>
-<script src="quanlytk/tk20.js"></script>
+<script src="js7.js"></script>
+<script src="quanlytk/tk24.js"></script>
 <script src="quanlykh/kh6.js"></script>
-<script src="quanlynv/nv8.js"></script>
+<script src="quanlynv/nv9.js"></script>
 </body>
 </html>

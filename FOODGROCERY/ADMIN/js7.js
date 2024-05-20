@@ -1753,6 +1753,9 @@ function hide_function(username) {
             if (role_current.addaccount == 0 && role_current.deleteaccount == 0 && role_current.updateaccount == 0) {
                 document.querySelector('.QUANLYTAIKHOAN').classList.add('invisible');
             }
+            if (role_current.addrole == 0) {
+                document.querySelector('.QUANLYNHANVIEN').classList.add('invisible');
+            }
             // ẩn trong fetch_Data
             // role_current.deleteproduct
             // role_current.deletecategories
@@ -1764,8 +1767,10 @@ function hide_function(username) {
 
 
 window.addEventListener('load', function () {
+    var username = localStorage.getItem('username');
+    console.log(username);
     // lấy username đăng nhập bỏ vào
-    hide_function('huy');
+    hide_function('duy');
     selectOptionType('TẤT CẢ');
     show_madm.style.display = 'none';
     weekCheckbox.click();
