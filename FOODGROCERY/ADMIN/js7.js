@@ -1768,9 +1768,9 @@ function hide_function(username) {
 
 window.addEventListener('load', function () {
     var username = localStorage.getItem('username');
-    console.log(username);
+    console.log("heloooo " + username);
     // lấy username đăng nhập bỏ vào
-    hide_function('duy');
+    hide_function(username);
     selectOptionType('TẤT CẢ');
     show_madm.style.display = 'none';
     weekCheckbox.click();

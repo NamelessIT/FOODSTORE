@@ -1,5 +1,6 @@
 <?php
 require '../config/db.php'; 
+session_start();
 
 
 $sql="SELECT madm,tendm  FROM danhmuc WHERE ishidden=0";
@@ -17,6 +18,12 @@ if (mysqli_num_rows($query) > 0) {
     echo "Không có dữ liệu được tìm thấy.";
 }
 
+
+    if(!isset($_SESSION['mySession'])){
+        header('Location: ../MAIN/trangchu.php');
+        exit;
+    }
+
 // Đóng kết nối
 mysqli_close($connect);
 ?>
@@ -28,7 +35,7 @@ mysqli_close($connect);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
-    <link rel="stylesheet" href="style3.css">
+    <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="quanlykh/kh2.css">
     <link rel="stylesheet" href="quanlytk/tk5.css">
     <link rel="stylesheet" href="quanlynv/nv.css">
