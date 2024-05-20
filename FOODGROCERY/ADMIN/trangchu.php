@@ -103,15 +103,15 @@ mysqli_close($connect);
         <!-- MODAL FOR ADD SẢN PHẨM -->
     <form method="POST" id="THEM_SAN_PHAM">
         <div class="modal-admin invisible">
-            <div class="modal-container animationTransmision" style="width:70% ; min-height: 40%;">
+            <div class="modal-container animationTransmision" style="max-width:70% ; max-height: 45%;">
                 <div>
                     <div class="fa fa-times icon add-close" style="position: absolute;">
                         <i></i>
                     </div>
                 </div>
                 <div class="modal-body">
-                <div class="img" style="display: flex;align-items: center;flex-direction: column; min-width: 46% ; min-height: 20%;">
-                    <img id="preview" src="" title="Nhấn để thêm ảnh" style="max-width: 200px; margin-bottom: 0;">
+                <div class="img" style="display: flex;align-items: center;flex-direction: column; ">
+                    <img id="preview" src="" title="Nhấn để thêm ảnh" style="margin-bottom: 0; max-width: 200px; max-height: 15vh;">
                     <br>
                     <input type="file" id="AnhSanPham" onchange="previewImage(event)" style="margin:0 0 2% 17%">
                 </div>
