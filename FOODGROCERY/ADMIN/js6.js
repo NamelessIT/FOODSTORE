@@ -2286,12 +2286,26 @@ function fetch_data_hienhd4(){
 }
     var Find_DONHANG=document.getElementById('Find_DONHANG');
     Find_DONHANG.addEventListener('keypress',function(event){
+        
         if (event.keyCode === 13) {
             if (Find_DONHANG.value !== '') {
+                document.getElementById('HOADON5').classList.remove('invisible')
+
                 fetch_data_hoadon();
+                document.getElementById('HOADON2').classList.add('invisible')
+    document.getElementById('HOADON1').classList.add('invisible')
+    document.getElementById('HOADON').classList.add('invisible')
+    document.getElementById('HOADON3').classList.add('invisible')
+    document.getElementById('HOADON4').classList.add('invisible')
+
             }
             else{
                 fetch_data_hienhd();
+    document.getElementById('HOADON1').classList.add('invisible')
+    document.getElementById('HOADON').classList.remove('invisible')
+    document.getElementById('HOADON3').classList.add('invisible')
+    document.getElementById('HOADON4').classList.add('invisible')
+    document.getElementById('HOADON5').classList.add('invisible')
             }
         }
     })
@@ -2304,10 +2318,10 @@ function fetch_data_hienhd4(){
                 method: "POST",
                 data: { SEARCH_hd:search1},
                 success: function(data) {
-                    document.getElementById('HOADON').innerHTML='';
+                    // document.getElementById('HOADON5').innerHTML='';
                     var responseData = JSON.parse(data);
                     var output2_search = responseData.output2_search;
-                    khunghoadon.innerHTML = output2_search; 
+                    document.getElementById('HOADON5').innerHTML = output2_search; 
                 }
             });
         }else{

@@ -188,6 +188,8 @@ mysqli_close($connect);
         </div>
         <div id="HOADON4" class="invisible">
         </div>
+        <div id="HOADON5" class="invisible">
+        </div>
         <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>                   
         <!-- <h5>TÌM KIẾM HÓA ĐƠN ĐÃ HOÀN THÀNH</h5>
         <input id="FindOLD" type="text"> -->

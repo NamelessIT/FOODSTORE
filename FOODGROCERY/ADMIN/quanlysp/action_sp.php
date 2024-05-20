@@ -1949,49 +1949,61 @@ if(isset($_POST['SEARCH_hd'])){
     $search=$_POST['SEARCH_hd'];
     $output2_search .= '
     <table class="table" style="width: 100%">
-        <thead class="thead_dark">
-        <tr>
-            <th>
-                TOP
-            </th>
-            <th>
-                Mã danh mục
-            </th>
-            <th>
-                Tên danh mục
-            </th>
-            <th>
-                Tiền kiếm được
-            </th>
-            <th>Xem chi tiết</th>
-        </tr>
-        </thead>
+    <thead class="thead_dark">
+    <tr>
+        <th>
+            Mã hóa đơn
+        </th>
+        <th>
+            Mã khách hàng
+        </th>
+        <th>
+            Mã nhân viên
+        </th>
+        <th>
+            Ngày tạo
+        </th>
+        <th>
+            Tổng tiền
+        </th>
+        <th>Trạng thái đơn hàng</th>
+
+        <th>Xem chi tiết</th>
+    </tr>
+    </thead>
 ';
     $sql_query3 = mysqli_query($connect, "SELECT * FROM hoadon WHERE hoadon.isDelete=0  AND 
-    (hoadon.mahd LIKE '%$search%' 
-    OR hoadon.makh LIKE '%$search%' 
-    OR hoadon.manv LIKE '%$search%'  ) ");
+    (hoadon.mahd LIKE '%$search%' )");
+   // OR hoadon.makh LIKE '%$search%' 
+    //OR hoadon.manv LIKE '%$search%'  ) ");
     if(mysqli_num_rows($sql_query3)>0){
         while($row=mysqli_fetch_array($sql_query3)){
             $output2_search .='
-            <tr style="margin:5px 0;">
-                <td class="seperate STT">
-                    '.$i++.'
-                </td>
-                <td class="seperate ">
-                    '.$row['mahd'].'
-                </td>
-                <td class="seperate ">
-                    '.$row['makh'].'
-                </td>         
-                <td class="seperate ">
-                    '.$row['manv'].'
-                </td>
-                <td class="seperate ">
-                    <button class="laythongtinhd" data-mhd='.$row['mahd'].' data-mkh='.$row['makh'].'>Xem</button>
-                </td>
-            </tr>
-            ';
+        <tr style="margin:5px 0;">
+           
+            <td class="seperate " style="text-align: center;">
+                '.$row['mahd'].'
+            </td>
+            <td class="seperate " style="text-align: center;">
+                '.$row['makh'].'
+            </td>         
+            <td class="seperate " style="text-align: center;">
+                '.$row['manv'].'
+            </td>
+            <td class="seperate " style="text-align: center;">
+                '.$formattedDate.'
+            </td>
+            <td class="seperate " style="text-align: center;">
+            '.$row['tongtien'].'
+        </td>';
+            $output2_search .='  <td class="seperate " style="text-align: center;">
+            Đã xử lý
+        </td>';
+        $output2_search .=' <td class="seperate " >
+        <button class="laythongtinhd" data-tmp=1  data-mhd='.$row['mahd'].' data-mkh='.$row['makh'].'>Xem</button>
+    </td>
+</tr>
+';
         }
     }
     else{
