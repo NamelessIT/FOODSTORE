@@ -62,7 +62,7 @@ mysqli_close($connect);
         </div>
         <div class="search_cover">
             <label>Tìm Kiếm</label>
-            <input id="Find_SANPHAM" type="text" class="input_seacrh">
+            <input id="Find_SANPHAM" type="text" class="input_seacrh" placeholder="Tìm kiếm...">
         </div>
         <div style="display: flex ; margin: 1% 0">
         <button class="Modal_Add ADD_SP_BTN" style="width:15%; margin-right: 1%;">Thêm sản phẩm</button>
@@ -74,8 +74,8 @@ mysqli_close($connect);
         </div>
         <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>
         <div style="display: flex; align-items: center;">                  
-        <h5 style="margin-right: .5%;">Tìm kiếm sản phẩm đã xóa: </h5>
-        <input id="Find_SANPHAM_XOA" type="text">
+        <h4 style="margin-right: .5%;">Tìm kiếm sản phẩm đã xóa </h4>
+        <input id="Find_SANPHAM_XOA" type="text" placeholder="Tìm kiếm...">
         </div> 
         <div id="SANPHAM_XOA" >
                             
@@ -398,7 +398,7 @@ mysqli_close($connect);
         <button  style="width:15%;margin:20px 0"  id="btn_ADDPN">Tạo phiếu nhập</button>
         <div class="search_cover search_phieunhap" style="margin-bottom: 1%">
             <label>Tìm Kiếm</label>
-            <input id="Find_PHIEUNHAP" type="text" class="input_seacrh">
+            <input id="Find_PHIEUNHAP" type="text" class="input_seacrh" placeholder="Tìm kiếm...">
         </div>
         <input type="date" id="Ngay_PN_start" style="border-radius:5px;margin-bottom: 3%;" required>
         <input type="date" id="Ngay_PN_end" style="border-radius:5px;margin-bottom: 3%;" required>
