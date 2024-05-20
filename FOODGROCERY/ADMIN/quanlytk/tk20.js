@@ -379,3 +379,30 @@ function updateAccount(username,password, role) {
     }
   });
 }
+
+
+document.getElementById('Find_NGUOIDUNG').addEventListener('keyup', (event) => {
+  if (event.key === 'Enter') {
+    const searchTerm = document.getElementById('Find_NGUOIDUNG').value.toLowerCase();
+
+    $.ajax({
+      url: 'quanlytk/qltk.php',
+      type: 'POST',
+      data: {
+        q: searchTerm,
+      },
+      success: function(response) {
+        try {
+          const data = JSON.parse(response);
+          document.getElementById("TAIKHOAN").innerHTML = data.tabletknv;
+          document.getElementById("TAIKHOAN2").innerHTML = data.tabletkkh;
+        } catch (e) {
+          console.error('Error parsing response:', e);
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error('Error making AJAX request:', textStatus, errorThrown);
+      }
+    });
+  }
+});

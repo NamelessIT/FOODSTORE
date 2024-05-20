@@ -210,7 +210,7 @@ mysqli_close($connect);
         </div>
         <div class="search_cover">
             <label>Tìm Kiếm</label>
-            <input id="Find_KHACHHANG" type="text" class="input_seacrh">
+            <input id="Find_KHACHHANG" type="text" class="input_seacrh" placeholder="Tìm kiếm...">
         </div>
         <br></br>
         <div id="KHACHHANG">
@@ -229,7 +229,7 @@ mysqli_close($connect);
         </div>
         <div class="search_cover">
             <label style="margin-right: .5%">Tìm Kiếm</label>
-            <input id="search-input" type="text">
+            <input id="search-input" type="text"  placeholder="Tìm kiếm...">
         </div>
         <div id="nv-count" style="font-weight: bold; font-size: 1.1em; margin: 1vh 0;"></div>
         <div style="display: flex; align-items: center">
@@ -301,14 +301,13 @@ mysqli_close($connect);
         </div>
         <div class="search_cover">
             <label>Tìm Kiếm</label>
-            <input id="Find_NGUOIDUNG" type="text" class="input_seacrh">
+            <input id="Find_NGUOIDUNG" type="text" class="input_seacrh"  placeholder="Tìm kiếm...">
         </div>
         <br>
-            <div id="nv_count" style="font-size: 1.1em;font-weight: bold;"></div>
-            <div id="kh_count" style="font-size: 1.1em;font-weight: bold;"></div>
-        <br></br>
+            <div id="nv_count" style="font-size: 1.1em;font-weight: bold;border-bottom: 1px solid;width:max-content; margin-bottom: 1%;"></div>
+            <div id="kh_count" style="font-size: 1.1em;font-weight: bold;border-bottom: 1px solid;width:max-content;margin-bottom: 2%;"></div>
         <div style="display: flex">
-            <div style="font-size: 1.1em;font-weight: bold;margin-right: 1%">Thêm tài khoản nhân viên: </div>
+            <div style="font-size: 1.1em;font-weight: bold;margin-right: 1%;">Thêm tài khoản nhân viên: </div>
             <button id="showFormtk" class="add_account" style="width: 10%;background-color: greenyellow;font-weight: bold;cursor: pointer">Thêm</button>
         </div>
         <div id="overlay_form_them"></div>
@@ -558,8 +557,8 @@ mysqli_close($connect);
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="js6.js"></script>
-<script src="quanlytk/tk18.js"></script>
-<script src="quanlykh/kh4.js"></script>
+<script src="quanlytk/tk20.js"></script>
+<script src="quanlykh/kh6.js"></script>
 <script src="quanlynv/nv8.js"></script>
 </body>
 </html>

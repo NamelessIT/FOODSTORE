@@ -1,8 +1,8 @@
 // Lấy dữ liệu từ file get_customer_table.php và hiển thị trong div
 fetch('quanlykh/ql_kh.php')
-.then(response => response.text())
+.then(response => response.json())
 .then(data => {
-    document.getElementById('KHACHHANG').innerHTML = data;
+    document.getElementById('KHACHHANG').innerHTML = data.table;
 })
 .catch(error => console.error('Error:', error));
 
@@ -128,10 +128,10 @@ function showLockModal(accountId) {
   function updateCustomerTable() {
     // Fetch data from the server
     fetch('quanlykh/ql_kh.php')
-      .then(response => response.text())
+      .then(response => response.json())
       .then(data => {
         // Update the table HTML
-        document.getElementById('KHACHHANG').innerHTML = data;
+        document.getElementById('KHACHHANG').innerHTML = data.table;
       })
       .catch(error => console.error('Error:', error));
   }
@@ -191,4 +191,29 @@ function showLockModal(accountId) {
       }
     });
   }
-  
+
+
+  document.getElementById('Find_KHACHHANG').addEventListener('keyup', (event) => {
+  if (event.key === 'Enter') {
+    const searchTerm = document.getElementById('Find_KHACHHANG').value.toLowerCase();
+
+    $.ajax({
+      url: 'quanlykh/ql_kh.php',
+      type: 'POST',
+      data: {
+        q: searchTerm,
+      },
+      success: function(response) {
+        try {
+          const data = JSON.parse(response);
+          document.getElementById("KHACHHANG").innerHTML = data.tabletim;
+        } catch (e) {
+          console.error('Error parsing response:', e);
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error('Error making AJAX request:', textStatus, errorThrown);
+      }
+    });
+  }
+});
