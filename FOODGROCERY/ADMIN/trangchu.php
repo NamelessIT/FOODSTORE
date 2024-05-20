@@ -31,13 +31,14 @@ mysqli_close($connect);
     <link rel="stylesheet" href="style3.css">
     <link rel="stylesheet" href="quanlykh/kh2.css">
     <link rel="stylesheet" href="quanlytk/tk5.css">
+    <link rel="stylesheet" href="quanlynv/nv.css">
     <title>Admin</title>
 </head>
 <body>
 
 
     <div class="container">
-        <div class="sidebar">
+        <div class="sidebar" style="overflow: hidden">
             <ul>
                 <li class="QUANLYSANPHAM active">QUẢN LÝ SẢN PHẨM</li>
                 <li class="QUANLYDONHANG ">QUẢN LÝ HÓA ĐƠN</li>
@@ -227,14 +228,68 @@ mysqli_close($connect);
             <div class="sepherate_line"></div>
         </div>
         <div class="search_cover">
-            <label>Tìm Kiếm</label>
-            <input id="Find_NHANVIEN" type="text" class="input_seacrh">
+            <label style="margin-right: .5%">Tìm Kiếm</label>
+            <input id="search-input" type="text">
         </div>
-        <br></br>
-        <div id="NHANVIEN">
+        <div id="nv-count" style="font-weight: bold; font-size: 1.1em; margin: 1vh 0;"></div>
+        <div style="display: flex; align-items: center">
+        <label style="margin-right: .5%">Thêm nhân viên</label>
+        <button class="add-button-nv" style="width: 10%;margin-top: .5%;background-color: rgb(58, 164, 12);color: white;font-weight: bold;cursor: pointer">Thêm mới</button>
         </div>
-        <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>
+        <div class="overlay-nv"></div>
+        <div class="form-container-nv">
+        <form class="user-form-nv">
+            <div style="display: flex; justify-content: center;">
+            <h2>Sửa Đổi Thông Tin Nhân Viên</h2>
+            </div>
+        <label for="name">Họ tên:</label>
+        <input type="text" id="name-nv" name="name">
+
+        <label for="address">Địa chỉ:</label>
+        <input type="text" id="address-nv" name="address">
+    
+        <label for="email">Email:</label>
+        <input type="text" id="email-nv" name="email">
+
+        <label for="phone">Số điện thoại:</label>
+        <input type="text" id="phone-nv" name="phone">
+
+        <input type="hidden" id="hidden-input-nv">
+    
+        <div style="display: flex; justify-content: center;margin-top: 3%">
+        <button id="cancel-btn-nv">Hủy</button>
+        <button class="submit-btn-nv"type="submit">Sửa</button>
     </div>
+  </form>
+</div>
+
+<div class="form-container-nv-add">
+        <form class="user-form-nv-add">
+            <div style="display: flex; justify-content: center;">
+            <h2>Thêm Nhân Viên Mới</h2>
+            </div>
+        <label for="name">Họ tên:</label>
+        <input type="text" id="name-nv-add" name="name">
+
+        <label for="address">Địa chỉ:</label>
+        <input type="text" id="address-nv-add" name="address">
+    
+        <label for="email">Email:</label>
+        <input type="text" id="email-nv-add" name="email">
+
+        <label for="phone">Số điện thoại:</label>
+        <input type="text" id="phone-nv-add" name="phone">
+
+        <div style="display: flex; justify-content: center;margin-top: 3%">
+        <button id="cancel-btn-nv-add">Hủy</button>
+        <button class="submit-btn-nv" type="submit">Thêm</button>
+    </div>
+  </form>
+</div>
+
+        <div id="NHANVIEN"></div>
+        <div style="background-color: black;width: 100%; height: 1px;margin: 8px 0;"></div>
+    </div>           
 
     <!-- MODAL QUANLYTAIKHOAN -->
     <div id="QUANLYTAIKHOAN" class="invisible">
@@ -505,5 +560,6 @@ mysqli_close($connect);
 <script src="js6.js"></script>
 <script src="quanlytk/tk18.js"></script>
 <script src="quanlykh/kh4.js"></script>
+<script src="quanlynv/nv8.js"></script>
 </body>
 </html>

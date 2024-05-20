@@ -382,7 +382,7 @@ input[readonly] {
     .dropdown-content-MONTH{
       position: absolute;
       top: 100%;
-      left: 4%;
+      left: .1%;
       text-align: center;
       border: 1px solid #ccc;
       min-width: 140px;
