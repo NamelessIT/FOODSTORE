@@ -616,7 +616,8 @@ if (isset($_COOKIE['user']) && isset($_COOKIE['pass'])) {
                     <div class="input-box">
                         <label id="username_info">Tên tài khoản:</label>
                         <div style="display: flex;">
-                            <input type="text" name="username_info" id="input_username_info" readonly>
+                            <input type="text" name="username_info" id="input_username_info" readonly value="<?php if (isset($_SESSION['mySession'])) {
+                        $tenDangNhap = $_SESSION['mySession'][0]; echo $tenDangNhap; }?>">
                         </div>
                     </div>
                     <div class="input-box">
@@ -631,7 +632,6 @@ if (isset($_COOKIE['user']) && isset($_COOKIE['pass'])) {
                         <div style="display: flex;width: 107.5%;">
                             <input type="text" name="email_info" id="input_email_info" readonly>
                             <span class="icon" id="sua_emailKH" style="cursor: pointer;"><ion-icon name="create-outline"></ion-icon></span>
-                            <label style="font-size: 0.8em ;top: 120%;color: red ; position: absolute;" class = "error_email_info">* Vui lòng điền thông tin</label>
                         </div>
                     </div>
                     <div class="input-box">
@@ -646,13 +646,12 @@ if (isset($_COOKIE['user']) && isset($_COOKIE['pass'])) {
                         <div style="display: flex;width: 107.5%;">
                             <input type="text" name="sdt_info" id="input_sdt_info" readonly>
                             <span class="icon" id="sua_sdtKH" style="cursor: pointer;"><ion-icon name="create-outline"></ion-icon></span>
-                            <label style="font-size: 0.8em ;top: 120%;color: red ; position: absolute;" class = "error_sdt_info">* Vui lòng điền thông tin</label>
                         </div>
                     </div>
                     <div class="input-box">
                         
                     </div>
-                    <button type="submit" class="btn_info" name="dangky">Xác nhận</button>
+                    <button type="submit" class="btn_info" name="dangky" id="btn_update_info">Xác nhận</button>
                 </form>
             </div>
 
@@ -682,7 +681,7 @@ if (isset($_COOKIE['user']) && isset($_COOKIE['pass'])) {
         });
     </script>
     <script src="./chinhthuc4.js"></script>
-    <script src="./form3.js"></script>
+    <script src="./form7.js"></script>
 
     <script>
     function goToMainPage() {

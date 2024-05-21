@@ -1756,6 +1756,9 @@ function hide_function(username) {
             if (role_current.addrole == 0) {
                 document.querySelector('.QUANLYNHANVIEN').classList.add('invisible');
             }
+            if (role_current.printbill == 0 && role_current.deletebill == 0) {
+                document.querySelector('.QUANLYDONHANG').classList.add('invisible');
+            }
             // ẩn trong fetch_Data
             // role_current.deleteproduct
             // role_current.deletecategories

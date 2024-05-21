@@ -595,3 +595,126 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }, 250);
     })
 // }
+
+
+
+// Lấy các input và span elements
+const inputUsername = document.getElementById('input_username_info');
+const inputName = document.getElementById('input_name_info');
+const inputEmail = document.getElementById('input_email_info');
+const inputAddress = document.getElementById('input_diachi_info');
+const inputPhone = document.getElementById('input_sdt_info');
+
+const spanEditName = document.getElementById('sua_nameKH');
+const spanEditEmail = document.getElementById('sua_emailKH');
+const spanEditAddress = document.getElementById('sua_diachiKH');
+const spanEditPhone = document.getElementById('sua_sdtKH');
+
+
+// Thêm sự kiện click vào các span
+spanEditName.addEventListener('click', () => {
+  spanEditName.innerHTML = '<ion-icon name="create"></ion-icon>';
+  inputName.readOnly = false;
+  inputName.focus();
+});
+
+spanEditEmail.addEventListener('click', () => {
+    spanEditEmail.innerHTML = '<ion-icon name="create"></ion-icon>';
+  inputEmail.readOnly = false;
+  inputEmail.focus();
+});
+
+spanEditAddress.addEventListener('click', () => {
+    spanEditAddress.innerHTML = '<ion-icon name="create"></ion-icon>';
+  inputAddress.readOnly = false;
+  inputAddress.focus();
+});
+
+spanEditPhone.addEventListener('click', () => {
+    spanEditPhone.innerHTML = '<ion-icon name="create"></ion-icon>';
+  inputPhone.readOnly = false;
+  inputPhone.focus();
+});
+
+$(document).ready(function () {
+    $('#infoForm').submit(function (event) {
+        event.preventDefault();
+        console.log('nhấn sub');
+    
+    // Lấy giá trị của các input
+    const username = document.getElementById('input_username_info').value;
+let name = document.getElementById('input_name_info').value;
+let email = document.getElementById('input_email_info').value;
+let address = document.getElementById('input_diachi_info').value;
+let phone = document.getElementById('input_sdt_info').value;
+  
+    // Kiểm tra xem có ô nào rỗng không
+    if (name === '') {
+      name = 'NULL';
+    }
+    if (email === '') {
+        email = 'NULL';
+    }
+    if (address === '') {
+        address = 'NULL';
+    }
+    if (phone === '') {
+        phone = 'NULL'
+    }
+
+    console.log('nhấn sub2');
+    $.ajax({
+        type: 'POST',
+        url: 'phpForm/updateacc.php',
+        data: {
+          username: username,
+          name: name,
+          email: email,
+          address: address,
+          phone: phone
+        },
+        success: function(data) {
+          if (data === 'success') {
+            document.querySelector('.wrapper_info').classList.remove('active_form');
+            document.getElementById('div_overlay_info').style.display = "none";
+            setTimeout(() => {
+                document.querySelector('.user_info').classList.remove('active');
+            }, 250);
+          }
+        },
+        error: function(xhr, status, error) {
+          // Xử lý lỗi
+          console.error(error);
+        }
+      });
+  });
+
+});
+
+  $(document).ready(function () {
+    $('#btn_show-info').on('click',function (event) {
+        var username = document.getElementById('input_username_info').value;
+        $.ajax({
+            type: 'POST',
+            url: 'phpForm/showacc.php',
+            data: {
+              username: username,
+            },
+            success: function(data) {
+              var response = JSON.parse(data);
+              if (response.status === 'success') {
+                document.getElementById('input_name_info').value = response.name;
+                document.getElementById('input_diachi_info').value = response.diachi;
+                document.getElementById('input_email_info').value = response.email;
+                document.getElementById('input_sdt_info').value = response.dienthoai;
+              }
+            },
+            error: function(xhr, status, error) {
+              // Xử lý lỗi
+              console.error(error);
+            }
+          });
+    })
+  });
+
+  
