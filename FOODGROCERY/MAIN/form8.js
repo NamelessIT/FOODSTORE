@@ -691,6 +691,30 @@ let phone = document.getElementById('input_sdt_info').value;
 
 });
 
+
+$(document).ready(function () {
+    $('#menu__bar').on('click',function (event) {
+        var username = localStorage.getItem('username');
+        $.ajax({
+            type: 'POST',
+            url: 'phpForm/toadminbtn.php',
+            data: {
+              username: username,
+            },
+            success: function(data) {
+                document.querySelector('.toAdim_btn').style.display="block";
+            },
+            error: function(xhr, status, error) {
+              // Xử lý lỗi
+              console.error(error);
+            }
+          });
+    })
+  });
+
+
+
+
   $(document).ready(function () {
     $('#btn_show-info').on('click',function (event) {
         var username = document.getElementById('input_username_info').value;

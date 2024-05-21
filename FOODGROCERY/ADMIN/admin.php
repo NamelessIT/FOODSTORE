@@ -563,7 +563,7 @@ mysqli_close($connect);
     
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="js7.js"></script>
+<script src="js10.js"></script>
 <script src="quanlytk/tk24.js"></script>
 <script src="quanlykh/kh6.js"></script>
 <script src="quanlynv/nv9.js"></script>

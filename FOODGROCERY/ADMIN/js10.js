@@ -106,7 +106,7 @@ sidebarItems[6].addEventListener('click', function () {
 
 sidebarItems[7].addEventListener('click', function () {
     // window.location.href = 'http://localhost:3000/FOODGROCERY/index.php?page_layout=danhsach';
-    alert('chưa có đường dẫn về trang chủ');
+    window.location.href = '../MAIN/User.php';
 })
 
 

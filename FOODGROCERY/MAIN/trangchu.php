@@ -24,7 +24,7 @@ if (isset($_COOKIE['user']) && isset($_COOKIE['pass'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="stylesheet" href="./trangchu.css">
+    <link rel="stylesheet" href="./trangchu1.css">
     <link rel="stylesheet" href="./form4.css">
     <link rel="icon" href="Logo/Untitled.png" type="image/x-icon" />
     <title>Document</title>
@@ -86,6 +86,9 @@ if (isset($_COOKIE['user']) && isset($_COOKIE['pass'])) {
                             <ul>
                                 <li>
                                     <button onclick="goToMainPage()">Trang chính</button>
+                                </li>
+                                <li class="toAdim_btn">
+                                    <button onclick="goToAdminPage()">Quản lý</button>
                                 </li>
                                 <li>
                                     <button  id="btn_show-info">Tài khoản</button>
@@ -681,11 +684,14 @@ if (isset($_COOKIE['user']) && isset($_COOKIE['pass'])) {
         });
     </script>
     <script src="./chinhthuc4.js"></script>
-    <script src="./form7.js"></script>
+    <script src="./form8.js"></script>
 
     <script>
     function goToMainPage() {
         window.location.href = './User.php';
+     }
+     function goToAdminPage(){
+        window.location.href = '../ADMIN/admin.php';
      }
 </script>
     
